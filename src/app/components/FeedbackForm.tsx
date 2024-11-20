@@ -4,7 +4,7 @@ import { useState } from "react";
 const FeedbackForm = () => {
   // feedback and questions form
   const [formData, setFormData] = useState<{
-    feedbackType: "comments" | "suggestions" | "error" | undefined;
+    feedbackType: "comments" | "suggestions" | "error";
     description: string;
     firstName: string;
     lastName: string;
