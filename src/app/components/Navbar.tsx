@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 ("publicimagesEquinor_Symbol_Favicon_RED_64x64px.png");
 const Navbar = () => {
   const router = useRouter();
@@ -15,13 +16,17 @@ const Navbar = () => {
     <nav className="bg-gray-800 text-white p-4 shadow-md grid grid-cols-2 ">
       {/* Logo and title */}
       <div className="flex justify-start items-center gap-2">
-        <Image
-          src="/images/Equinor_Symbol_Favicon_RED_64x64px.png"
-          alt="Logo"
-          width={24}
-          height={24}
-        />
-        <h1 className="font-bold">OSDU Self-service Portal</h1>
+        <Link href="/">
+          <Image
+            src="/images/Equinor_Symbol_Favicon_RED_64x64px.png"
+            alt="Logo"
+            width={24}
+            height={24}
+          />
+        </Link>
+        <Link href="">
+          <h1 className="font-bold">OSDU Self-service Portal</h1>
+        </Link>
       </div>
 
       {/* Buttons for different users */}
