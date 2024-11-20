@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Authentication from "./components/Authentication";
+import FeedbackForm from "./components/FeedbackForm";
 import TopTask from "./components/TopTask";
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
   ];
   const topTaskRoutes = [
     "OSDU-general",
-    "Role-Information",
+    "Role-information",
     "Step-guides",
     "Useful-links",
   ];
@@ -33,6 +33,33 @@ export default function Home() {
             </li>
           ))}
         </ul>
+
+        {/* Mission statement */}
+        <h1>Mission statement</h1>
+        <p>
+          OSDU Selv-service portal enables you to find, collect and read
+          relevant information for the xx and xx. This page contains all
+          relevant documentation and provides you with the right tools to share,
+          collect and save data. The self-service portal is under construction
+          and we appreciate feedback for further improvements.
+        </p>
+
+        {/* Further documentation - OSDU documentation */}
+        <h1>Further documentation</h1>
+        <a
+          href="https://docs.osdu.equinor.com/"
+          className={`px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600`}
+        >
+          OSDU Documentation
+        </a>
+
+        {/* Feedback or questions about the SSP */}
+        <h1>Feedback or questions</h1>
+        <p>
+          We would love to hear your thoughts, suggestions, concerns or problems
+          with anything we can improve.
+        </p>
+        <FeedbackForm />
       </main>
     </div>
   );
