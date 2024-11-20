@@ -1,17 +1,15 @@
 "use client";
-
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 ("publicimagesEquinor_Symbol_Favicon_RED_64x64px.png");
 const Navbar = () => {
-  const router = useRouter();
-
+  const searchParams = useSearchParams();
   return (
     <nav className="bg-gray-800 text-white p-4 shadow-md grid grid-cols-2 ">
       {/* Logo and title */}
       <div className="flex justify-start items-center gap-2">
-        <Link href="/">
+        <Link href={`/?${searchParams}`}>
           <Image
             src="/images/Equinor_Symbol_Favicon_RED_64x64px.png"
             alt="Logo"
@@ -19,7 +17,7 @@ const Navbar = () => {
             height={24}
           />
         </Link>
-        <Link href="/">
+        <Link href={`/?${searchParams}`}>
           <h1 className="font-bold">OSDU Self-service Portal</h1>
         </Link>
       </div>
