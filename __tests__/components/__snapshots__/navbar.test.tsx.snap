@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NavBar renders correctly 1`] = `
+<div>
+  <nav
+    class="bg-gray-/00 text-white p-4 shadow-md grid grid-cols-2 "
+  >
+    <div
+      class="flex justify-start items-center gap-2"
+    >
+      <a
+        href="/?null"
+      >
+        <img
+          alt="Logo"
+          data-nimg="1"
+          decoding="async"
+          height="24"
+          loading="lazy"
+          src="/_next/image?url=%2Fimages%2FEquinor_Symbol_Favicon_RED_64x64px.png&w=48&q=75"
+          srcset="/_next/image?url=%2Fimages%2FEquinor_Symbol_Favicon_RED_64x64px.png&w=32&q=75 1x, /_next/image?url=%2Fimages%2FEquinor_Symbol_Favicon_RED_64x64px.png&w=48&q=75 2x"
+          style="color: transparent;"
+          width="24"
+        />
+      </a>
+      <a
+        href="/?null"
+      >
+        <h1
+          class="font-bold"
+        >
+          OSDU Self-service Portal
+        </h1>
+      </a>
+    </div>
+    <ul
+      class="flex justify-end space-x-4"
+    >
+      <li>
+        <a
+          class="px-4 py-2 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500 rounded"
+          href="?user=Data-Producer"
+        >
+          Data Producer
+        </a>
+      </li>
+      <li>
+        <a
+          class="px-4 py-2 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500 rounded"
+          href="?user=Data-Consumer"
+        >
+          Data Consumer
+        </a>
+      </li>
+      <li>
+        <a
+          class="px-4 py-2 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500 rounded"
+          href="?user=Developer"
+        >
+          Developer
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+`;
