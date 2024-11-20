@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-("publicimagesEquinor_Symbol_Favicon_RED_64x64px.png");
+
 const Navbar = () => {
   const searchParams = useSearchParams();
   return (
