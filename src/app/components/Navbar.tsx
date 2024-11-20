@@ -7,11 +7,6 @@ import Link from "next/link";
 const Navbar = () => {
   const router = useRouter();
 
-  const handleNavClick = (item: string) => {
-    const formattedItem = item.replace(" ", "-"); // Replace space with a hyphen
-    router.push(`?user=${formattedItem}`);
-  };
-
   return (
     <nav className="bg-gray-800 text-white p-4 shadow-md grid grid-cols-2 ">
       {/* Logo and title */}
@@ -24,7 +19,7 @@ const Navbar = () => {
             height={24}
           />
         </Link>
-        <Link href="">
+        <Link href="/">
           <h1 className="font-bold">OSDU Self-service Portal</h1>
         </Link>
       </div>
@@ -33,12 +28,12 @@ const Navbar = () => {
       <ul className="flex justify-end space-x-4">
         {["Data Producer", "Data Consumer", "Developer"].map((item) => (
           <li key={item}>
-            <button
-              onClick={() => handleNavClick(item)}
+            <Link
+              href={`?user=${item.replace(" ", "-")}`}
               className="px-4 py-2 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500 rounded"
             >
               {item}
-            </button>
+            </Link>
           </li>
         ))}
       </ul>
