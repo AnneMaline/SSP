@@ -8,13 +8,13 @@ export default function Home() {
     "OSDU General",
     "Information about the role",
     "Step-guides",
-    "Uselful links",
+    "Useful links",
   ];
   const topTaskRoutes = [
     "OSDU-general",
     "Role-Information",
     "Step-guides",
-    "Uselful-links",
+    "Useful-links",
   ];
 
   return (
