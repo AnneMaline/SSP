@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import TopTask from "../../src/app/components/TopTask";
+import TopTask from "../../../../src/app/components/TopTask";
 import { ReadonlyURLSearchParams, useSearchParams } from "next/navigation";
 import { mocked } from "jest-mock";
 
