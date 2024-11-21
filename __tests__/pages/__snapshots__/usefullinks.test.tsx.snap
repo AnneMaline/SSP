@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Usefiul links Page renders correctly 1`] = `
+<div>
+  <div>
+    <h1>
+      Useful links
+    </h1>
+  </div>
+</div>
+`;
