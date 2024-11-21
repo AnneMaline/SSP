@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer renders correctly 1`] = `
+<div>
+  <footer
+    class="bg-gray-800 text-white py-10"
+  >
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+    >
+      <div
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10"
+      >
+        <div>
+          <h3
+            class="text-lg font-bold mb-4"
+          >
+            Info
+          </h3>
+          <ul
+            class="space-y-2"
+          >
+            <li>
+              <a
+                class="hover:underline"
+                href="/about"
+              >
+                About Us
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:underline"
+                href="/privacy"
+              >
+                Privacy Policy
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:underline"
+                href="/terms"
+              >
+                Terms & Conditions
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3
+            class="text-lg font-bold mb-4"
+          >
+            Organization
+          </h3>
+          <ul
+            class="space-y-2"
+          >
+            <li>
+              <a
+                class="hover:underline"
+                href="/team"
+              >
+                Our Team
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:underline"
+                href="/careers"
+              >
+                Careers
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:underline"
+                href="/news"
+              >
+                Latest News
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3
+            class="text-lg font-bold mb-4"
+          >
+            Contact
+          </h3>
+          <ul
+            class="space-y-2"
+          >
+            <li>
+              <a
+                class="hover:underline"
+                href="mailto:info@example.com"
+              >
+                info@example.com
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:underline"
+                href="tel:+1234567890"
+              >
+                +123 456 7890
+              </a>
+            </li>
+            <li>
+              <a
+                class="hover:underline"
+                href="https://www.example.com/contact"
+              >
+                Contact Form
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="mt-10 text-center text-sm"
+      >
+        <p>
+          © 2024 Your Organization. All rights reserved.
+        </p>
+      </div>
+    </div>
+  </footer>
+</div>
+`;

@@ -1,5 +1,4 @@
 import { test, expect } from "@playwright/test";
-import { waitFor } from "@testing-library/react";
 
 test("submitting the feedback form", async ({ page }) => {
   // Navigate to the landing page

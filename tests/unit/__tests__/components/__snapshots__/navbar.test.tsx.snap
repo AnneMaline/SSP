@@ -9,6 +9,7 @@ exports[`NavBar renders correctly 1`] = `
       class="flex justify-start items-center gap-2"
     >
       <a
+        aria-label="logo"
         href="/?null"
       >
         <img
@@ -24,6 +25,7 @@ exports[`NavBar renders correctly 1`] = `
         />
       </a>
       <a
+        aria-label="title"
         href="/?null"
       >
         <h1

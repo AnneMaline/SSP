@@ -65,13 +65,42 @@ test("clicking navbar title and logo to navigate to the landing page", async ({
   await page.goto("http://localhost:3000/OSDU-general");
 
   // Click on the navbar title
-  await page.click('a[aria-label="logo"]'); // Replace with the actual selector for the navbar title
+  await page.click('a[aria-label="logo"]');
   await expect(page).toHaveURL("http://localhost:3000"); // Ensure we are back on the landing page
 
   // Navigate to another page than the landing page
   await page.goto("http://localhost:3000/OSDU-general");
 
   // Click on the navbar logo
-  await page.click('a[aria-label="title"]'); // Replace with the actual selector for the navbar logo
+  await page.click('a[aria-label="title"]');
   await expect(page).toHaveURL("http://localhost:3000"); // Ensure we are back on the landing page
+});
+
+test.describe("Footer Navigation", () => {
+  test.beforeEach(async ({ page }) => {
+    // Go to the homepage or your base URL
+    await page.goto("http://localhost:3000");
+  });
+
+  // Change when the code is not a template anymore
+  test("should navigate to Info page when Info link is clicked", async ({
+    page,
+  }) => {
+    await page.click('a[href="/about"]'); // Info link
+    await expect(page).toHaveURL("http://localhost:3000/about");
+  });
+
+  test("should navigate to Organization page when Organization link is clicked", async ({
+    page,
+  }) => {
+    await page.click('a[href="/team"]'); // Organization link
+    await expect(page).toHaveURL("http://localhost:3000/team");
+  });
+
+  test("should navigate to Contact page when Contact link is clicked", async ({
+    page,
+  }) => {
+    await page.click('a[href="https://www.example.com/contact"]'); // Contact link
+    await expect(page).toHaveURL("https://www.example.com/contact");
+  });
 });
