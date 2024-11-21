@@ -13,13 +13,6 @@ const FeedbackForm = () => {
   // feedback and questions form
   const [formData, setFormData] = useState(initialFormData);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Submitting form data:", formData);
@@ -55,7 +48,9 @@ const FeedbackForm = () => {
                 name="feedbackType"
                 value={type}
                 checked={formData.feedbackType === type}
-                onChange={handleChange}
+                onChange={() =>
+                  setFormData((prev) => ({ ...prev, feedbackType: type }))
+                }
                 className="mr-2"
               />
               {type.charAt(0).toUpperCase() + type.slice(1)}
@@ -73,7 +68,12 @@ const FeedbackForm = () => {
           id="description"
           name="description"
           value={formData.description}
-          onChange={handleChange}
+          onChange={(value) =>
+            setFormData((prev) => ({
+              ...prev,
+              description: value.target.value,
+            }))
+          }
           className="border rounded px-3 py-2 w-full"
           rows={5}
           required
@@ -91,7 +91,12 @@ const FeedbackForm = () => {
             id="firstName"
             name="firstName"
             value={formData.firstName}
-            onChange={handleChange}
+            onChange={(value) =>
+              setFormData((prev) => ({
+                ...prev,
+                firstName: value.target.value,
+              }))
+            }
             className="border rounded px-3 py-2 w-full"
             required
           />
@@ -105,7 +110,12 @@ const FeedbackForm = () => {
             id="lastName"
             name="lastName"
             value={formData.lastName}
-            onChange={handleChange}
+            onChange={(value) =>
+              setFormData((prev) => ({
+                ...prev,
+                lastName: value.target.value,
+              }))
+            }
             className="border rounded px-3 py-2 w-full"
             required
           />
@@ -122,7 +132,12 @@ const FeedbackForm = () => {
           id="email"
           name="email"
           value={formData.email}
-          onChange={handleChange}
+          onChange={(value) =>
+            setFormData((prev) => ({
+              ...prev,
+              email: value.target.value,
+            }))
+          }
           className="border rounded px-3 py-2 w-full"
           required
         />
