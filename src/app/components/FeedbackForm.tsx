@@ -2,20 +2,16 @@
 import { useState } from "react";
 
 const FeedbackForm = () => {
-  // feedback and questions form
-  const [formData, setFormData] = useState<{
-    feedbackType: "comments" | "suggestions" | "error";
-    description: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-  }>({
+  // Initial state for the form
+  const initialFormData = {
     feedbackType: "comments", // Default feedback type
     description: "",
     firstName: "",
     lastName: "",
     email: "",
-  });
+  };
+  // feedback and questions form
+  const [formData, setFormData] = useState(initialFormData);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -27,6 +23,9 @@ const FeedbackForm = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("Submitting form data:", formData);
+
+    // Reset form after submission
+    setFormData(initialFormData);
 
     /*// Send data to the server or API
     const response = await fetch("/api/submit-form", {
