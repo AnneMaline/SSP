@@ -1,6 +1,5 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import AzureADProvider from "next-auth/providers/azure-ad";
-import { cookies } from "next/headers";
 
 declare module "next-auth" {
   interface Session {
