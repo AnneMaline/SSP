@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FeedbackForm renders correctly 1`] = `
+<div>
+  <form
+    class="space-y-4 max-w-lg mx-auto"
+  >
+    <h1
+      class="text-xl font-bold"
+    >
+      Feedback Form
+    </h1>
+    <fieldset>
+      <legend
+        class="block text-sm font-medium"
+      >
+        Feedback Type
+      </legend>
+      <div
+        class="space-y-2"
+      >
+        <label
+          class="block"
+        >
+          <input
+            checked=""
+            class="mr-2"
+            name="feedbackType"
+            type="radio"
+            value="comments"
+          />
+          Comments
+        </label>
+        <label
+          class="block"
+        >
+          <input
+            class="mr-2"
+            name="feedbackType"
+            type="radio"
+            value="suggestions"
+          />
+          Suggestions
+        </label>
+        <label
+          class="block"
+        >
+          <input
+            class="mr-2"
+            name="feedbackType"
+            type="radio"
+            value="error"
+          />
+          Error
+        </label>
+      </div>
+    </fieldset>
+    <div>
+      <label
+        class="block text-sm font-medium"
+        for="description"
+      >
+        Description
+      </label>
+      <textarea
+        class="border rounded px-3 py-2 w-full"
+        id="description"
+        name="description"
+        required=""
+        rows="5"
+      />
+    </div>
+    <div
+      class="grid grid-cols-2 gap-4"
+    >
+      <div>
+        <label
+          class="block text-sm font-medium"
+          for="firstName"
+        >
+          First Name
+        </label>
+        <input
+          class="border rounded px-3 py-2 w-full"
+          id="firstName"
+          name="firstName"
+          required=""
+          type="text"
+          value=""
+        />
+      </div>
+      <div>
+        <label
+          class="block text-sm font-medium"
+          for="lastName"
+        >
+          Last Name
+        </label>
+        <input
+          class="border rounded px-3 py-2 w-full"
+          id="lastName"
+          name="lastName"
+          required=""
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div>
+      <label
+        class="block text-sm font-medium"
+        for="email"
+      >
+        Email
+      </label>
+      <input
+        class="border rounded px-3 py-2 w-full"
+        id="email"
+        name="email"
+        required=""
+        type="email"
+        value=""
+      />
+    </div>
+    <button
+      class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+      type="submit"
+    >
+      Submit Feedback
+    </button>
+  </form>
+</div>
+`;
