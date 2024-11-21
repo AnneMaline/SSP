@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TopTask renders correctly 1`] = `
+<div>
+  <a
+    class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 custom-class"
+    href="/target-page?param1=value1&param2=value2"
+  >
+    Go to Target
+  </a>
+</div>
+`;
