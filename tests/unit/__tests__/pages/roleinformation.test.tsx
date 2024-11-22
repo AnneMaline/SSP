@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import RoleInformationPage from "../../../../src/app/Role-information/page";
 
 describe("Role-information Page", () => {

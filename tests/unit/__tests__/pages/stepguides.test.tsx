@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import StepGuidesPage from "../../../../src/app/Step-guides/page";
 
 describe("Step-guide Page", () => {
