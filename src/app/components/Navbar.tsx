@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 const Navbar = () => {
   const searchParams = useSearchParams();
+  const currentParam = searchParams.get("user");
   return (
     <nav className="bg-gray-800 text-white p-4 shadow-md grid grid-cols-2 ">
       {/* Logo and title */}
@@ -28,7 +29,11 @@ const Navbar = () => {
           <li key={item}>
             <Link
               href={`?user=${item.replace(" ", "-")}`}
-              className="px-4 py-2 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500 rounded"
+              className={
+                item.replace(" ", "-") === currentParam
+                  ? "px-4 py-2 bg-blue-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500 rounded"
+                  : "px-4 py-2 bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring focus:ring-blue-500 rounded"
+              }
             >
               {item}
             </Link>
