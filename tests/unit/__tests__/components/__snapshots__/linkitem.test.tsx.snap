@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StepCard renders correctly 1`] = `
+<div>
+  <div
+    class="py-4 border-b border-gray-200"
+  >
+    <h2
+      class="text-lg font-bold"
+    >
+      Test Title
+    </h2>
+    <p
+      class="text-gray-700 my-2"
+    >
+      Test information about the item.
+    </p>
+    <div
+      class="mb-2"
+    >
+      <span
+        class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+      >
+        Tag1
+      </span>
+      <span
+        class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+      >
+        Tag2
+      </span>
+      <span
+        class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+      >
+        Tag3
+      </span>
+    </div>
+    <a
+      class="text-blue-500 hover:underline"
+      href="https://example.com"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      Learn More
+    </a>
+  </div>
+</div>
+`;

@@ -6,6 +6,138 @@ exports[`Usefiul links Page renders correctly 1`] = `
     <h1>
       Useful links
     </h1>
+    <div
+      class="bg-white p-6 max-w-3xl mx-auto"
+    >
+      <h1
+        class="text-2xl font-bold text-center my-6"
+      >
+        Links
+      </h1>
+      <div
+        class="py-4 border-b border-gray-200"
+      >
+        <h2
+          class="text-lg font-bold"
+        >
+          React Documentation
+        </h2>
+        <p
+          class="text-gray-700 my-2"
+        >
+          Learn about React's features, hooks, and components.
+        </p>
+        <div
+          class="mb-2"
+        >
+          <span
+            class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+          >
+            React
+          </span>
+          <span
+            class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+          >
+            JavaScript
+          </span>
+          <span
+            class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+          >
+            Frontend
+          </span>
+        </div>
+        <a
+          class="text-blue-500 hover:underline"
+          href="https://reactjs.org"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Learn More
+        </a>
+      </div>
+      <div
+        class="py-4 border-b border-gray-200"
+      >
+        <h2
+          class="text-lg font-bold"
+        >
+          Next.js
+        </h2>
+        <p
+          class="text-gray-700 my-2"
+        >
+          Discover the power of server-side rendering with Next.js.
+        </p>
+        <div
+          class="mb-2"
+        >
+          <span
+            class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+          >
+            Next.js
+          </span>
+          <span
+            class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+          >
+            React
+          </span>
+          <span
+            class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+          >
+            SSR
+          </span>
+        </div>
+        <a
+          class="text-blue-500 hover:underline"
+          href="https://nextjs.org"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Learn More
+        </a>
+      </div>
+      <div
+        class="py-4 border-b border-gray-200"
+      >
+        <h2
+          class="text-lg font-bold"
+        >
+          Playwright
+        </h2>
+        <p
+          class="text-gray-700 my-2"
+        >
+          Automate testing for web applications using Playwright.
+        </p>
+        <div
+          class="mb-2"
+        >
+          <span
+            class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+          >
+            Testing
+          </span>
+          <span
+            class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+          >
+            Automation
+          </span>
+          <span
+            class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded"
+          >
+            Playwright
+          </span>
+        </div>
+        <a
+          class="text-blue-500 hover:underline"
+          href="https://playwright.dev"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Learn More
+        </a>
+      </div>
+    </div>
   </div>
 </div>
 `;

@@ -104,3 +104,79 @@ test.describe("Footer Navigation", () => {
     await expect(page).toHaveURL("https://www.example.com/contact");
   });
 });
+
+test.describe("Links list Navigation", () => {
+  test.beforeEach(async ({ page }) => {
+    // Go to the homepage
+    await page.goto("http://localhost:3000/Useful-links");
+  });
+
+  // Change when the code is not a template anymore
+  test("should navigate to react documentation when learn more link is clicked", async ({
+    page,
+  }) => {
+    await page.locator('a[data-link-title="React Documentation"]').click();
+    const [newTab] = await Promise.all([
+      page.waitForEvent("popup"), // Wait for the new tab to open
+    ]);
+    await expect(newTab).toHaveURL("https://react.dev/");
+  });
+
+  test("should navigate to next.js documentation when learn more link is clicked", async ({
+    page,
+  }) => {
+    await page.locator('a[data-link-title="Next.js"]').click();
+    const [newTab] = await Promise.all([
+      page.waitForEvent("popup"), // Wait for the new tab to open
+    ]);
+    await expect(newTab).toHaveURL("https://nextjs.org/");
+  });
+
+  test("should navigate to playwright documentation when learn more link is clicked", async ({
+    page,
+  }) => {
+    await page.locator('a[data-link-title="Playwright"]').click();
+    const [newTab] = await Promise.all([
+      page.waitForEvent("popup"), // Wait for the new tab to open
+    ]);
+    await expect(newTab).toHaveURL("https://playwright.dev/");
+  });
+});
+
+test.describe("Step-card list Navigation", () => {
+  test.beforeEach(async ({ page }) => {
+    // Go to the homepage
+    await page.goto("http://localhost:3000/Step-guides");
+  });
+
+  // Change when the code is not a template anymore
+  test("should navigate to react documentation when learn more link is clicked", async ({
+    page,
+  }) => {
+    await page.locator('a[data-link-title="React Documentation"]').click();
+    const [newTab] = await Promise.all([
+      page.waitForEvent("popup"), // Wait for the new tab to open
+    ]);
+    await expect(newTab).toHaveURL("https://react.dev/");
+  });
+
+  test("should navigate to next.js documentation when learn more link is clicked", async ({
+    page,
+  }) => {
+    await page.locator('a[data-link-title="Next.js"]').click();
+    const [newTab] = await Promise.all([
+      page.waitForEvent("popup"), // Wait for the new tab to open
+    ]);
+    await expect(newTab).toHaveURL("https://nextjs.org/");
+  });
+
+  test("should navigate to playwright documentation when learn more link is clicked", async ({
+    page,
+  }) => {
+    await page.locator('a[data-link-title="Playwright"]').click();
+    const [newTab] = await Promise.all([
+      page.waitForEvent("popup"), // Wait for the new tab to open
+    ]);
+    await expect(newTab).toHaveURL("https://playwright.dev/");
+  });
+});

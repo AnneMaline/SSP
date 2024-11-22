@@ -6,6 +6,85 @@ exports[`Step-guide Page renders correctly 1`] = `
     <h1>
       Step-guides
     </h1>
+    <div
+      class="bg-gray-100"
+    >
+      <h1
+        class="text-2xl font-bold text-center my-6"
+      >
+        Step-by-step-guides
+      </h1>
+      <div
+        class="grid grid-cols-1 md:grid-cols-3 gap-6 p-4"
+      >
+        <div
+          class="bg-white shadow-md rounded-lg p-6 border border-gray-200"
+        >
+          <h2
+            class="text-lg font-bold mb-2"
+          >
+            React Documentation
+          </h2>
+          <p
+            class="text-gray-700 mb-4"
+          >
+            Learn more about React and its features on the official documentation.
+          </p>
+          <a
+            class="text-blue-500 hover:underline"
+            href="https://reactjs.org"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Learn More
+          </a>
+        </div>
+        <div
+          class="bg-white shadow-md rounded-lg p-6 border border-gray-200"
+        >
+          <h2
+            class="text-lg font-bold mb-2"
+          >
+            Next.js
+          </h2>
+          <p
+            class="text-gray-700 mb-4"
+          >
+            Next.js provides the best developer experience for building React applications.
+          </p>
+          <a
+            class="text-blue-500 hover:underline"
+            href="https://nextjs.org"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Learn More
+          </a>
+        </div>
+        <div
+          class="bg-white shadow-md rounded-lg p-6 border border-gray-200"
+        >
+          <h2
+            class="text-lg font-bold mb-2"
+          >
+            Playwright
+          </h2>
+          <p
+            class="text-gray-700 mb-4"
+          >
+            Automate tests for your web applications with Playwright.
+          </p>
+          <a
+            class="text-blue-500 hover:underline"
+            href="https://playwright.dev"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Learn More
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 `;

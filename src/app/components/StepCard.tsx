@@ -16,6 +16,7 @@ const Card = ({ title, information, link }: CardProps) => {
         target="_blank"
         rel="noopener noreferrer"
         className="text-blue-500 hover:underline"
+        data-link-title={title}
       >
         Learn More
       </a>
