@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 const Navbar = () => {
   const searchParams = useSearchParams();
-  const currentParam = searchParams.get("user");
+  const currentParam = searchParams ? searchParams.get("user") : null;
   return (
     <nav className="bg-gray-800 text-white p-4 shadow-md grid grid-cols-2 ">
       {/* Logo and title */}
