@@ -48,6 +48,7 @@ exports[`Usefiul links Page renders correctly 1`] = `
         </div>
         <a
           class="text-blue-500 hover:underline"
+          data-link-title="React Documentation"
           href="https://reactjs.org"
           rel="noopener noreferrer"
           target="_blank"
@@ -89,6 +90,7 @@ exports[`Usefiul links Page renders correctly 1`] = `
         </div>
         <a
           class="text-blue-500 hover:underline"
+          data-link-title="Next.js"
           href="https://nextjs.org"
           rel="noopener noreferrer"
           target="_blank"
@@ -130,6 +132,7 @@ exports[`Usefiul links Page renders correctly 1`] = `
         </div>
         <a
           class="text-blue-500 hover:underline"
+          data-link-title="Playwright"
           href="https://playwright.dev"
           rel="noopener noreferrer"
           target="_blank"
