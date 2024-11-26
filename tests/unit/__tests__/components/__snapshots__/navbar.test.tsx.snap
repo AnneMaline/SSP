@@ -10,7 +10,7 @@ exports[`NavBar renders correctly 1`] = `
     >
       <a
         aria-label="logo"
-        href="/?null"
+        href="/?undefined"
       >
         <img
           alt="Logo"
@@ -26,7 +26,7 @@ exports[`NavBar renders correctly 1`] = `
       </a>
       <a
         aria-label="title"
-        href="/?null"
+        href="/?undefined"
       >
         <h1
           class="font-bold"
