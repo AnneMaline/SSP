@@ -1,17 +1,32 @@
 "use client";
 import { useState } from "react";
 
+type FeedbackFormType = {
+  feedbackType: "comments" | "suggestions" | "error";
+  description: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
 const FeedbackForm = () => {
   // Initial state for the form
-  const initialFormData = {
+  const initialFormData: FeedbackFormType = {
     feedbackType: "comments", // Default feedback type
     description: "",
     firstName: "",
     lastName: "",
     email: "",
   };
+
+  const feedbackTypes: FeedbackFormType["feedbackType"][] = [
+    "comments",
+    "suggestions",
+    "error",
+  ];
+
   // feedback and questions form
-  const [formData, setFormData] = useState(initialFormData);
+  const [formData, setFormData] = useState<FeedbackFormType>(initialFormData);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,7 +56,7 @@ const FeedbackForm = () => {
       <fieldset>
         <legend className="block text-sm font-medium">Feedback Type</legend>
         <div className="space-y-2">
-          {["comments", "suggestions", "error"].map((type) => (
+          {feedbackTypes.map((type) => (
             <label key={type} className="block">
               <input
                 type="radio"
@@ -49,7 +64,10 @@ const FeedbackForm = () => {
                 value={type}
                 checked={formData.feedbackType === type}
                 onChange={() =>
-                  setFormData((prev) => ({ ...prev, feedbackType: type }))
+                  setFormData((prev) => ({
+                    ...prev,
+                    feedbackType: type as FeedbackFormType["feedbackType"],
+                  }))
                 }
                 className="mr-2"
               />
@@ -68,10 +86,10 @@ const FeedbackForm = () => {
           id="description"
           name="description"
           value={formData.description}
-          onChange={(value) =>
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
             setFormData((prev) => ({
               ...prev,
-              description: value.target.value,
+              description: e.target.value,
             }))
           }
           className="border rounded px-3 py-2 w-full"
@@ -91,10 +109,10 @@ const FeedbackForm = () => {
             id="firstName"
             name="firstName"
             value={formData.firstName}
-            onChange={(value) =>
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData((prev) => ({
                 ...prev,
-                firstName: value.target.value,
+                firstName: e.target.value,
               }))
             }
             className="border rounded px-3 py-2 w-full"
@@ -110,10 +128,10 @@ const FeedbackForm = () => {
             id="lastName"
             name="lastName"
             value={formData.lastName}
-            onChange={(value) =>
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormData((prev) => ({
                 ...prev,
-                lastName: value.target.value,
+                lastName: e.target.value,
               }))
             }
             className="border rounded px-3 py-2 w-full"
@@ -132,10 +150,10 @@ const FeedbackForm = () => {
           id="email"
           name="email"
           value={formData.email}
-          onChange={(value) =>
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setFormData((prev) => ({
               ...prev,
-              email: value.target.value,
+              email: e.target.value,
             }))
           }
           className="border rounded px-3 py-2 w-full"
