@@ -9,13 +9,13 @@ export default function Home() {
   // TopTask titles and routes
   const topTaskTitle = [
     "OSDU General",
-    "Information about the role",
+    "Entitlements",
     "Step-guides",
     "Useful links",
   ];
   const topTaskRoutes = [
     "OSDU-general",
-    "Role-information",
+    "Entitlements",
     "Step-guides",
     "Useful-links",
   ];
