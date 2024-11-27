@@ -21,11 +21,7 @@ const AddIDtoGroupForm = () => {
   ];
 
   // Dummy dynamic groups (update when the API is connected)
-  const [groups, setGroups] = useState<string[]>([
-    "Group 1",
-    "Group 2",
-    "Group 3",
-  ]);
+  const [groups] = useState<string[]>(["Group 1", "Group 2", "Group 3"]);
 
   // feedback and questions form
   const [formData, setFormData] =
