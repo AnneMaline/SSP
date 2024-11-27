@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Entitlements Page renders correctly 1`] = `
+<div>
+  <div>
+    <h1>
+      Entitlements
+    </h1>
+    <ul
+      class="mb-2 mt-2"
+    >
+      <li>
+        <div
+          class="border border-gray-300 mr-2 ml-2"
+        >
+          <div
+            class="flex justify-between items-center px-4 py-2 cursor-pointer"
+          >
+            <span>
+              Team A
+            </span>
+            <span>
+              ↓
+            </span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div
+          class="border border-gray-300 mr-2 ml-2"
+        >
+          <div
+            class="flex justify-between items-center px-4 py-2 cursor-pointer"
+          >
+            <span>
+              Team B
+            </span>
+            <span>
+              ↓
+            </span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
