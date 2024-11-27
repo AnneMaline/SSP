@@ -50,7 +50,7 @@ const AddIDtoGroupForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-6 border border-gray-300 rounded-lg shadow space-y-6"
+      className="max-w-md mx-auto p-6 border-2 border-dashed border-[#80AFB4] rounded-lg space-y-6"
     >
       {/* EntraID */}
       <div className="space-y-2">

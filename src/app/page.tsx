@@ -2,6 +2,8 @@
 import { Suspense } from "react";
 import FeedbackForm from "./components/FeedbackForm";
 import TopTask from "./components/TopTask";
+import CreateGroupForm from "./components/CreateGroupForm";
+import AddIDtoGroupForm from "./components/AddIDtoGroupForm";
 
 export default function Home() {
   // TopTask titles and routes
@@ -63,6 +65,14 @@ export default function Home() {
           with anything we can improve.
         </p>
         <FeedbackForm />
+
+        {/* Create new group */}
+        <h1>Create new group</h1>
+        <CreateGroupForm />
+
+        {/* Add member to a group */}
+        <h1>Add member to a group</h1>
+        <AddIDtoGroupForm />
       </main>
     </div>
   );
