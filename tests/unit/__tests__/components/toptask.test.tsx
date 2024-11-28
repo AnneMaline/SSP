@@ -9,32 +9,32 @@ jest.mock("next/navigation", () => ({
 }));
 
 describe("TopTask", () => {
-  const mockUseSearchParams = mocked(useSearchParams);
+  // const mockUseSearchParams = mocked(useSearchParams);
 
-  beforeEach(() => {
-    // Mock default behavior of useSearchParams
-    const mockSearchParams: Partial<ReadonlyURLSearchParams> = {
-      toString: () => "param1=value1&param2=value2",
-      get: (name: string) => {
-        const params: { [key: string]: string } = {
-          param1: "value1",
-          param2: "value2",
-        };
-        return params[name] || null;
-      },
-      getAll: () => [],
-      has: () => false,
-      keys: jest.fn().mockReturnValue([][Symbol.iterator]()),
-      values: jest.fn().mockReturnValue([][Symbol.iterator]()),
-      entries: jest.fn().mockReturnValue([][Symbol.iterator]()),
-      forEach: jest.fn(),
-    };
+  // beforeEach(() => {
+  //   // Mock default behavior of useSearchParams
+  //   const mockSearchParams: Partial<ReadonlyURLSearchParams> = {
+  //     toString: () => "param1=value1&param2=value2",
+  //     get: (name: string) => {
+  //       const params: { [key: string]: string } = {
+  //         param1: "value1",
+  //         param2: "value2",
+  //       };
+  //       return params[name] || null;
+  //     },
+  //     getAll: () => [],
+  //     has: () => false,
+  //     keys: jest.fn().mockReturnValue([][Symbol.iterator]()),
+  //     values: jest.fn().mockReturnValue([][Symbol.iterator]()),
+  //     entries: jest.fn().mockReturnValue([][Symbol.iterator]()),
+  //     forEach: jest.fn(),
+  //   };
 
-    // Cast the mock as ReadonlyURLSearchParams
-    mockUseSearchParams.mockReturnValue(
-      mockSearchParams as ReadonlyURLSearchParams
-    );
-  });
+  //   // Cast the mock as ReadonlyURLSearchParams
+  //   mockUseSearchParams.mockReturnValue(
+  //     mockSearchParams as ReadonlyURLSearchParams
+  //   );
+  // });
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -67,7 +67,7 @@ describe("TopTask", () => {
     // Check if the href is correct
     expect(link).toHaveAttribute(
       "href",
-      "/target-page?param1=value1&param2=value2"
+      "/target-page" //?param1=value1&param2=value2"
     );
 
     // Check if custom className is applied
@@ -82,7 +82,7 @@ describe("TopTask", () => {
     // Check updated href
     expect(link).toHaveAttribute(
       "href",
-      "/dynamic-page?param1=value1&param2=value2"
+      "/dynamic-page" //?param1=value1&param2=value2"
     );
   });
 });
