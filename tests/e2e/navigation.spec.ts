@@ -10,8 +10,8 @@ test("navigating through pages with toptasks", async ({ page }) => {
 
   await page.goto("http://localhost:3000"); // Go back to the landing page
 
-  await page.click('a[href="/Role-information?"]');
-  await expect(page).toHaveURL("http://localhost:3000/Role-information");
+  await page.click('a[href="/Entitlements?"]');
+  await expect(page).toHaveURL("http://localhost:3000/Entitlements");
 
   await page.goto("http://localhost:3000"); // Go back to the landing page
 
