@@ -4,7 +4,7 @@ import "./globals.css";
 //import { SessionProvider } from "next-auth/react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Suspense } from "react";
+// import { Suspense } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,9 +33,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {/*<SessionProvider>*/}
-        <Suspense>
-          <Navbar />
-        </Suspense>
+        {/* <Suspense> */}
+        <Navbar />
+        {/* </Suspense> */}
         {children}
         {/*</SessionProvider>*/}
 

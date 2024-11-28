@@ -1,16 +1,17 @@
-"use client";
+// "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+// import { useSearchParams } from "next/navigation";
 
 const Navbar = () => {
-  const searchParams = useSearchParams();
-  const currentParam = searchParams ? searchParams.get("user") : null;
+  // const searchParams = useSearchParams();
+  // const currentParam = searchParams ? searchParams.get("user") : null;
   return (
     <nav className="bg-gray-800 text-white p-4 shadow-md grid grid-cols-2 ">
       {/* Logo and title */}
       <div className="flex justify-start items-center gap-2">
-        <Link href={`/?${searchParams}`} aria-label="logo">
+        {/* <Link href={`/?${searchParams}`} aria-label="logo"> */}
+        <Link href="/" aria-label="logo">
           <Image
             src="/images/Equinor_Symbol_Favicon_RED_64x64px.png"
             alt="Logo"
@@ -18,13 +19,14 @@ const Navbar = () => {
             height={24}
           />
         </Link>
-        <Link href={`/?${searchParams}`} aria-label="title">
+        {/* <Link href={`/?${searchParams}`} aria-label="title"> */}
+        <Link href="/" aria-label="title">
           <h1 className="font-bold">OSDU Self-service Portal</h1>
         </Link>
       </div>
 
       {/* Buttons for different users */}
-      <ul className="flex justify-end space-x-4">
+      {/* <ul className="flex justify-end space-x-4">
         {["Data Producer", "Data Consumer", "Developer"].map((item) => (
           <li key={item}>
             <Link
@@ -39,7 +41,7 @@ const Navbar = () => {
             </Link>
           </li>
         ))}
-      </ul>
+      </ul> */}
     </nav>
   );
 };

@@ -1,5 +1,5 @@
 //import Authentication from "./components/Authentication";
-import { Suspense } from "react";
+// import { Suspense } from "react";
 import FeedbackForm from "./components/FeedbackForm";
 import TopTask from "./components/TopTask";
 import CreateGroupForm from "./components/CreateGroupForm";
@@ -72,12 +72,12 @@ export default function Home() {
         <ul className="flex justify-end space-x-4">
           {topTaskTitle.map((text, index) => (
             <li key={index}>
-              <Suspense>
-                <TopTask
-                  targetUrl={`/${topTaskRoutes[index]}`}
-                  text={`${text}`}
-                />
-              </Suspense>
+              {/* <Suspense> */}
+              <TopTask
+                targetUrl={`/${topTaskRoutes[index]}`}
+                text={`${text}`}
+              />
+              {/* </Suspense> */}
             </li>
           ))}
         </ul>
