@@ -16,6 +16,7 @@ exports[`StepCard renders correctly 1`] = `
       Test information about the item.
     </p>
     <a
+      aria-label="Step card - Test Title"
       class="text-blue-500 hover:underline"
       data-link-title="Test Title"
       href="https://example.com"

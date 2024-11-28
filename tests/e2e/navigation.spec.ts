@@ -5,8 +5,8 @@ test("navigating through pages with toptasks", async ({ page }) => {
   await page.goto("http://localhost:3000");
 
   // Click on each of the four toptask links and verify navigation
-  await page.click('a[href="/OSDU-general?"]');
-  await expect(page).toHaveURL("http://localhost:3000/OSDU-general");
+  await page.click('a[href="/General-information?"]');
+  await expect(page).toHaveURL("http://localhost:3000/General-information");
 
   await page.goto("http://localhost:3000"); // Go back to the landing page
 
@@ -15,13 +15,13 @@ test("navigating through pages with toptasks", async ({ page }) => {
 
   await page.goto("http://localhost:3000"); // Go back to the landing page
 
-  await page.click('a[href="/Step-guides?"]');
-  await expect(page).toHaveURL("http://localhost:3000/Step-guides");
+  await page.click('a[href="/Self-service?"]');
+  await expect(page).toHaveURL("http://localhost:3000/Self-service");
 
   await page.goto("http://localhost:3000"); // Go back to the landing page
 
-  await page.click('a[href="/Useful-links?"]');
-  await expect(page).toHaveURL("http://localhost:3000/Useful-links");
+  await page.click('a[href="/Onboarding?"]');
+  await expect(page).toHaveURL("http://localhost:3000/Onboarding");
 });
 
 test("updating search parameters through navbar links", async ({ page }) => {
@@ -108,14 +108,16 @@ test.describe("Footer Navigation", () => {
 test.describe("Links list Navigation", () => {
   test.beforeEach(async ({ page }) => {
     // Go to the homepage
-    await page.goto("http://localhost:3000/Useful-links");
+    await page.goto("http://localhost:3000/");
   });
 
   // Change when the code is not a template anymore
   test("should navigate to react documentation when learn more link is clicked", async ({
     page,
   }) => {
-    await page.locator('a[data-link-title="React Documentation"]').click();
+    await page
+      .locator('a[aria-label="Link item - React Documentation"]')
+      .click();
     const [newTab] = await Promise.all([
       page.waitForEvent("popup"), // Wait for the new tab to open
     ]);
@@ -125,7 +127,7 @@ test.describe("Links list Navigation", () => {
   test("should navigate to next.js documentation when learn more link is clicked", async ({
     page,
   }) => {
-    await page.locator('a[data-link-title="Next.js"]').click();
+    await page.locator('a[aria-label="Link item - Next.js"]').click();
     const [newTab] = await Promise.all([
       page.waitForEvent("popup"), // Wait for the new tab to open
     ]);
@@ -135,7 +137,7 @@ test.describe("Links list Navigation", () => {
   test("should navigate to playwright documentation when learn more link is clicked", async ({
     page,
   }) => {
-    await page.locator('a[data-link-title="Playwright"]').click();
+    await page.locator('a[aria-label="Link item - Playwright"]').click();
     const [newTab] = await Promise.all([
       page.waitForEvent("popup"), // Wait for the new tab to open
     ]);
@@ -146,14 +148,16 @@ test.describe("Links list Navigation", () => {
 test.describe("Step-card list Navigation", () => {
   test.beforeEach(async ({ page }) => {
     // Go to the homepage
-    await page.goto("http://localhost:3000/Step-guides");
+    await page.goto("http://localhost:3000/");
   });
 
   // Change when the code is not a template anymore
   test("should navigate to react documentation when learn more link is clicked", async ({
     page,
   }) => {
-    await page.locator('a[data-link-title="React Documentation"]').click();
+    await page
+      .locator('a[aria-label="Step card - React Documentation"]')
+      .click();
     const [newTab] = await Promise.all([
       page.waitForEvent("popup"), // Wait for the new tab to open
     ]);
@@ -163,7 +167,7 @@ test.describe("Step-card list Navigation", () => {
   test("should navigate to next.js documentation when learn more link is clicked", async ({
     page,
   }) => {
-    await page.locator('a[data-link-title="Next.js"]').click();
+    await page.locator('a[aria-label="Step card - Next.js"]').click();
     const [newTab] = await Promise.all([
       page.waitForEvent("popup"), // Wait for the new tab to open
     ]);
@@ -173,7 +177,7 @@ test.describe("Step-card list Navigation", () => {
   test("should navigate to playwright documentation when learn more link is clicked", async ({
     page,
   }) => {
-    await page.locator('a[data-link-title="Playwright"]').click();
+    await page.locator('a[aria-label="Step card - Playwright"]').click();
     const [newTab] = await Promise.all([
       page.waitForEvent("popup"), // Wait for the new tab to open
     ]);

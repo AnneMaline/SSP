@@ -35,6 +35,7 @@ exports[`StepCard renders correctly 1`] = `
       </span>
     </div>
     <a
+      aria-label="Link item - Test Title"
       class="text-blue-500 hover:underline"
       data-link-title="Test Title"
       href="https://example.com"

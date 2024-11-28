@@ -17,6 +17,7 @@ const Card = ({ title, information, link }: CardProps) => {
         rel="noopener noreferrer"
         className="text-blue-500 hover:underline"
         data-link-title={title}
+        aria-label={`Step card - ${title}`}
       >
         Learn More
       </a>

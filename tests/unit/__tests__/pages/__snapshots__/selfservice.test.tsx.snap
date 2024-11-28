@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`OSDUGeneral Page renders correctly 1`] = `
+exports[`Self-service Page renders correctly 1`] = `
 <div>
   <div>
     <h1>
-      OSDU general
+      Step-guides
     </h1>
   </div>
 </div>

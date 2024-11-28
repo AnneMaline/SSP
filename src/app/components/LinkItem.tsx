@@ -28,6 +28,7 @@ const LinkItem = ({ title, information, tags, link }: LinkItemProps) => {
         rel="noopener noreferrer"
         className="text-blue-500 hover:underline"
         data-link-title={title}
+        aria-label={`Link item - ${title}`}
       >
         Learn More
       </a>
