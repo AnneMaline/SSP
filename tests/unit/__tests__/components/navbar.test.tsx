@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import NavBar from "../../../../src/app/components/Navbar";
+import NavBar from "../../../../src/components/Navbar";
 import { useSearchParams } from "next/navigation";
 
 // Mock the useSearchParams hook

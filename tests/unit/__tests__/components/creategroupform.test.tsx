@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import CreateGroupForm from "../../../../src/app/components/CreateGroupForm";
+import CreateGroupForm from "../../../../src/components/CreateGroupForm";
 
 describe("CreateGroupForm Component", () => {
   it("renders correctly", () => {

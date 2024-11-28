@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import GroupDropDown from "../components/GroupDropDown";
+import GroupDropDown from "../../components/GroupDropDown";
 
 type GroupItem = {
   name: string;

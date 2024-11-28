@@ -1,11 +1,11 @@
 //import Authentication from "./components/Authentication";
 // import { Suspense } from "react";
-import FeedbackForm from "./components/FeedbackForm";
-import TopTask from "./components/TopTask";
-import CreateGroupForm from "./components/CreateGroupForm";
-import AddIDtoGroupForm from "./components/AddIDtoGroupForm";
-import Card from "./components/StepCard";
-import LinkItem from "./components/LinkItem";
+import FeedbackForm from "../components/FeedbackForm";
+import TopTask from "../components/TopTask";
+import CreateGroupForm from "../components/CreateGroupForm";
+import AddIDtoGroupForm from "../components/AddIDtoGroupForm";
+import Card from "../components/StepCard";
+import LinkItem from "../components/LinkItem";
 
 export default function Home() {
   // TopTask titles and routes

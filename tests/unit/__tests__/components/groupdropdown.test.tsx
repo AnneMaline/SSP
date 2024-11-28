@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import GroupDropDown from "../../../../src/app/components/GroupDropDown";
+import GroupDropDown from "../../../../src/components/GroupDropDown";
 
 describe("GroupDropDown Component", () => {
   const mockOnDelete = jest.fn();

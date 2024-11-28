@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import AddIDtoGroupForm from "../../../../src/app/components/AddIDtoGroupForm";
+import AddIDtoGroupForm from "../../../../src/components/AddIDtoGroupForm";
 
 describe("AddIDtoGroupForm Component", () => {
   it("renders correctly", () => {

@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import StepCard from "../../../../src/app/components/StepCard";
+import StepCard from "../../../../src/components/StepCard";
 
 describe("StepCard", () => {
   const mockProps = {
