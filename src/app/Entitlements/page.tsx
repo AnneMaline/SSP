@@ -5,8 +5,8 @@ import { jwtDecode } from "jwt-decode";
 
 type GroupItem = {
   name: string;
+  email: string;
   description: string;
-  members: { id: string; role: string }[];
 };
 
 type DecodedToken = {
@@ -16,8 +16,8 @@ type DecodedToken = {
 export default function EntitlementsPage() {
   const [GroupItems, setGroupItems] = useState<GroupItem[]>([]);
 
-  const handleDelete = (index: number) => {
-    setGroupItems((prev) => prev.filter((_, i) => i !== index));
+  const handleDelete = (email: string) => {
+    setGroupItems((prev) => prev.filter((member) => member.email !== email));
   };
 
   const roleRequired = "";
@@ -78,16 +78,94 @@ export default function EntitlementsPage() {
         }
         const data = await response.json();
         setGroupItems(
-          data.groups.map((item: any) => ({
+          data.groups.map((item: GroupItem) => ({
             name: item.name,
+            email: item.email,
             description: item.description,
-            members: [],
           }))
         );
       } catch (error) {
         console.error("Error fetching groups:", error);
       }
     }
+
+    // async function getMembersCount(
+    //   group_email: string,
+    //   data_partition_id: string,
+    //   role: string,
+    //   authToken: string
+    // ) {
+    //   if (!authToken) {
+    //     console.error("No token available for getMembersCount");
+    //     return;
+    //   }
+
+    //   try {
+    //     const response = await fetch(
+    //       `/api/entitlements/v2/groups/${group_email}/membersCount`,
+    //       {
+    //         method: "GET",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //           "data-partition-id": data_partition_id,
+    //           group_email: group_email,
+    //           role,
+    //           Authorization: `Bearer ${authToken}`,
+    //         },
+    //       }
+    //     );
+    //     if (!response.ok) {
+    //       throw new Error(`Error: ${response.status} ${response.statusText}`);
+    //     }
+    //     const data = await response.json();
+    //     setGroupItems((prevGroupItems) =>
+    //       prevGroupItems.map((group) =>
+    //         group.name === group_email
+    //           ? { ...group, membersCount: data.membersCount }
+    //           : group
+    //       )
+    //     );
+    //   } catch (error) {
+    //     console.error("Error fetching members count:", error);
+    //   }
+    // }
+
+    // async function getMembers(
+    //   group_email: string,
+    //   data_partition_id: string,
+    //   role: string,
+    //   includeType: string,
+    //   authToken: string
+    // ) {
+    //   if (!authToken) {
+    //     console.error("No token available for getMembers");
+    //     return;
+    //   }
+
+    //   try {
+    //     const response = await fetch(
+    //       `/api/entitlements/v2/groups/${group_email}/members`,
+    //       {
+    //         method: "GET",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //           "data-partition-id": data_partition_id,
+    //           group_email: group_email,
+    //           role,
+    //           includeType,
+    //           Authorization: `Bearer ${authToken}`,
+    //         },
+    //       }
+    //     );
+    //     if (!response.ok) {
+    //       throw new Error(`Error: ${response.status} ${response.statusText}`);
+    //     }
+    //     const data = await response.json();
+    //     console.log("Members:", data);
+    //   } catch (error) {
+    //     console.error("Error fetching members:", error);
+    //   }
+    // }
 
     async function fetchData() {
       let authToken = localStorage.getItem("access_token");
@@ -113,13 +191,14 @@ export default function EntitlementsPage() {
     <div>
       <h1>Entitlements</h1>
       <ul className="mb-2 mt-2">
-        {GroupItems.map((item, index) => (
-          <li key={index}>
+        {GroupItems.map((item) => (
+          <li key={item.email}>
             <GroupDropDown
               name={item.name}
+              group_email={item.email}
               description={item.description}
-              members={item.members}
-              onDelete={() => handleDelete(index)}
+              data_partition_id={data_partition_id}
+              onDelete={() => handleDelete(item.email)}
             />
           </li>
         ))}

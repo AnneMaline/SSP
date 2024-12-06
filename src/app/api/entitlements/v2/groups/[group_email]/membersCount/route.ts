@@ -3,13 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 const TOKEN_ENDPOINT = process.env.API_URL + "/groups";
 
 export async function GET(request: NextRequest) {
-  const roleRequired = request.headers.get("roleRequired") || "";
+  const group_email =
+    request.headers.get("group_email") || "users@bootcamp.dataservices.energy";
+  const role = request.headers.get("role") || "";
   const data_partition_id =
     request.headers.get("data-partition-id") || "bootcamp";
-  const on_behalf_of = request.headers.get("on-behalf-of") || "";
   const authToken = request.headers.get("Authorization")?.replace("Bearer", "");
 
-  if (!data_partition_id) {
+  if (!data_partition_id || !group_email) {
     return NextResponse.json(
       { error: "Missing required headers" },
       { status: 400 }
@@ -20,21 +21,21 @@ export async function GET(request: NextRequest) {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
       "data-partition-id": data_partition_id,
+      gruop_email: group_email,
       Authorization: `Bearer ${authToken}`,
     };
 
-    if (roleRequired) {
-      headers.roleRequired = roleRequired;
+    if (role) {
+      headers.role = role;
     }
 
-    if (on_behalf_of) {
-      headers["on-behalf-of"] = on_behalf_of;
-    }
-
-    const response = await fetch(TOKEN_ENDPOINT, {
-      method: "GET",
-      headers: headers,
-    });
+    const response = await fetch(
+      TOKEN_ENDPOINT + "/" + group_email + "/membersCount",
+      {
+        method: "GET",
+        headers: headers,
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);

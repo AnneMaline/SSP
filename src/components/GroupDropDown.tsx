@@ -1,36 +1,110 @@
 "use client";
 import React, { useState } from "react";
+import AddIDtoGroupForm from "./AddIDtoGroupForm";
 
 type Member = {
-  id: string;
+  email: string;
   role: string;
 };
 
 type GroupDropDownProps = {
   name: string;
+  group_email: string;
   description: string;
-  members: Member[];
+  data_partition_id: string;
   onDelete: () => void;
 };
 
 const GroupDropDown: React.FC<GroupDropDownProps> = ({
   name,
+  group_email,
   description,
-  members: initialMembers,
+  data_partition_id,
   onDelete,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [members, setMembers] = useState<Member[]>(initialMembers);
+  const [members, setMembers] = useState<Member[]>([]);
+  const [membersCount, setMembersCount] = useState<number>(0);
+  const [showMembers, setShowMembers] = useState(false);
+  const [showAddIDForm, setShowAddIDForm] = useState(false);
 
-  const toggleDropdown = () => {
+  const toggleDropdown = async () => {
     setIsOpen((prevState) => !prevState);
+    if (!isOpen && membersCount === 0) {
+      const authToken = localStorage.getItem("access_token");
+      if (!authToken) {
+        console.error("No token available for getMembers");
+        return;
+      }
+
+      try {
+        console.log(group_email, data_partition_id);
+        const response = await fetch(
+          `/api/entitlements/v2/groups/${group_email}/membersCount`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "data-partition-id": data_partition_id,
+              group_email: group_email,
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+        setMembersCount(data.membersCount);
+      } catch (error) {
+        console.error("Error fetching members count:", error);
+      }
+    }
   };
 
-  // Add member. Template - Change!!!!
-  const handleAddMember = () => {
-    const newId = (members.length + 1).toString();
-    const newRole = `New Role ${newId}`;
-    setMembers((prev) => [...prev, { id: newId, role: newRole }]);
+  const handleSeeMembers = async () => {
+    if (showMembers) {
+      setShowMembers(false);
+      return;
+    } else {
+      setShowMembers(true);
+    }
+
+    if (members.length == 0) {
+      const authToken = localStorage.getItem("access_token");
+      if (!authToken) {
+        console.error("No token available for getMembers");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          `/api/entitlements/v2/groups/${group_email}/members`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "data-partition-id": data_partition_id,
+              group_email: group_email,
+              // role,
+              // includeType,
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+        setMembers(data.members);
+      } catch (error) {
+        console.error("Error fetching members:", error);
+      }
+    }
+  };
+
+  const handleDeleteMember = () => {
+    setShowAddIDForm(true); // Show the AddIDtoGroupForm pop-up
   };
 
   return (
@@ -52,47 +126,86 @@ const GroupDropDown: React.FC<GroupDropDownProps> = ({
             <p>{description}</p>
           </div>
 
-          {/* Table of Members */}
+          {/* Number of Members */}
           <div className="mb-4">
             <p className="font-semibold text-lg mb-2">
-              Number of members: {members.length}
+              Number of members: {membersCount}
             </p>
-            <table className="w-full table-auto border-collapse border border-gray-300">
-              <thead>
-                <tr>
-                  <th className="border border-gray-300 px-4 py-2">ID</th>
-                  <th className="border border-gray-300 px-4 py-2">Role</th>
-                </tr>
-              </thead>
-              <tbody>
-                {members.map((member) => (
-                  <tr key={member.id}>
-                    <td className="border border-gray-300 px-4 py-2">
-                      {member.id}
-                    </td>
-                    <td className="border border-gray-300 px-4 py-2">
-                      {member.role}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
           </div>
+
           {/* Buttons */}
-          <div className="flex justify-between mt-4">
+          <div className="mb-4">
             <button
-              onClick={handleAddMember}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              className="bg-red-500 text-white px-4 py-2 mr-2"
+              onClick={onDelete}
+            >
+              Delete Group
+            </button>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 mr-2"
+              onClick={handleSeeMembers}
+            >
+              {!showMembers ? "See Members" : "Hide Members"}
+            </button>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 mr-2"
+              onClick={handleDeleteMember}
             >
               Add Member
             </button>
-            <button
-              onClick={onDelete}
-              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-            >
-              Delete
-            </button>
           </div>
+
+          {/* Table of Members (visible when showMembers is true) */}
+          {showMembers && (
+            <div className="mb-4">
+              <table className="w-full table-auto border-collapse border border-gray-300">
+                <thead>
+                  <tr>
+                    <th className="border border-gray-300 px-4 py-2">Email</th>
+                    <th className="border border-gray-300 px-4 py-2">Role</th>
+                    <th className="border border-gray-300 px-4 py-2">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {members.map((member) => (
+                    <tr key={member.email}>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {member.email}
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        {member.role}
+                      </td>
+                      <td className="border border-gray-300 px-4 py-2">
+                        <button
+                          className="bg-red-500 text-white px-2 py-1"
+                          onClick={handleDeleteMember}
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* AddIDtoGroupForm Pop-up */}
+          {showAddIDForm && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white p-4 rounded">
+                <AddIDtoGroupForm />
+                <button
+                  className="mt-4 bg-gray-500 text-white px-4 py-2"
+                  onClick={() => setShowAddIDForm(false)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
