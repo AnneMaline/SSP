@@ -1,94 +1,103 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import GroupDropDown from "../../../../src/components/GroupDropDown";
+import fetchMock from "jest-fetch-mock";
+
+jest.mock("../../../../src/components/AddIDtoGroupForm", () =>
+  jest.fn(() => <div>Mocked AddIDtoGroupForm</div>)
+);
 
 describe("GroupDropDown Component", () => {
-  const mockOnDelete = jest.fn();
-
   const mockProps = {
-    name: "Test Group",
-    description: "This is a test group.",
-    members: [
-      { id: "1", role: "Admin" },
-      { id: "2", role: "Member" },
-    ],
-    onDelete: mockOnDelete,
+    name: "Group 1",
+    group_email: "group1@example.com",
+    description: "Description 1",
+    data_partition_id: "bootcamp",
+    onDelete: jest.fn(),
   };
+
+  beforeEach(() => {
+    localStorage.clear();
+    fetchMock.resetMocks();
+
+    localStorage.setItem("access_token", "mockAuthToken");
+  });
 
   it("renders correctly", () => {
     const { container } = render(<GroupDropDown {...mockProps} />);
     expect(container).toMatchSnapshot();
   });
 
-  it("renders the component with correct initial state", () => {
+  it("should toggle dropdown, fetch members count and check content", async () => {
+    fetchMock.mockResponseOnce(JSON.stringify({ membersCount: 10 }));
+
     render(<GroupDropDown {...mockProps} />);
 
-    // Check if the name is displayed in the header
-    expect(screen.getByText("Test Group")).toBeInTheDocument();
+    const dropdownHeader = screen.getByText(mockProps.name);
+    fireEvent.click(dropdownHeader);
 
-    // Check if the dropdown is initially closed
-    expect(screen.queryByText("Number of members: 2")).not.toBeInTheDocument();
-    expect(screen.getByText("↓")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(fetchMock).toHaveBeenCalledWith(
+        `/api/entitlements/v2/groups/${mockProps.group_email}/membersCount`,
+        expect.any(Object)
+      );
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText("Number of members: 10")).toBeInTheDocument();
+      expect(screen.getByText(mockProps.description)).toBeInTheDocument();
+      expect(screen.getByText("Delete Group")).toBeInTheDocument();
+      expect(screen.getByText("See Members")).toBeInTheDocument();
+      expect(screen.getByText("Add Member")).toBeInTheDocument();
+      expect(screen.getByText("↑")).toBeInTheDocument();
+    });
   });
 
-  it("toggles the dropdown on click", () => {
+  it('should fetch and display members when "See Members" is clicked', async () => {
+    const mockMembers = [
+      { email: "member1@example.com", role: "OWMER" },
+      { email: "member2@example.com", role: "MEMBER" },
+    ];
+
+    fetchMock.mockResponses(
+      [JSON.stringify({ access_token: "mockAuthToken" }), { status: 200 }],
+      [JSON.stringify({ members: mockMembers }), { status: 200 }]
+    );
+
     render(<GroupDropDown {...mockProps} />);
 
-    const header = screen.getByText("Test Group");
+    const dropdownHeader = screen.getByText(mockProps.name);
+    fireEvent.click(dropdownHeader);
 
-    // Open the dropdown
-    fireEvent.click(header);
-    expect(screen.getByText("Number of members: 2")).toBeInTheDocument();
-    expect(screen.getByText("↑")).toBeInTheDocument();
+    const seeMembersButton = screen.getByText("See Members");
+    fireEvent.click(seeMembersButton);
 
-    // Close the dropdown
-    fireEvent.click(header);
-    expect(screen.queryByText("Number of members: 2")).not.toBeInTheDocument();
-    expect(screen.getByText("↓")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Email")).toBeInTheDocument();
+      expect(screen.getByText("Role")).toBeInTheDocument();
+      expect(screen.getByText("Actions")).toBeInTheDocument();
+      mockMembers.forEach((member) => {
+        expect(screen.getByText(member.email)).toBeInTheDocument();
+        expect(screen.getByText(member.role)).toBeInTheDocument();
+      });
+    });
   });
 
-  it("displays the correct number of members", () => {
+  it('should show AddIDtoGroupForm pop-up when "Add member" button is clicked', () => {
     render(<GroupDropDown {...mockProps} />);
 
-    // Open the dropdown
-    fireEvent.click(screen.getByText("Test Group"));
+    fireEvent.click(screen.getByText(mockProps.name)); // Open the dropdown
 
-    // Check the number of members
-    expect(screen.getByText("Number of members: 2")).toBeInTheDocument();
+    const addMemberButton = screen.getByText("Add Member");
+    fireEvent.click(addMemberButton);
 
-    // Check member table rows
-    const rows = screen.getAllByRole("row");
-    expect(rows).toHaveLength(3); // 1 header row + 2 member rows
-  });
+    expect(screen.getByText("Mocked AddIDtoGroupForm")).toBeInTheDocument();
 
-  it("adds a member when the 'Add Member' button is clicked", () => {
-    render(<GroupDropDown {...mockProps} />);
+    const closeButton = screen.getByText("Close");
+    fireEvent.click(closeButton);
 
-    // Open the dropdown
-    fireEvent.click(screen.getByText("Test Group"));
-
-    // Click the Add Member button
-    const addButton = screen.getByText("Add Member");
-    fireEvent.click(addButton);
-
-    // Verify the new member count
-    expect(screen.getByText("Number of members: 3")).toBeInTheDocument();
-
-    // Verify the new member row
-    expect(screen.getByText("New Role 3")).toBeInTheDocument();
-  });
-
-  it("calls the onDelete function when the 'Delete' button is clicked", () => {
-    render(<GroupDropDown {...mockProps} />);
-
-    // Open the dropdown
-    fireEvent.click(screen.getByText("Test Group"));
-
-    // Click the Delete button
-    const deleteButton = screen.getByText("Delete");
-    fireEvent.click(deleteButton);
-
-    // Verify the onDelete function is called
-    expect(mockOnDelete).toHaveBeenCalledTimes(1);
+    expect(
+      screen.queryByText("Mocked AddIDtoGroupForm")
+    ).not.toBeInTheDocument();
   });
 });
