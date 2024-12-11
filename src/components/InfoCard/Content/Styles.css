@@ -1,0 +1,44 @@
+/* --------------Styles for Chapter-------------- */
+
+.chapter-title {
+  padding: 16px;
+  margin: 16px 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+/* --------------Styles for Paragraph-------------- */
+.paragraph {
+  margin: 16px;
+}
+
+/* --------------Styles for List-------------- */
+.custom_list {
+  list-style-type: none; /* Remove default bullet points */
+  padding-left: 0; /* Remove default padding */
+  margin-left: 0; /* Remove default margin */
+}
+
+.custom_list_item {
+  padding-left: 1em;
+  text-indent: -1em;
+  line-height: 2em;
+}
+
+.custom_list_item::before {
+  content: "•"; /* Custom bullet point */
+  padding-right: 10px;
+}
+
+/* --------------Styles for Image-------------- */
+.image {
+  height: auto;
+  width: 100%;
+}
+
+/* --------------Styles for Video-------------- */
+.video {
+  height: auto;
+  width: 100%;
+}

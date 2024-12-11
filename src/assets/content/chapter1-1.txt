@@ -1,0 +1,21 @@
+Chapter 1-1: Introduction to OSDU
+## Overview of OSDU
+The Open Subsurface Data Universe (OSDU) is an open-source, standards-based data platform tailored for the energy industry. It provides a unified framework for managing subsurface and energy data, enabling seamless data sharing and collaboration across organizations. OSDU is governed by The Open Group, a global consortium that develops and promotes vendor-neutral technology standards. The platform's primary goal is to standardize data formats and protocols, eliminating silos and enabling organizations to focus on extracting insights rather than handling data fragmentation
+
+## Key Benefits of the platform
+- Cost Reduction: By standardizing data formats and reducing integration complexity, OSDU helps lower operational costs.
+- Improved Data Accessibility: Provides a unified interface for accessing diverse data types, making it easier for teams to collaborate.
+- Scalability: Built on cloud-native architecture, OSDU can scale to accommodate growing data volumes and compute needs.
+- Vendor Neutrality: Encourages innovation and flexibility by supporting multiple cloud providers and avoiding vendor lock-in."
+
+#video: videoFile.mp4;
+#img: imgFile.jpg;
+
+## Why OSDU Matters
+OSDU plays a pivotal role in the digital transformation of the energy industry. By enabling open access to standardized data, it fosters:
+
+- Innovation: Supports the development of new applications and tools using a shared ecosystem.
+- Efficiency: Reduces time spent on data preparation and integration, accelerating decision-making processes.
+- Energy Transition: Facilitates the shift to renewable energy by enabling better management of data in exploration, production, and beyond.
+
+## OSDU in Equinor
