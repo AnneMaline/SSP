@@ -1,9 +1,11 @@
 import Card from "../../components/InfoCard/Card";
 import ContentRenderer from "@/components/InfoCard/Content/ContentRenderer";
+import { getChapterStructure } from "@/utils/getChapterStructure";
 import { getContent } from "@/utils/getContent";
 
 export default async function OnboardingPage() {
-  const data = await getContent("chapter1-1.txt");
+  const chapters = await getChapterStructure();
+  const data = await getContent(chapters[0].subchapters[0].fileName);
   return (
     <div>
       {/* <SideBar /> */}

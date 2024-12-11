@@ -4,8 +4,8 @@ The text files (src/assets/content) are used to present information on the onboa
 
 The file chapter-structure.txt includes the setup in the sidebar. This will show the right information in the right places. The structure is setup like this:
 Chapter 1: Name of Chapter 1
-chapter1-1.txt: Name of Chapter 1.1
-chapter1-2.txt: Name of Chapter 1.2
+#chapter1-1.txt: Name of Chapter 1.1
+#chapter1-2.txt: Name of Chapter 1.2
 ...
 Chapter 2: Name of Chapter 2
 ...

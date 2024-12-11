@@ -1,4 +1,4 @@
 Chapter 1: Getting Started with OSDU
-chapter1-1.txt: Introduction to OSDU
-chapter1-2.txt: Quick Start Guide
+#chapter1-1.txt: Introduction to OSDU
+#chapter1-2.txt: Quick Start Guide
 Chapter 2: Core Concepts of OSDU

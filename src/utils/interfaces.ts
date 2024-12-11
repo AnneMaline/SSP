@@ -1,3 +1,4 @@
+// ----------------Content Structure Interfaces----------------
 export interface ContentType {
   name: string;
   chapterNumber: number;
@@ -29,4 +30,17 @@ export interface ListType {
 export interface ParagraphType {
   type: "paragraph";
   content: string;
+}
+
+// ----------------Chapter Structure Interfaces----------------
+export interface Chapter {
+  name: string;
+  chapterNumber: number;
+  subchapters: SubChapter[];
+}
+
+export interface SubChapter {
+  name: string;
+  subchapterNumber: number;
+  fileName: string;
 }
