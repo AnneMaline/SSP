@@ -12,7 +12,7 @@ const ContentRenderer = async ({ subChapter }: ContentRenderProps) => {
     <div>
       {/* ------------Title of the Info Card------------ */}
       {subChapter.title !== "Default" && (
-        <h1 className="chapter-title">{subChapter.title}</h1>
+        <h1 className="title">{subChapter.title}</h1>
       )}
       {/* ------------Content of the Info Card------------ */}
       {subChapter.content.map((content, index) => (

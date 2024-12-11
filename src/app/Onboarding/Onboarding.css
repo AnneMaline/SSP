@@ -1,0 +1,24 @@
+.container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  height: calc(100vh - var(--navbar-height)); /* Adjust the height as needed */
+}
+
+.content {
+  overflow-y: auto;
+  /* Hide scrollbar*/
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+.content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.info-cards {
+  padding: 1rem;
+  max-width: 800px;
+  justify-self: center;
+}

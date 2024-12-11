@@ -53,7 +53,6 @@ async function getContent(fileName: string): Promise<ContentType> {
         path: "/images/" + line.replace("#img:", "").split(";")[0].trim(),
         altText: line.replace("#img:", "").trim().split(".")[0],
       };
-      console.log(image.path);
       currentSubchapter?.content.push(image);
     } else if (line.startsWith("#video:")) {
       // make a default subchapter for content
@@ -116,7 +115,6 @@ async function getContent(fileName: string): Promise<ContentType> {
     content.subchapters.push(currentSubchapter);
   }
 
-  console.log(content);
   return content;
 }
 

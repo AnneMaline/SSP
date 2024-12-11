@@ -5,6 +5,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --navbar-height: 60px;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -47,7 +47,7 @@ async function getChapterStructure(): Promise<Chapter[]> {
   if (currentChapter) {
     chapters.push(currentChapter);
   }
-  console.log(chapters);
+
   return chapters;
 }
 
