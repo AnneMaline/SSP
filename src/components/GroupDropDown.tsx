@@ -15,13 +15,13 @@ type GroupDropDownProps = {
   onDelete: () => void;
 };
 
-const GroupDropDown: React.FC<GroupDropDownProps> = ({
+const GroupDropDown = ({
   name,
   group_email,
   description,
   data_partition_id,
   onDelete,
-}) => {
+}: GroupDropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [members, setMembers] = useState<Member[]>([]);
   const [membersCount, setMembersCount] = useState<number>(0);

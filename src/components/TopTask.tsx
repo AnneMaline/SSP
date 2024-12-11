@@ -9,11 +9,7 @@ interface TopTaskProps {
   className?: string; // Optional className prop for customization
 }
 
-const TopTask: React.FC<TopTaskProps> = ({
-  text,
-  targetUrl,
-  className = "",
-}) => {
+const TopTask = ({ text, targetUrl, className = "" }: TopTaskProps) => {
   // const searchParams = useSearchParams(); // Access the current search parameters
   return (
     <Link
