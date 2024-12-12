@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
   try {
     const data = await getContent(fileName);
     return NextResponse.json({ data });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "File not found" }, { status: 404 });
   }
 }

@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { Chapter, SubChapter } from "./interfaces";
+import { Chapter } from "./interfaces";
 
 async function getChapterStructure(): Promise<Chapter[]> {
   const filePath = path.join(

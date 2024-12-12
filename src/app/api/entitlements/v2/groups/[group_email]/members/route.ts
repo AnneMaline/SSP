@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
     const data = await response.json();
 
     return NextResponse.json(data);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Error fetching token" },
       { status: 500 }
