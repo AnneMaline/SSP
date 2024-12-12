@@ -1,5 +1,4 @@
 //import Authentication from "./components/Authentication";
-// import { Suspense } from "react";
 import FeedbackForm from "../components/FeedbackForm";
 import TopTask from "../components/TopTask";
 import CreateGroupForm from "../components/CreateGroupForm";
@@ -9,18 +8,8 @@ import LinkItem from "../components/LinkItem";
 
 export default function Home() {
   // TopTask titles and routes
-  const topTaskTitle = [
-    "General Information",
-    "Entitlements",
-    "Onboarding",
-    "Self-service",
-  ];
-  const topTaskRoutes = [
-    "General-information",
-    "Entitlements",
-    "Onboarding",
-    "Self-service",
-  ];
+  const topTaskTitle = ["Entitlements", "Onboarding"];
+  const topTaskRoutes = ["Entitlements", "Onboarding"];
 
   const cardsData = [
     {
@@ -72,12 +61,10 @@ export default function Home() {
         <ul className="flex justify-end space-x-4">
           {topTaskTitle.map((text, index) => (
             <li key={index}>
-              {/* <Suspense> */}
               <TopTask
                 targetUrl={`/${topTaskRoutes[index]}`}
                 text={`${text}`}
               />
-              {/* </Suspense> */}
             </li>
           ))}
         </ul>
