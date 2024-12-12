@@ -1,5 +1,4 @@
 "use client";
-// src/components/Authentication.tsx
 import { useSession, signIn, signOut } from "next-auth/react";
 
 const Authentication = () => {
