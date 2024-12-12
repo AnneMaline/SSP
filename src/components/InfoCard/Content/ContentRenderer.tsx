@@ -7,7 +7,7 @@ interface ContentRenderProps {
   subChapter: SubchapterType;
 }
 
-const ContentRenderer = async ({ subChapter }: ContentRenderProps) => {
+const ContentRenderer = ({ subChapter }: ContentRenderProps) => {
   return (
     <div>
       {/* ------------Title of the Info Card------------ */}
