@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const TOKEN_ENDPOINT = process.env.API_URL + "/groups";
+const ENDPOINT = process.env.API_URL + "/groups";
 
 export async function GET(request: NextRequest) {
   const roleRequired = request.headers.get("roleRequired") || "";
@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
   const on_behalf_of = request.headers.get("on-behalf-of") || "";
   const authToken = request.headers.get("Authorization")?.replace("Bearer", "");
 
-  if (!data_partition_id) {
+  if (!data_partition_id || !authToken) {
     return NextResponse.json(
       { error: "Missing required headers" },
       { status: 400 }
@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
       headers["on-behalf-of"] = on_behalf_of;
     }
 
-    const response = await fetch(TOKEN_ENDPOINT, {
+    const response = await fetch(ENDPOINT, {
       method: "GET",
       headers: headers,
     });

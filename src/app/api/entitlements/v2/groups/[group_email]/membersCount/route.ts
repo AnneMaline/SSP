@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const TOKEN_ENDPOINT = process.env.API_URL + "/groups";
+const ENDPOINT = process.env.API_URL + "/groups";
 
 export async function GET(request: NextRequest) {
   const group_email =
@@ -30,7 +30,7 @@ export async function GET(request: NextRequest) {
     }
 
     const response = await fetch(
-      TOKEN_ENDPOINT + "/" + group_email + "/membersCount",
+      ENDPOINT + "/" + group_email + "/membersCount",
       {
         method: "GET",
         headers: headers,

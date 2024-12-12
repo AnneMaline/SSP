@@ -2,16 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 
 const ENDPOINT = process.env.API_URL + "/groups";
 
-export async function GET(request: NextRequest) {
-  const group_email =
-    request.headers.get("group_email") || "users@bootcamp.dataservices.energy";
-  const role = request.headers.get("role") || "";
-  const includeType = request.headers.get("includeType") || "";
+export async function POST(request: NextRequest) {
   const data_partition_id =
     request.headers.get("data-partition-id") || "bootcamp";
+  const description = request.headers.get("description") || "";
+  const name = request.headers.get("name") || "";
   const authToken = request.headers.get("Authorization")?.replace("Bearer", "");
 
-  if (!data_partition_id || !group_email) {
+  if (!data_partition_id || !authToken || !description || !name) {
     return NextResponse.json(
       { error: "Missing required headers" },
       { status: 400 }
@@ -22,21 +20,13 @@ export async function GET(request: NextRequest) {
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
       "data-partition-id": data_partition_id,
-      gruop_email: group_email,
       Authorization: `Bearer ${authToken}`,
     };
 
-    if (role) {
-      headers.role = role;
-    }
-
-    if (includeType) {
-      headers.includeType = includeType;
-    }
-
-    const response = await fetch(ENDPOINT + "/" + group_email + "/members", {
-      method: "GET",
+    const response = await fetch(ENDPOINT, {
+      method: "POST",
       headers: headers,
+      body: JSON.stringify({ description, name }),
     });
 
     if (!response.ok) {
@@ -48,7 +38,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(data);
   } catch {
     return NextResponse.json(
-      { error: "Error fetching token" },
+      { error: "Error creating group" },
       { status: 500 }
     );
   }

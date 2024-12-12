@@ -1,25 +1,30 @@
 "use client";
 import { useState } from "react";
+import { isTokenValid } from "@/utils/isTokenValid";
+import { create } from "domain";
 
 type CreateGroupFormType = {
-  environment: "prod" | "test" | "development";
+  environment: "prod" | "test" | "development" | "bootcamp";
   type: "data" | "service" | "users";
   name: string;
+  description: string;
   accessType: "view" | "data" | "edit";
 };
 
 const CreateGroupForm = () => {
   // Initial state for the form
   const initialFormData: CreateGroupFormType = {
-    environment: "prod",
+    environment: "bootcamp",
     type: "data",
-    name: "",
+    name: "string",
+    description: "string",
     accessType: "view",
   };
   const environments: CreateGroupFormType["environment"][] = [
     "prod",
     "test",
     "development",
+    "bootcamp",
   ];
   const types: CreateGroupFormType["type"][] = ["data", "service", "users"];
   const accessTypes: CreateGroupFormType["accessType"][] = [
@@ -39,19 +44,67 @@ const CreateGroupForm = () => {
     // Reset form after submission
     setFormData(initialFormData);
 
-    /*// Send data to the server or API
-    const response = await fetch("/api/submit-form", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    // Send data to the server or API
+    async function fetchAuth() {
+      try {
+        const response = await fetch("/api/auth/");
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        const data = await response.json();
+        // TASK: hash access_token before adding to local storage. Save hash-secret in env
+        localStorage.setItem("access_token", data.access_token);
+        return data.access_token;
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
 
-    if (response.ok) {
-      console.log("Form submitted successfully!");
-    } else {
-      console.error("Form submission failed.");
-    }*/
+    async function createGroup(
+      name: string,
+      description: string,
+      data_partition_id: string
+    ) {
+      let authToken = localStorage.getItem("access_token");
+      if (!authToken || !isTokenValid(authToken)) {
+        authToken = await fetchAuth();
+      }
+
+      if (!authToken) {
+        console.error("No token available for createGroup");
+        return;
+      }
+
+      try {
+        const response = await fetch(
+          "/api/entitlements/v2/groups/createGroup",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "data-partition-id": data_partition_id,
+              Authorization: `Bearer ${authToken}`,
+              name,
+              description,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log("Group created successfully:", data);
+        // Optionally, update the state or perform other actions with the response data
+      } catch (error) {
+        console.error("Error creating group:", error);
+      }
+    }
+
+    createGroup(formData.name, formData.description, "bootcamp");
   };
+
   return (
     <form
       onSubmit={handleSubmit}

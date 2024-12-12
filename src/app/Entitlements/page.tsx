@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 import GroupDropDown from "../../components/GroupDropDown";
-import { jwtDecode } from "jwt-decode";
+import { isTokenValid } from "@/utils/isTokenValid";
+import CreateGroupForm from "@/components/CreateGroupForm";
 
 type GroupItem = {
   name: string;
@@ -9,12 +10,9 @@ type GroupItem = {
   description: string;
 };
 
-type DecodedToken = {
-  exp: number;
-};
-
 export default function EntitlementsPage() {
   const [GroupItems, setGroupItems] = useState<GroupItem[]>([]);
+  const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
 
   const handleDelete = (email: string) => {
     setGroupItems((prev) => prev.filter((member) => member.email !== email));
@@ -23,17 +21,6 @@ export default function EntitlementsPage() {
   const roleRequired = "";
   const data_partition_id = "bootcamp";
   const on_behalf_of = "";
-
-  const isTokenValid = (token: string) => {
-    try {
-      const decoded: DecodedToken = jwtDecode(token);
-      const currentTime = Date.now() / 1000;
-      return decoded.exp > currentTime;
-    } catch (error) {
-      console.error("Invalid token:", error);
-      return false;
-    }
-  };
 
   useEffect(() => {
     async function fetchAuth() {
@@ -190,6 +177,28 @@ export default function EntitlementsPage() {
   return (
     <div>
       <h1>Entitlements</h1>
+      {/* -------------CREATE GROUP---------------- */}
+      <button
+        className="bg-green-500 text-white px-4 py-2"
+        onClick={() => setShowCreateGroupForm(true)}
+      >
+        Create Group
+      </button>
+      {showCreateGroupForm && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded">
+            <CreateGroupForm />
+            <button
+              className="mt-4 bg-gray-500 text-white px-4 py-2"
+              onClick={() => setShowCreateGroupForm(false)}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* -------------GROUPS---------------- */}
       <ul className="mb-2 mt-2">
         {GroupItems.map((item) => (
           <li key={item.email}>
