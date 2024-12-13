@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import AddIDtoGroupForm from "./AddIDtoGroupForm";
+import { validateAuth } from "@/utils/validateAuth";
 
 type Member = {
   email: string;
@@ -31,14 +32,9 @@ const GroupDropDown = ({
   const toggleDropdown = async () => {
     setIsOpen((prevState) => !prevState);
     if (!isOpen && membersCount === 0) {
-      const authToken = localStorage.getItem("access_token");
-      if (!authToken) {
-        console.error("No token available for getMembers");
-        return;
-      }
+      const authToken = await validateAuth();
 
       try {
-        console.log(group_email, data_partition_id);
         const response = await fetch(
           `/api/entitlements/v2/groups/${group_email}/membersCount`,
           {
@@ -71,15 +67,11 @@ const GroupDropDown = ({
     }
 
     if (members.length == 0) {
-      const authToken = localStorage.getItem("access_token");
-      if (!authToken) {
-        console.error("No token available for getMembers");
-        return;
-      }
+      const authToken = await validateAuth();
 
       try {
         const response = await fetch(
-          `/api/entitlements/v2/groups/${group_email}/members`,
+          `/api/entitlements/v2/groups/${group_email}/members/getMembers`,
           {
             method: "GET",
             headers: {

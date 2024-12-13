@@ -1,51 +1,102 @@
 "use client";
-import { useState } from "react";
+import { getGroups } from "@/utils/getGroups";
+import { validateAuth } from "@/utils/validateAuth";
+import { useEffect, useState } from "react";
+
+type Environment = "prod" | "test" | "development" | "bootcamp";
 
 type AddIDtoGroupFormType = {
   entraID: string;
-  environment: "prod" | "test" | "development";
+  environment: Environment[];
+  role: "MEMBER" | "OWNER";
   group: string;
+};
+
+type Groups = {
+  name: string;
+  email: string;
+  description: string;
 };
 
 const AddIDtoGroupForm = () => {
   // Initial state for the form
   const initialFormData: AddIDtoGroupFormType = {
     entraID: "",
-    environment: "prod",
+    environment: [],
+    role: "MEMBER",
     group: "",
   };
-  const environments: AddIDtoGroupFormType["environment"][] = [
+  const environments: AddIDtoGroupFormType["environment"] = [
     "prod",
     "test",
     "development",
+    "bootcamp",
   ];
 
   // Dummy dynamic groups (update when the API is connected)
-  const [groups] = useState<string[]>(["Group 1", "Group 2", "Group 3"]);
+  const [groups, setGroups] = useState<Groups[]>([]);
 
   // feedback and questions form
   const [formData, setFormData] =
     useState<AddIDtoGroupFormType>(initialFormData);
 
+  const roleRequired = "";
+  const data_partition_id = "bootcamp";
+  useEffect(() => {
+    getGroups(roleRequired, data_partition_id).then((groups) =>
+      setGroups(groups)
+    );
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (formData.environment.length === 0) {
+      alert("Please select at least one environment");
+      return;
+    }
     console.log("Submitting form data:", formData);
 
     // Reset form after submission
     setFormData(initialFormData);
 
-    /*// Send data to the server or API
-    const response = await fetch("/api/submit-form", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    // Send data to the server or API
+    async function addMember(
+      email: string,
+      role: string,
+      data_partition_id: string,
+      group_email: string
+    ) {
+      const authToken = await validateAuth();
 
-    if (response.ok) {
-      console.log("Form submitted successfully!");
-    } else {
-      console.error("Form submission failed.");
-    }*/
+      try {
+        const response = await fetch(
+          `/api/entitlements/v2/groups/${group_email}/members/addMembers`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              group_email,
+              "data-partition-id": data_partition_id,
+              Authorization: `Bearer ${authToken}`,
+              email,
+              role,
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        console.log("Member added successfully:", data);
+        // Optionally, update the state or perform other actions with the response data
+      } catch (error) {
+        console.error("Error adding member:", error);
+      }
+    }
+
+    addMember(formData.entraID, formData.role, "bootcamp", formData.group);
   };
   return (
     <form
@@ -74,6 +125,45 @@ const AddIDtoGroupForm = () => {
         />
       </div>
 
+      {/* Role */}
+      <div className="space-y-2">
+        <legend className="block text-lg font-semibold">Select Role</legend>
+        <div className="space-y-1">
+          <label className="block">
+            <input
+              type="radio"
+              name="role"
+              value="MEMBER"
+              checked={formData.role === "MEMBER"}
+              onChange={() =>
+                setFormData((prev) => ({
+                  ...prev,
+                  role: "MEMBER",
+                }))
+              }
+              className="mr-2"
+            />
+            Member
+          </label>
+          <label className="block">
+            <input
+              type="radio"
+              name="role"
+              value="OWNER"
+              checked={formData.role === "OWNER"}
+              onChange={() =>
+                setFormData((prev) => ({
+                  ...prev,
+                  role: "OWNER",
+                }))
+              }
+              className="mr-2"
+            />
+            Owner
+          </label>
+        </div>
+      </div>
+
       {/* Environment */}
       <fieldset className="space-y-2">
         <legend className="block text-lg font-semibold">Environment</legend>
@@ -81,15 +171,20 @@ const AddIDtoGroupForm = () => {
           {environments.map((type) => (
             <label key={type} className="block">
               <input
-                type="radio"
+                type="checkbox"
                 name="environment"
                 value={type}
-                checked={formData.environment === type}
+                checked={formData.environment.includes(type)}
                 onChange={() =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    environment: type as AddIDtoGroupFormType["environment"],
-                  }))
+                  setFormData((prev) => {
+                    const newEnvironments = prev.environment.includes(type)
+                      ? prev.environment.filter((env) => env !== type)
+                      : [...prev.environment, type];
+                    return {
+                      ...prev,
+                      environment: newEnvironments,
+                    };
+                  })
                 }
                 className="mr-2"
               />
@@ -118,9 +213,9 @@ const AddIDtoGroupForm = () => {
           className="w-full px-3 py-2 border border-gray-300 rounded"
         >
           <option value="">Select a group</option>
-          {groups.map((group, index) => (
-            <option key={index} value={group}>
-              {group}
+          {groups.map((group) => (
+            <option key={group.email} value={group.email}>
+              {group.name}
             </option>
           ))}
         </select>

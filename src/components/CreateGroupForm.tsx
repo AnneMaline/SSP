@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-import { isTokenValid } from "@/utils/isTokenValid";
-import { create } from "domain";
+import { validateAuth } from "@/utils/validateAuth";
 
 type CreateGroupFormType = {
   environment: "prod" | "test" | "development" | "bootcamp";
@@ -45,35 +44,12 @@ const CreateGroupForm = () => {
     setFormData(initialFormData);
 
     // Send data to the server or API
-    async function fetchAuth() {
-      try {
-        const response = await fetch("/api/auth/");
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-        const data = await response.json();
-        // TASK: hash access_token before adding to local storage. Save hash-secret in env
-        localStorage.setItem("access_token", data.access_token);
-        return data.access_token;
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
     async function createGroup(
       name: string,
       description: string,
       data_partition_id: string
     ) {
-      let authToken = localStorage.getItem("access_token");
-      if (!authToken || !isTokenValid(authToken)) {
-        authToken = await fetchAuth();
-      }
-
-      if (!authToken) {
-        console.error("No token available for createGroup");
-        return;
-      }
+      const authToken = await validateAuth();
 
       try {
         const response = await fetch(
