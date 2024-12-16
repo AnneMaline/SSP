@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import EntitlementsPage from "../../../../src/app/Entitlements/page";
+import EntitlementsPage from "../../../../src/app/entitlements/page";
 import GroupDropDown from "../../../../src/components/GroupDropDown";
 import fetchMock from "jest-fetch-mock";
 
