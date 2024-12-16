@@ -1,10 +1,10 @@
 import Authentication from "../components/Authentication";
-import FeedbackForm from "../components/FeedbackForm";
+import FeedbackForm from "../components/NOTUSE/FeedbackForm";
 import TopTask from "../components/TopTask";
 import CreateGroupForm from "../components/CreateGroupForm";
 import AddIDtoGroupForm from "../components/AddIDtoGroupForm";
-import Card from "../components/StepCard";
-import LinkItem from "../components/LinkItem";
+import Card from "../components/NOTUSE/StepCard";
+import LinkItem from "../components/NOTUSE/LinkItem";
 
 export default function Home() {
   // TopTask titles and routes
@@ -55,6 +55,7 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+        {/* Login */}
         <Authentication />
 
         {/* TopTasks */}

@@ -27,8 +27,12 @@ const GroupDropDown = ({
   const [showMembers, setShowMembers] = useState(false);
   const [showAddIDForm, setShowAddIDForm] = useState(false);
 
+  // ----------------------Toggle dropdown and get member count----------------------
   const toggleDropdown = async () => {
+    // toggle isOpen
     setIsOpen((prevState) => !prevState);
+
+    // get members count if not already fetched
     if (!isOpen && membersCount === 0) {
       const authToken = await validateAuth();
 
@@ -56,7 +60,9 @@ const GroupDropDown = ({
     }
   };
 
+  // ----------------------Handle see members and get members----------------------
   const handleSeeMembers = async () => {
+    // toggle showMembers
     if (showMembers) {
       setShowMembers(false);
       return;
@@ -64,6 +70,7 @@ const GroupDropDown = ({
       setShowMembers(true);
     }
 
+    // get members if not already fetched
     if (members.length == 0) {
       const authToken = await validateAuth();
 
@@ -76,8 +83,6 @@ const GroupDropDown = ({
               "Content-Type": "application/json",
               "data-partition-id": data_partition_id,
               group_email: group_email,
-              // role,
-              // includeType,
               Authorization: `Bearer ${authToken}`,
             },
           }
@@ -93,6 +98,7 @@ const GroupDropDown = ({
     }
   };
 
+  // ----------------------Handle add member----------------------
   const handleAddMember = () => {
     setShowAddIDForm(true); // Show the AddIDtoGroupForm pop-up
   };
@@ -147,9 +153,6 @@ const GroupDropDown = ({
                   <tr>
                     <th className="border border-gray-300 px-4 py-2">Email</th>
                     <th className="border border-gray-300 px-4 py-2">Role</th>
-                    <th className="border border-gray-300 px-4 py-2">
-                      Actions
-                    </th>
                   </tr>
                 </thead>
                 <tbody>

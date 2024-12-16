@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import FeedbackForm from "../../../../src/components/FeedbackForm";
+import FeedbackForm from "../../../../src/components/NOTUSE/FeedbackForm";
 
 describe("FeedbackForm", () => {
   it("renders correctly", () => {

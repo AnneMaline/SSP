@@ -13,8 +13,8 @@ async function getContent(fileName: string): Promise<ContentType> {
   const filePath = path.join(process.cwd(), "src/assets/content", fileName);
 
   try {
+    // read file
     const fileContent = await fs.readFile(filePath, "utf-8");
-
     const lines = fileContent.split("\n");
     const content: ContentType = {
       name: "",
@@ -24,6 +24,7 @@ async function getContent(fileName: string): Promise<ContentType> {
     let currentSubchapter: SubchapterType | null = null;
     let currentList: ListType | null = null;
 
+    // structure text files into ContentType objects
     for (const line of lines) {
       if (line.startsWith("Chapter")) {
         content.name = line.split(":")[1].trim();

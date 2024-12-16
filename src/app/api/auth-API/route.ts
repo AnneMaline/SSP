@@ -5,10 +5,10 @@ const TOKEN_ENDPOINT =
 
 export async function GET() {
   const TOKEN_REQUEST_BODY = new URLSearchParams({
-    client_id: process.env.CLIENT_ID || "", // Ensure values are always strings
-    client_secret: process.env.CLIENT_SECRET || "", // Default to an empty string if undefined
+    client_id: process.env.CLIENT_ID || "",
+    client_secret: process.env.CLIENT_SECRET || "",
     grant_type: "client_credentials",
-    scope: process.env.SCOPE || "", // Default to an empty string if undefined
+    scope: process.env.SCOPE || "",
   });
 
   try {

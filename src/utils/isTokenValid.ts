@@ -4,6 +4,7 @@ type DecodedToken = {
   exp: number;
 };
 
+// checks if the auth token is valid
 const isTokenValid = (token: string) => {
   try {
     const decoded: DecodedToken = jwtDecode(token);

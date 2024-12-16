@@ -33,13 +33,8 @@ const AddIDtoGroupForm = () => {
     "bootcamp",
   ];
 
-  // Dummy dynamic groups (update when the API is connected)
+  // ----------------------Fetch groups----------------------
   const [groups, setGroups] = useState<Groups[]>([]);
-
-  // feedback and questions form
-  const [formData, setFormData] =
-    useState<AddIDtoGroupFormType>(initialFormData);
-
   const roleRequired = "";
   const data_partition_id = "bootcamp";
   useEffect(() => {
@@ -48,18 +43,23 @@ const AddIDtoGroupForm = () => {
     );
   }, []);
 
+  // ----------------------Make and submitt form----------------------
+  const [formData, setFormData] =
+    useState<AddIDtoGroupFormType>(initialFormData);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // prevent the default form submission
     e.preventDefault();
+
+    // if environment is empty
     if (formData.environment.length === 0) {
       alert("Please select at least one environment");
       return;
     }
-    console.log("Submitting form data:", formData);
 
     // Reset form after submission
     setFormData(initialFormData);
 
-    // Send data to the server or API
+    // Send data to the API
     async function addMember(
       email: string,
       role: string,
@@ -90,7 +90,7 @@ const AddIDtoGroupForm = () => {
 
         const data = await response.json();
         console.log("Member added successfully:", data);
-        // Optionally, update the state or perform other actions with the response data
+        // Update the state or perform other actions with the response data
       } catch (error) {
         console.error("Error adding member:", error);
       }
@@ -98,6 +98,7 @@ const AddIDtoGroupForm = () => {
 
     addMember(formData.entraID, formData.role, "bootcamp", formData.group);
   };
+
   return (
     <form
       onSubmit={handleSubmit}

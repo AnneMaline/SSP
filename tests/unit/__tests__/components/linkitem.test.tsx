@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import LinkItem from "@/components/LinkItem";
+import LinkItem from "@/components/NOTUSE/LinkItem";
 
 describe("StepCard", () => {
   const mockProps = {

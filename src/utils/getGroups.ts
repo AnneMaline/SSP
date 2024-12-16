@@ -1,9 +1,9 @@
 import { validateAuth } from "./validateAuth";
 
+// fetches groups from the API
 export async function getGroups(
   roleRequired: string,
   data_partition_id: string
-  //on_behalf_of: string
 ) {
   const authToken = await validateAuth();
 
@@ -14,7 +14,6 @@ export async function getGroups(
         "Content-Type": "application/json",
         roleRequired,
         "data-partition-id": data_partition_id,
-        //"on-behalf-of": on_behalf_of,
         Authorization: `Bearer ${authToken}`,
       },
     });

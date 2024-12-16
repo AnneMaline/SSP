@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import GroupDropDown from "../../components/GroupDropDown";
 import CreateGroupForm from "@/components/CreateGroupForm";
 import { getGroups } from "@/utils/getGroups";
-import { useSession } from "next-auth/react";
 
 type GroupItem = {
   name: string;
@@ -28,8 +27,6 @@ export default function EntitlementsPage() {
       )
     );
   }, []);
-  const { data: session } = useSession();
-  console.log(session);
 
   return (
     <div>

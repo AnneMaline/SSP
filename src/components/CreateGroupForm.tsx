@@ -37,13 +37,13 @@ const CreateGroupForm = () => {
     useState<CreateGroupFormType>(initialFormData);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    // prevent the default form submission
     e.preventDefault();
-    console.log("Submitting form data:", formData);
 
     // Reset form after submission
     setFormData(initialFormData);
 
-    // Send data to the server or API
+    // Send data to the API
     async function createGroup(
       name: string,
       description: string,
@@ -69,10 +69,6 @@ const CreateGroupForm = () => {
         if (!response.ok) {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
-
-        const data = await response.json();
-        console.log("Group created successfully:", data);
-        // Optionally, update the state or perform other actions with the response data
       } catch (error) {
         console.error("Error creating group:", error);
       }

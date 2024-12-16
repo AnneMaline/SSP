@@ -1,3 +1,4 @@
+// Fetch auth and add in local storage
 export async function fetchAuth() {
   try {
     const response = await fetch("/api/auth-API/");

@@ -34,8 +34,6 @@ const authOptions: NextAuthOptions = {
         token.idToken = account.id_token as string;
         token.accessToken = account.access_token as string;
       }
-      console.log(token);
-      console.log(account);
       return token;
     },
     async session({ session, token }) {

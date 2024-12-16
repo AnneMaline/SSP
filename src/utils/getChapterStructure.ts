@@ -2,6 +2,7 @@ import * as fs from "fs";
 import * as path from "path";
 import { Chapter } from "./interfaces";
 
+// get chapter strucutre from chapter-structure.txt
 async function getChapterStructure(): Promise<Chapter[]> {
   const filePath = path.join(
     process.cwd(),
@@ -10,12 +11,14 @@ async function getChapterStructure(): Promise<Chapter[]> {
   );
 
   try {
+    // read file
     const fileContent = fs.readFileSync(filePath, "utf-8");
     const lines = fileContent.split("\n");
     const chapters: Chapter[] = [];
 
     let currentChapter: Chapter | null = null;
 
+    // structure text files into Chapter and Subchapter objects
     lines.forEach((line) => {
       const trimmedLine = line.trim();
       if (!trimmedLine.startsWith("#")) {

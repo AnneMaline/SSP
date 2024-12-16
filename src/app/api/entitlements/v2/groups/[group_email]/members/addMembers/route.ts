@@ -25,7 +25,6 @@ export async function POST(request: NextRequest) {
       "data-partition-id": data_partition_id,
       Authorization: `Bearer ${authToken}`,
     };
-    console.log("Adding member:", email, role);
 
     const response = await fetch(ENDPOINT + url, {
       method: "POST",
@@ -36,9 +35,8 @@ export async function POST(request: NextRequest) {
     if (!response.ok) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
     }
-    console.log("Response:", response);
+
     const data = await response.json();
-    console.log("Member added successfully:", data);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: "Error adding member" }, { status: 500 });

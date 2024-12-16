@@ -9,7 +9,6 @@ const Navbar = () => {
     >
       {/* Logo and title */}
       <div className="flex justify-start items-center gap-2">
-        {/* <Link href={`/?${searchParams}`} aria-label="logo"> */}
         <Link href="/" aria-label="logo">
           <Image
             src="/images/Equinor_Symbol_Favicon_RED_64x64px.png"
@@ -18,7 +17,6 @@ const Navbar = () => {
             height={24}
           />
         </Link>
-        {/* <Link href={`/?${searchParams}`} aria-label="title"> */}
         <Link href="/" aria-label="title">
           <h1 className="font-bold">OSDU Self-service Portal</h1>
         </Link>

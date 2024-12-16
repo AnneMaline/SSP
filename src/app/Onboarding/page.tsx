@@ -13,6 +13,7 @@ export default function OnboardingPage() {
   const [content, setContent] = useState<ContentType>();
   const [chapters, setChapters] = useState<Chapter[]>([]);
 
+  // ---------------FETCH CHAPTERS----------------
   useEffect(() => {
     async function fetchChapters() {
       try {
@@ -30,6 +31,7 @@ export default function OnboardingPage() {
     fetchChapters();
   }, []);
 
+  // ---------------FETCH CONTENT----------------
   useEffect(() => {
     if (!chapter) return;
 
@@ -50,6 +52,7 @@ export default function OnboardingPage() {
     fetchContent();
   }, [chapter]);
 
+  // ---------------Select chapter----------------
   if (!chapter) {
     return (
       <div className="container">
@@ -59,13 +62,16 @@ export default function OnboardingPage() {
     );
   }
 
+  // ---------------Loading content----------------
   if (!content) {
     return <div>Loading content for chapter {chapter}...</div>;
   }
 
   return (
     <div className="container">
+      {/* Sidebar */}
       <SideBar chapters={chapters} />
+      {/* Content */}
       <div className="content">
         <div className="info-cards">
           {content.subchapters.map((subchapter, index) => (
