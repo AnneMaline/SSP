@@ -9,7 +9,7 @@ import LinkItem from "../components/LinkItem";
 export default function Home() {
   // TopTask titles and routes
   const topTaskTitle = ["Entitlements", "Onboarding"];
-  const topTaskRoutes = ["Entitlements", "Onboarding"];
+  const topTaskRoutes = ["entitlements", "onboarding"];
 
   const cardsData = [
     {

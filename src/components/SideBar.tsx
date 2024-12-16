@@ -35,7 +35,7 @@ const SideBar = ({ chapters }: SideBarProps) => {
                 <a
                   key={subchapter.name}
                   href={
-                    "Onboarding?chapter=" +
+                    "onboarding?chapter=" +
                     chapter.chapterNumber.toString() +
                     "-" +
                     subchapter.subchapterNumber.toString()

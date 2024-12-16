@@ -2,7 +2,7 @@
 import Card from "@/components/InfoCard/Card";
 import ContentRenderer from "@/components/InfoCard/Content/ContentRenderer";
 import SideBar from "@/components/SideBar";
-import "./Onboarding.css";
+import "./onboarding.css";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Chapter, ContentType } from "@/utils/interfaces";
