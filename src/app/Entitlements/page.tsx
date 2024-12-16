@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import GroupDropDown from "../../components/GroupDropDown";
 import CreateGroupForm from "@/components/CreateGroupForm";
 import { getGroups } from "@/utils/getGroups";
+import { useSession } from "next-auth/react";
 
 type GroupItem = {
   name: string;
@@ -13,11 +14,6 @@ type GroupItem = {
 export default function EntitlementsPage() {
   const [GroupItems, setGroupItems] = useState<GroupItem[]>([]);
   const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
-
-  const handleDelete = (email: string) => {
-    setGroupItems((prev) => prev.filter((member) => member.email !== email));
-  };
-
   const roleRequired = "";
   const data_partition_id = "bootcamp";
 
@@ -32,10 +28,13 @@ export default function EntitlementsPage() {
       )
     );
   }, []);
+  const { data: session } = useSession();
+  console.log(session);
 
   return (
     <div>
       <h1>Entitlements</h1>
+
       {/* -------------CREATE GROUP---------------- */}
       <button
         className="bg-green-500 text-white px-4 py-2"
@@ -66,7 +65,6 @@ export default function EntitlementsPage() {
               group_email={item.email}
               description={item.description}
               data_partition_id={data_partition_id}
-              onDelete={() => handleDelete(item.email)}
             />
           </li>
         ))}

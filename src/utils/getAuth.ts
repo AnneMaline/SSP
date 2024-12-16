@@ -1,6 +1,6 @@
 export async function fetchAuth() {
   try {
-    const response = await fetch("/api/auth/");
+    const response = await fetch("/api/auth-API/");
     if (!response.ok) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
     }

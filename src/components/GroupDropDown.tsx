@@ -13,7 +13,6 @@ type GroupDropDownProps = {
   group_email: string;
   description: string;
   data_partition_id: string;
-  onDelete: () => void;
 };
 
 const GroupDropDown = ({
@@ -21,7 +20,6 @@ const GroupDropDown = ({
   group_email,
   description,
   data_partition_id,
-  onDelete,
 }: GroupDropDownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [members, setMembers] = useState<Member[]>([]);
@@ -95,7 +93,7 @@ const GroupDropDown = ({
     }
   };
 
-  const handleDeleteMember = () => {
+  const handleAddMember = () => {
     setShowAddIDForm(true); // Show the AddIDtoGroupForm pop-up
   };
 
@@ -128,12 +126,6 @@ const GroupDropDown = ({
           {/* Buttons */}
           <div className="mb-4">
             <button
-              className="bg-red-500 text-white px-4 py-2 mr-2"
-              onClick={onDelete}
-            >
-              Delete Group
-            </button>
-            <button
               className="bg-blue-500 text-white px-4 py-2 mr-2"
               onClick={handleSeeMembers}
             >
@@ -141,7 +133,7 @@ const GroupDropDown = ({
             </button>
             <button
               className="bg-blue-500 text-white px-4 py-2 mr-2"
-              onClick={handleDeleteMember}
+              onClick={handleAddMember}
             >
               Add Member
             </button>
@@ -168,14 +160,6 @@ const GroupDropDown = ({
                       </td>
                       <td className="border border-gray-300 px-4 py-2">
                         {member.role}
-                      </td>
-                      <td className="border border-gray-300 px-4 py-2">
-                        <button
-                          className="bg-red-500 text-white px-2 py-1"
-                          onClick={handleDeleteMember}
-                        >
-                          Remove
-                        </button>
                       </td>
                     </tr>
                   ))}

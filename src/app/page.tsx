@@ -1,4 +1,4 @@
-//import Authentication from "./components/Authentication";
+import Authentication from "../components/Authentication";
 import FeedbackForm from "../components/FeedbackForm";
 import TopTask from "../components/TopTask";
 import CreateGroupForm from "../components/CreateGroupForm";
@@ -55,7 +55,7 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        {/*<Authentication />*/}
+        <Authentication />
 
         {/* TopTasks */}
         <ul className="flex justify-end space-x-4">

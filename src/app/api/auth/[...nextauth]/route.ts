@@ -22,7 +22,9 @@ const authOptions: NextAuthOptions = {
       clientId: process.env.AZURE_AD_CLIENT_ID as string,
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET as string,
       tenantId: process.env.AZURE_AD_TENANT_ID as string,
-      authorization: { params: { scope: "openid profile user.Read email" } },
+      authorization: {
+        params: { scope: "openid profile email User.Read" },
+      },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET as string,
@@ -32,6 +34,8 @@ const authOptions: NextAuthOptions = {
         token.idToken = account.id_token as string;
         token.accessToken = account.access_token as string;
       }
+      console.log(token);
+      console.log(account);
       return token;
     },
     async session({ session, token }) {
