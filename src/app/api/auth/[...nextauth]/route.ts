@@ -22,8 +22,10 @@ const authOptions: NextAuthOptions = {
       clientId: process.env.AZURE_AD_CLIENT_ID as string,
       clientSecret: process.env.AZURE_AD_CLIENT_SECRET as string,
       tenantId: process.env.AZURE_AD_TENANT_ID as string,
-      authorization: {
-        params: { scope: "openid profile email User.Read" },
+       authorization: {
+        params: {
+          scope: "7daee810-3f78-40c4-84c2-7a199428de18/.default openid profile", // Add offline_access for refresh tokens
+        },
       },
     }),
   ],
@@ -31,6 +33,7 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
+        console.log(account)
         token.idToken = account.id_token as string;
         token.accessToken = account.access_token as string;
       }
