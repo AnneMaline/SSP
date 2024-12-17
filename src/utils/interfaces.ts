@@ -44,3 +44,24 @@ export interface SubChapter {
   subchapterNumber: number;
   fileName: string;
 }
+
+// ----------------Request Structure Interfaces----------------
+export type RequestDropDownType = {
+  name: string;
+  description: string;
+  applicant: string;
+  reason: string;
+  type: CreateGroupRequest | AddMemberRequest;
+};
+
+export type CreateGroupRequest = {
+  type: "CREATE_GROUP";
+  group_type: string;
+  access_type: string;
+};
+
+export type AddMemberRequest = {
+  type: "ADD_MEMBER";
+  entraID: string;
+  role: "OWNER" | "MEMBER";
+};
