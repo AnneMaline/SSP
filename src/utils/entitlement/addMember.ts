@@ -1,13 +1,11 @@
-import { validateAuth } from "./validateAuth";
-
+// send request to add member to the API
 export async function addMember(
   email: string,
   role: string,
   data_partition_id: string,
-  group_email: string
+  group_email: string,
+  authToken: string
 ) {
-  const authToken = await validateAuth();
-
   try {
     const response = await fetch(
       `/api/entitlements/v2/groups/${group_email}/members/addMembers`,

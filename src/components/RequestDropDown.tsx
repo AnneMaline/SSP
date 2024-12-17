@@ -2,6 +2,7 @@
 import { addMember } from "@/utils/entitlement/addMember";
 import { createGroup } from "@/utils/entitlement/createGroup";
 import { RequestDropDownType } from "@/utils/interfaces";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 interface RequestDropDownProps extends RequestDropDownType {
@@ -25,6 +26,7 @@ const RequestDropDown = ({
   const [isOpen, setIsOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [answer, setAnswer] = useState(false);
+  const { data: session } = useSession();
 
   // ----------------------Toggle dropdown----------------------
   const toggleDropdown = async () => {
@@ -36,18 +38,27 @@ const RequestDropDown = ({
   const handleReply = (reply: boolean) => {
     // approve or reject the request, and do the corresponding API requests
     if (reply) {
+      if (!session || !session.accessToken) {
+        throw new Error("Session not found");
+      }
       if (type.type === "CREATE_GROUP") {
         console.log(
           "CreateGroup - Set correct data_partition_id when done developing: ",
           data_partition_id
         );
-        createGroup(name, description, "bootcamp");
+        createGroup(name, description, "bootcamp", session.accessToken);
       } else {
         console.log(
           "Add Member - Set correct data_partition_id when done developing: ",
           data_partition_id
         );
-        addMember(type.entraID, type.role, "bootcamp", type.group_email);
+        addMember(
+          type.entraID,
+          type.role,
+          "bootcamp",
+          type.group_email,
+          session.accessToken
+        );
       }
     }
     console.log("API request to remove the request");

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import GroupDropDown from "../../components/GroupDropDown";
 import CreateGroupForm from "@/components/CreateGroupForm";
 import { getGroups } from "@/utils/entitlement/getGroups";
+import { useSession } from "next-auth/react";
 
 type GroupItem = {
   name: string;
@@ -10,23 +11,32 @@ type GroupItem = {
   description: string;
 };
 
-export default function EntitlementsPage() {
+type EntitlementsPageProps = {
+  authToken: string;
+};
+
+export default function EntitlementsPage({ authToken }: EntitlementsPageProps) {
   const [GroupItems, setGroupItems] = useState<GroupItem[]>([]);
   const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
   const roleRequired = "";
   const data_partition_id = "bootcamp";
+  const { data: session } = useSession();
 
   useEffect(() => {
-    getGroups(roleRequired, data_partition_id).then((groups) =>
-      setGroupItems(
-        groups.map((item: GroupItem) => ({
-          name: item.name,
-          email: item.email,
-          description: item.description,
-        }))
-      )
+    if (!session || !session.accessToken) {
+      throw new Error("Session not found");
+    }
+    getGroups(roleRequired, data_partition_id, session.accessToken).then(
+      (groups) =>
+        setGroupItems(
+          groups.map((item: GroupItem) => ({
+            name: item.name,
+            email: item.email,
+            description: item.description,
+          }))
+        )
     );
-  }, []);
+  }, [session]);
 
   return (
     <div>

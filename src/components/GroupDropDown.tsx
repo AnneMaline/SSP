@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import AddIDtoGroupForm from "./AddIDtoGroupForm";
-import { validateAuth } from "@/utils/entitlement/validateAuth";
+import { useSession } from "next-auth/react";
 
 type Member = {
   email: string;
@@ -26,6 +26,7 @@ const GroupDropDown = ({
   const [membersCount, setMembersCount] = useState<number>(0);
   const [showMembers, setShowMembers] = useState(false);
   const [showAddIDForm, setShowAddIDForm] = useState(false);
+  const { data: session } = useSession();
 
   // ----------------------Toggle dropdown and get member count----------------------
   const toggleDropdown = async () => {
@@ -34,8 +35,9 @@ const GroupDropDown = ({
 
     // get members count if not already fetched
     if (!isOpen && membersCount === 0) {
-      const authToken = await validateAuth();
-
+      if (!session || !session.accessToken) {
+        throw new Error("Session not found");
+      }
       try {
         const response = await fetch(
           `/api/entitlements/v2/groups/${group_email}/membersCount`,
@@ -45,10 +47,11 @@ const GroupDropDown = ({
               "Content-Type": "application/json",
               "data-partition-id": data_partition_id,
               group_email: group_email,
-              Authorization: `Bearer ${authToken}`,
+              Authorization: `Bearer ${session.accessToken}`,
             },
           }
         );
+
         if (!response.ok) {
           throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
@@ -72,7 +75,9 @@ const GroupDropDown = ({
 
     // get members if not already fetched
     if (members.length == 0) {
-      const authToken = await validateAuth();
+      if (!session || !session.accessToken) {
+        throw new Error("Session not found");
+      }
 
       try {
         const response = await fetch(
@@ -83,7 +88,7 @@ const GroupDropDown = ({
               "Content-Type": "application/json",
               "data-partition-id": data_partition_id,
               group_email: group_email,
-              Authorization: `Bearer ${authToken}`,
+              Authorization: `Bearer ${session.accessToken}`,
             },
           }
         );
@@ -175,7 +180,7 @@ const GroupDropDown = ({
           {showAddIDForm && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
               <div className="bg-white p-4 rounded">
-                <AddIDtoGroupForm />
+                <AddIDtoGroupForm group={name} />
                 <button
                   className="mt-4 bg-gray-500 text-white px-4 py-2"
                   onClick={() => setShowAddIDForm(false)}

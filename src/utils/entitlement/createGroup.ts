@@ -1,13 +1,10 @@
-import { validateAuth } from "./validateAuth";
-
 // creates group
 export async function createGroup(
   name: string,
   description: string,
-  data_partition_id: string
+  data_partition_id: string,
+  authToken: string
 ) {
-  const authToken = await validateAuth();
-
   try {
     const response = await fetch("/api/entitlements/v2/groups/createGroup", {
       method: "POST",

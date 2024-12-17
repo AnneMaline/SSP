@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { createGroup } from "@/utils/entitlement/createGroup";
+import { useSession } from "next-auth/react";
 
 type CreateGroupFormType = {
   environment: "prod" | "test" | "development" | "bootcamp";
@@ -31,6 +32,7 @@ const CreateGroupForm = () => {
     "data",
     "edit",
   ];
+  const { data: session } = useSession();
 
   // feedback and questions form
   const [formData, setFormData] =
@@ -44,7 +46,15 @@ const CreateGroupForm = () => {
     setFormData(initialFormData);
 
     // Send data to the API
-    createGroup(formData.name, formData.description, "bootcamp");
+    if (!session || !session.accessToken) {
+      throw new Error("Session not found");
+    }
+    createGroup(
+      formData.name,
+      formData.description,
+      "bootcamp",
+      session.accessToken
+    );
   };
 
   return (

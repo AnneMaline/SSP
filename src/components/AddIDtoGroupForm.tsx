@@ -1,6 +1,7 @@
 "use client";
 import { addMember } from "@/utils/entitlement/addMember";
 import { getGroups } from "@/utils/entitlement/getGroups";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 type Environment = "prod" | "test" | "development" | "bootcamp";
@@ -18,13 +19,17 @@ type Groups = {
   description: string;
 };
 
-const AddIDtoGroupForm = () => {
+type AddIDtoGroupFormProps = {
+  group: string;
+};
+
+const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
   // Initial state for the form
   const initialFormData: AddIDtoGroupFormType = {
     entraID: "",
     environment: [],
     role: "MEMBER",
-    group: "",
+    group: group,
   };
   const environments: AddIDtoGroupFormType["environment"] = [
     "prod",
@@ -37,11 +42,19 @@ const AddIDtoGroupForm = () => {
   const [groups, setGroups] = useState<Groups[]>([]);
   const roleRequired = "";
   const data_partition_id = "bootcamp";
+  const { data: session } = useSession();
+
   useEffect(() => {
-    getGroups(roleRequired, data_partition_id).then((groups) =>
-      setGroups(groups)
+    if (!session || !session.accessToken) {
+      throw new Error("Session not found");
+    }
+    getGroups(roleRequired, data_partition_id, session.accessToken).then(
+      (groups) => {
+        setGroups(groups);
+        setFormData((prev) => ({ ...prev, group: group }));
+      }
     );
-  }, []);
+  }, [session]);
 
   // ----------------------Make and submitt form----------------------
   const [formData, setFormData] =
@@ -60,7 +73,15 @@ const AddIDtoGroupForm = () => {
     setFormData(initialFormData);
 
     // Send data to the API
-    addMember(formData.entraID, formData.role, "bootcamp", formData.group);
+    if (session && session.accessToken) {
+      addMember(
+        formData.entraID,
+        formData.role,
+        "bootcamp",
+        formData.group,
+        session.accessToken
+      );
+    }
   };
 
   return (

@@ -1,12 +1,9 @@
-import { validateAuth } from "./validateAuth";
-
 // fetches groups from the API
 export async function getGroups(
   roleRequired: string,
-  data_partition_id: string
+  data_partition_id: string,
+  authToken: string
 ) {
-  const authToken = await validateAuth();
-
   try {
     const response = await fetch("/api/entitlements/v2/groups/getGroups", {
       method: "GET",
