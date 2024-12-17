@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import AddIDtoGroupForm from "./AddIDtoGroupForm";
-import { validateAuth } from "@/utils/validateAuth";
+import { validateAuth } from "@/utils/entitlement/validateAuth";
 
 type Member = {
   email: string;

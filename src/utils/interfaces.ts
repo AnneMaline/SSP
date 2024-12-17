@@ -47,10 +47,12 @@ export interface SubChapter {
 
 // ----------------Request Structure Interfaces----------------
 export type RequestDropDownType = {
+  requestID: string;
   name: string;
   description: string;
   applicant: string;
   reason: string;
+  data_partition_id: string;
   type: CreateGroupRequest | AddMemberRequest;
 };
 
@@ -64,4 +66,5 @@ export type AddMemberRequest = {
   type: "ADD_MEMBER";
   entraID: string;
   role: "OWNER" | "MEMBER";
+  group_email: string;
 };

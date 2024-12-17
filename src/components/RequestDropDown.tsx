@@ -1,18 +1,24 @@
 "use client";
+import { addMember } from "@/utils/entitlement/addMember";
+import { createGroup } from "@/utils/entitlement/createGroup";
 import { RequestDropDownType } from "@/utils/interfaces";
 import { useState } from "react";
 
 interface RequestDropDownProps extends RequestDropDownType {
   showAgain: boolean;
+  removeRequest: (request: RequestDropDownType) => void;
   setShowAgain: (showAgain: boolean) => void;
 }
 
 const RequestDropDown = ({
+  requestID,
   name,
   description,
   applicant,
+  data_partition_id,
   reason,
   type,
+  removeRequest,
   showAgain,
   setShowAgain,
 }: RequestDropDownProps) => {
@@ -28,21 +34,35 @@ const RequestDropDown = ({
 
   // ----------------------Handle Reply----------------------
   const handleReply = (reply: boolean) => {
-    console.log("Request has been ", reply ? "approved" : "rejected");
-    //TASK: Send reply to API - either remove or send API request
+    // approve or reject the request, and do the corresponding API requests
     if (reply) {
-      console.log("API request to approve the request");
       if (type.type === "CREATE_GROUP") {
-        console.log("API request to create the group");
+        console.log(
+          "CreateGroup - Set correct data_partition_id when done developing: ",
+          data_partition_id
+        );
+        createGroup(name, description, "bootcamp");
       } else {
-        console.log("API request to add the member");
+        console.log(
+          "Add Member - Set correct data_partition_id when done developing: ",
+          data_partition_id
+        );
+        addMember(type.entraID, type.role, "bootcamp", type.group_email);
       }
-    } else {
-      console.log("API request to reject the request");
     }
+    console.log("API request to remove the request");
+    removeRequest({
+      requestID,
+      name,
+      description,
+      applicant,
+      reason,
+      data_partition_id,
+      type,
+    });
   };
 
-  // ----------------------Handle Confiration----------------------
+  // ----------------------Handle Confirmation----------------------
   const handleConfirmation = (reply: boolean) => {
     setAnswer(reply);
     if (showAgain) {

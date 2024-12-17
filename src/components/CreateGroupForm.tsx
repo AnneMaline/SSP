@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { validateAuth } from "@/utils/validateAuth";
+import { createGroup } from "@/utils/entitlement/createGroup";
 
 type CreateGroupFormType = {
   environment: "prod" | "test" | "development" | "bootcamp";
@@ -44,36 +44,6 @@ const CreateGroupForm = () => {
     setFormData(initialFormData);
 
     // Send data to the API
-    async function createGroup(
-      name: string,
-      description: string,
-      data_partition_id: string
-    ) {
-      const authToken = await validateAuth();
-
-      try {
-        const response = await fetch(
-          "/api/entitlements/v2/groups/createGroup",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "data-partition-id": data_partition_id,
-              Authorization: `Bearer ${authToken}`,
-              name,
-              description,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-      } catch (error) {
-        console.error("Error creating group:", error);
-      }
-    }
-
     createGroup(formData.name, formData.description, "bootcamp");
   };
 

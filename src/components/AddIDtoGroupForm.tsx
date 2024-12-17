@@ -1,6 +1,6 @@
 "use client";
-import { getGroups } from "@/utils/getGroups";
-import { validateAuth } from "@/utils/validateAuth";
+import { addMember } from "@/utils/entitlement/addMember";
+import { getGroups } from "@/utils/entitlement/getGroups";
 import { useEffect, useState } from "react";
 
 type Environment = "prod" | "test" | "development" | "bootcamp";
@@ -60,42 +60,6 @@ const AddIDtoGroupForm = () => {
     setFormData(initialFormData);
 
     // Send data to the API
-    async function addMember(
-      email: string,
-      role: string,
-      data_partition_id: string,
-      group_email: string
-    ) {
-      const authToken = await validateAuth();
-
-      try {
-        const response = await fetch(
-          `/api/entitlements/v2/groups/${group_email}/members/addMembers`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              group_email,
-              "data-partition-id": data_partition_id,
-              Authorization: `Bearer ${authToken}`,
-              email,
-              role,
-            },
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        console.log("Member added successfully:", data);
-        // Update the state or perform other actions with the response data
-      } catch (error) {
-        console.error("Error adding member:", error);
-      }
-    }
-
     addMember(formData.entraID, formData.role, "bootcamp", formData.group);
   };
 

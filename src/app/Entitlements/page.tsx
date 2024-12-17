@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import GroupDropDown from "../../components/GroupDropDown";
 import CreateGroupForm from "@/components/CreateGroupForm";
-import { getGroups } from "@/utils/getGroups";
+import { getGroups } from "@/utils/entitlement/getGroups";
 
 type GroupItem = {
   name: string;
