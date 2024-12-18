@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 import { NextAuthProvider } from "@/providers/NextAuthProvider";
-// import Footer from "../components/Footer";
+import { RedirectLogIn } from "@/components/RedirectLogIn";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,11 +32,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <NextAuthProvider>
-          <Navbar />
-          {children}
+          <RedirectLogIn>
+            <Navbar />
+            {children}
+          </RedirectLogIn>
         </NextAuthProvider>
-
-        {/* <Footer /> */}
       </body>
     </html>
   );

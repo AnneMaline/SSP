@@ -24,11 +24,15 @@ const authOptions: NextAuthOptions = {
       tenantId: process.env.AZURE_AD_TENANT_ID as string,
       authorization: {
         params: {
-          scope: "7daee810-3f78-40c4-84c2-7a199428de18/.default openid profile", // Add offline_access for refresh tokens
+          scope:
+            "7daee810-3f78-40c4-84c2-7a199428de18/.default openid profile offline_access", // Add offline_access for refresh tokens
         },
       },
     }),
   ],
+  pages: {
+    signIn: "/auth/signin", // BUG: NOT WORKING ?? Should redirect every unauthenticated users to login page
+  },
   secret: process.env.NEXTAUTH_SECRET as string,
   callbacks: {
     async jwt({ token, account }) {

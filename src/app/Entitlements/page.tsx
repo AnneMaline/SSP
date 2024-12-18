@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import GroupDropDown from "../../components/GroupDropDown";
 import CreateGroupForm from "@/components/CreateGroupForm";
 import { getGroups } from "@/utils/entitlement/getGroups";
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 
 type GroupItem = {
   name: string;
@@ -11,31 +11,28 @@ type GroupItem = {
   description: string;
 };
 
-type EntitlementsPageProps = {
-  authToken: string;
-};
-
-export default function EntitlementsPage({ authToken }: EntitlementsPageProps) {
+export default function EntitlementsPage() {
   const [GroupItems, setGroupItems] = useState<GroupItem[]>([]);
   const [showCreateGroupForm, setShowCreateGroupForm] = useState(false);
-  const roleRequired = "";
   const data_partition_id = "bootcamp";
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
-    if (!session || !session.accessToken) {
-      throw new Error("Session not found");
+    if (status !== "loading" && (!session || !session.accessToken)) {
+      signIn("azure-ad", { callbackUrl: "/entitlements" });
+      return;
     }
-    getGroups(roleRequired, data_partition_id, session.accessToken).then(
-      (groups) =>
+    if (session && session.accessToken) {
+      getGroups(data_partition_id, session.accessToken).then((data) => {
         setGroupItems(
-          groups.map((item: GroupItem) => ({
+          data.groups.map((item: GroupItem) => ({
             name: item.name,
             email: item.email,
             description: item.description,
           }))
-        )
-    );
+        );
+      });
+    }
   }, [session]);
 
   return (
