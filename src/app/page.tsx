@@ -1,6 +1,5 @@
 import Authentication from "../components/Authentication";
 import TopTask from "../components/TopTask";
-import RequestDropDown from "../components/RequestDropDown";
 
 export default function Home() {
   // TopTask titles and routes
