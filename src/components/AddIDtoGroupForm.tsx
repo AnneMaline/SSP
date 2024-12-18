@@ -40,7 +40,6 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
 
   // ----------------------Fetch groups----------------------
   const [groups, setGroups] = useState<Groups[]>([]);
-  const roleRequired = "";
   const data_partition_id = "bootcamp";
   const { data: session } = useSession();
 
@@ -48,12 +47,10 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
     if (!session || !session.accessToken) {
       throw new Error("Session not found");
     }
-    getGroups(roleRequired, data_partition_id, session.accessToken).then(
-      (groups) => {
-        setGroups(groups);
-        setFormData((prev) => ({ ...prev, group: group }));
-      }
-    );
+    getGroups(data_partition_id, session.accessToken).then((groups) => {
+      setGroups(groups);
+      setFormData((prev) => ({ ...prev, group: group })); //TASK: Make this work. Initial group in the form
+    });
   }, [session]);
 
   // ----------------------Make and submitt form----------------------

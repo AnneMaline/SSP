@@ -2,6 +2,7 @@
 import RequestDropDown from "@/components/RequestDropDown";
 import { RequestDropDownType } from "@/utils/interfaces";
 import { useState } from "react";
+import { RedirectHome } from "@/components/RedirectHome";
 
 const requestsTemp: RequestDropDownType[] = [
   {
@@ -46,19 +47,21 @@ const RequestsPage = () => {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Requests</h1>
-      {requests.map((request, index) => (
-        <div key={index}>
-          <RequestDropDown
-            {...request}
-            showAgain={showAgain}
-            setShowAgain={setShowAgain}
-            removeRequest={removeRequest}
-          />
-        </div>
-      ))}
-    </div>
+    <RedirectHome data_partition_id="bootcamp">
+      <div className="p-4">
+        <h1 className="text-2xl font-bold mb-4">Requests</h1>
+        {requests.map((request, index) => (
+          <div key={index}>
+            <RequestDropDown
+              {...request}
+              showAgain={showAgain}
+              setShowAgain={setShowAgain}
+              removeRequest={removeRequest}
+            />
+          </div>
+        ))}
+      </div>
+    </RedirectHome>
   );
 };
 

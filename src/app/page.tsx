@@ -1,10 +1,36 @@
+"use client";
+import { signIn, useSession } from "next-auth/react";
 import Authentication from "../components/Authentication";
 import TopTask from "../components/TopTask";
+import { useEffect, useState } from "react";
+import { checkRole } from "@/utils/checkRole";
 
 export default function Home() {
+  const { data: session, status } = useSession();
   // TopTask titles and routes
-  const topTaskTitle = ["Entitlements", "Onboarding", "Requests"];
-  const topTaskRoutes = ["entitlements", "onboarding", "requests"];
+  const [topTaskTitle, setTopTaskTitle] = useState([
+    "Entitlements",
+    "Onboarding",
+  ]);
+  const [topTaskRoutes, setTopTaskRoutes] = useState([
+    "entitlements",
+    "onboarding",
+  ]);
+
+  useEffect(() => {
+    if (status !== "loading" && (!session || !session.accessToken)) {
+      signIn("azure-ad", { callbackUrl: "/entitlements" });
+      return;
+    }
+    if (session && session.accessToken) {
+      checkRole(session.accessToken, "bootcamp").then((hasRole) => {
+        if (hasRole) {
+          setTopTaskTitle(["Entitlements", "Onboarding", "Requests"]);
+          setTopTaskRoutes(["entitlements", "onboarding", "requests"]);
+        }
+      });
+    }
+  }, [session]);
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -23,16 +49,6 @@ export default function Home() {
             </li>
           ))}
         </ul>
-
-        {/* Mission statement */}
-        <h1>Mission statement</h1>
-        <p>
-          OSDU Selv-service portal enables you to find, collect and read
-          relevant information for the xx and xx. This page contains all
-          relevant documentation and provides you with the right tools to share,
-          collect and save data. The self-service portal is under construction
-          and we appreciate feedback for further improvements.
-        </p>
 
         {/* Further documentation - OSDU documentation */}
         <h1>Further documentation</h1>

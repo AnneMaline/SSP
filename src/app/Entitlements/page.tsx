@@ -4,6 +4,7 @@ import GroupDropDown from "../../components/GroupDropDown";
 import CreateGroupForm from "@/components/CreateGroupForm";
 import { getGroups } from "@/utils/entitlement/getGroups";
 import { signIn, useSession } from "next-auth/react";
+import { checkRole } from "@/utils/checkRole";
 
 type GroupItem = {
   name: string;
@@ -23,9 +24,9 @@ export default function EntitlementsPage() {
       return;
     }
     if (session && session.accessToken) {
-      getGroups(data_partition_id, session.accessToken).then((data) => {
+      getGroups(data_partition_id, session.accessToken).then((groups) => {
         setGroupItems(
-          data.groups.map((item: GroupItem) => ({
+          groups.map((item: GroupItem) => ({
             name: item.name,
             email: item.email,
             description: item.description,
