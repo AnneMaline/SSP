@@ -3,35 +3,42 @@ import { useState } from "react";
 import { createGroup } from "@/utils/entitlement/createGroup";
 import { useSession } from "next-auth/react";
 
+type Environment = "prod" | "test" | "development" | "bootcamp";
+
 type CreateGroupFormType = {
-  environment: "prod" | "test" | "development" | "bootcamp";
-  type: "data" | "service" | "users";
+  environment: Environment[];
+  data_partition_id: "bootcamp" | "data";
+  //type: "data" | "service" | "users";
   name: string;
   description: string;
-  accessType: "view" | "data" | "edit";
+  //accessType: "view" | "data" | "edit";
 };
 
 const CreateGroupForm = () => {
   // Initial state for the form
   const initialFormData: CreateGroupFormType = {
-    environment: "bootcamp",
-    type: "data",
-    name: "string",
-    description: "string",
-    accessType: "view",
+    environment: ["development"],
+    data_partition_id: "bootcamp",
+    //type: "data",
+    name: "",
+    description: "",
+    //accessType: "view",
   };
-  const environments: CreateGroupFormType["environment"][] = [
+  const environments: CreateGroupFormType["environment"] = [
     "prod",
     "test",
     "development",
+  ];
+  const data_partition_id: CreateGroupFormType["data_partition_id"][] = [
     "bootcamp",
-  ];
-  const types: CreateGroupFormType["type"][] = ["data", "service", "users"];
-  const accessTypes: CreateGroupFormType["accessType"][] = [
-    "view",
     "data",
-    "edit",
   ];
+  // const types: CreateGroupFormType["type"][] = ["data", "service", "users"];
+  // const accessTypes: CreateGroupFormType["accessType"][] = [
+  //   "view",
+  //   "data",
+  //   "edit",
+  // ];
   const { data: session } = useSession();
 
   // feedback and questions form
@@ -42,19 +49,33 @@ const CreateGroupForm = () => {
     // prevent the default form submission
     e.preventDefault();
 
-    // Reset form after submission
-    setFormData(initialFormData);
+    console.log(formData);
 
     // Send data to the API
     if (!session || !session.accessToken) {
       throw new Error("Session not found");
     }
-    createGroup(
-      formData.name,
-      formData.description,
-      "bootcamp",
-      session.accessToken
-    );
+
+    const existingData = localStorage.getItem("CreateGroup");
+    if (existingData) {
+      const parsedData = JSON.parse(existingData);
+      const updatedData = Array.isArray(parsedData)
+        ? [...parsedData, formData]
+        : [parsedData, formData];
+      localStorage.setItem("CreateGroup", JSON.stringify(updatedData));
+    } else {
+      localStorage.setItem("CreateGroup", JSON.stringify([formData]));
+    }
+
+    // createGroup(
+    //   formData.name,
+    //   formData.description,
+    //   "bootcamp",
+    //   session.accessToken
+    // );
+
+    // Reset form after submission
+    setFormData(initialFormData);
   };
 
   return (
@@ -69,15 +90,20 @@ const CreateGroupForm = () => {
           {environments.map((type) => (
             <label key={type} className="block">
               <input
-                type="radio"
+                type="checkbox"
                 name="environment"
                 value={type}
-                checked={formData.environment === type}
+                checked={formData.environment.includes(type)}
                 onChange={() =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    environment: type as CreateGroupFormType["environment"],
-                  }))
+                  setFormData((prev) => {
+                    const newEnvironments = prev.environment.includes(type)
+                      ? prev.environment.filter((env) => env !== type)
+                      : [...prev.environment, type];
+                    return {
+                      ...prev,
+                      environment: newEnvironments,
+                    };
+                  })
                 }
                 className="mr-2"
               />
@@ -88,7 +114,7 @@ const CreateGroupForm = () => {
       </fieldset>
 
       {/* Group Type */}
-      <fieldset className="space-y-2">
+      {/* <fieldset className="space-y-2">
         <legend className="block text-lg font-semibold">Group Type</legend>
         <div className="space-y-1">
           {types.map((type) => (
@@ -107,6 +133,34 @@ const CreateGroupForm = () => {
                 className="mr-2"
               />
               {type.charAt(0).toUpperCase() + type.slice(1)}
+            </label>
+          ))}
+        </div>
+      </fieldset> */}
+
+      {/* Data Partition ID */}
+      <fieldset className="space-y-2">
+        <legend className="block text-lg font-semibold">
+          Data Partition ID
+        </legend>
+        <div className="space-y-1">
+          {data_partition_id.map((id) => (
+            <label key={id} className="block">
+              <input
+                type="radio"
+                name="data_partition_id"
+                value={id}
+                checked={formData.data_partition_id === id}
+                onChange={() =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    data_partition_id:
+                      id as CreateGroupFormType["data_partition_id"],
+                  }))
+                }
+                className="mr-2"
+              />
+              {id.charAt(0).toUpperCase() + id.slice(1)}
             </label>
           ))}
         </div>
@@ -134,8 +188,30 @@ const CreateGroupForm = () => {
         />
       </div>
 
+      {/* Description */}
+      <div className="space-y-2">
+        <label htmlFor="name" className="block text-lg font-semibold">
+          Description
+        </label>
+        <input
+          required
+          type="text"
+          id="description"
+          name="description"
+          value={formData.description}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setFormData((prev) => ({
+              ...prev,
+              description: e.target.value,
+            }))
+          }
+          className="w-full px-3 py-2 border border-gray-300 rounded"
+          placeholder="Enter group description"
+        />
+      </div>
+
       {/* Access Type */}
-      <fieldset className="space-y-2">
+      {/* <fieldset className="space-y-2">
         <legend className="block text-lg font-semibold">Access Type</legend>
         <div className="space-y-1">
           {accessTypes.map((type) => (
@@ -157,7 +233,7 @@ const CreateGroupForm = () => {
             </label>
           ))}
         </div>
-      </fieldset>
+      </fieldset> */}
 
       {/* Submit Button */}
       <button

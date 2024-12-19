@@ -97,7 +97,7 @@ export default function EntitlementsPage() {
       {/* ---------------Task form popups---------------- */}
       {showCreateGroupForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded">
+          <div className="bg-white p-4 rounded max-h-[90vh] overflow-y-auto">
             <CreateGroupForm />
             <button
               className="button"
@@ -110,7 +110,7 @@ export default function EntitlementsPage() {
       )}
       {showAddMemberForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white p-4 rounded">
+          <div className="bg-white p-4 rounded max-h-[90vh] overflow-y-auto">
             <AddIDtoGroupForm />
             <button
               className="button"

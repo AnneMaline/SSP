@@ -46,5 +46,5 @@ export const RedirectHome = ({
     return <p>Loading...</p>;
   }
 
-  return { children };
+  return <>{children}</>;
 };

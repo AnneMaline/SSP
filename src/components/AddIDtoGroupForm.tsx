@@ -4,11 +4,12 @@ import { getGroups } from "@/utils/entitlement/getGroups";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-type Environment = "prod" | "test" | "development" | "bootcamp";
+type Environment = "prod" | "test" | "development";
 
 type AddIDtoGroupFormType = {
   entraID: string;
   environment: Environment[];
+  data_partition_id: "bootcamp" | "data";
   role: "MEMBER" | "OWNER";
   group: string;
 };
@@ -27,7 +28,8 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
   // Initial state for the form
   const initialFormData: AddIDtoGroupFormType = {
     entraID: "",
-    environment: [],
+    environment: ["development"],
+    data_partition_id: "bootcamp",
     role: "MEMBER",
     group: group || "",
   };
@@ -35,19 +37,21 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
     "prod",
     "test",
     "development",
+  ];
+  const data_partition_id: AddIDtoGroupFormType["data_partition_id"][] = [
     "bootcamp",
+    "data",
   ];
 
   // ----------------------Fetch groups----------------------
   const [groups, setGroups] = useState<Groups[]>([]);
-  const data_partition_id = "bootcamp";
   const { data: session } = useSession();
 
   useEffect(() => {
     if (!session || !session.accessToken) {
       throw new Error("Session not found");
     }
-    getGroups(data_partition_id, session.accessToken).then((groups) => {
+    getGroups("bootcamp", session.accessToken).then((groups) => {
       setGroups(groups);
       //setFormData((prev) => ({ ...prev, group: groups })); //TASK: Make this work. Initial group in the form
     });
@@ -66,29 +70,40 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
       return;
     }
 
-    // Reset form after submission
-    setFormData(initialFormData);
+    const existingData = localStorage.getItem("AddMember");
+    if (existingData) {
+      const parsedData = JSON.parse(existingData);
+      const updatedData = Array.isArray(parsedData)
+        ? [...parsedData, formData]
+        : [parsedData, formData];
+      localStorage.setItem("AddMember", JSON.stringify(updatedData));
+    } else {
+      localStorage.setItem("AddMember", JSON.stringify([formData]));
+    }
 
     // Send data to the API
-    if (session && session.accessToken) {
-      if (group) {
-        addMember(
-          formData.entraID,
-          formData.role,
-          "bootcamp",
-          group,
-          session.accessToken
-        );
-      } else {
-        addMember(
-          formData.entraID,
-          formData.role,
-          "bootcamp",
-          formData.group,
-          session.accessToken
-        );
-      }
-    }
+    // if (session && session.accessToken) {
+    //   if (group) {
+    //     addMember(
+    //       formData.entraID,
+    //       formData.role,
+    //       "bootcamp",
+    //       group,
+    //       session.accessToken
+    //     );
+    //   } else {
+    //     addMember(
+    //       formData.entraID,
+    //       formData.role,
+    //       "bootcamp",
+    //       formData.group,
+    //       session.accessToken
+    //     );
+    //   }
+    // }
+
+    // Reset form after submission
+    setFormData(initialFormData);
   };
 
   return (
@@ -182,6 +197,34 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
                 className="mr-2"
               />
               {type.charAt(0).toUpperCase() + type.slice(1)}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      {/* Data Partition ID */}
+      <fieldset className="space-y-2">
+        <legend className="block text-lg font-semibold">
+          Data Partition ID
+        </legend>
+        <div className="space-y-1">
+          {data_partition_id.map((id) => (
+            <label key={id} className="block">
+              <input
+                type="radio"
+                name="data_partition_id"
+                value={id}
+                checked={formData.data_partition_id === id}
+                onChange={() =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    data_partition_id:
+                      id as AddIDtoGroupFormType["data_partition_id"],
+                  }))
+                }
+                className="mr-2"
+              />
+              {id.charAt(0).toUpperCase() + id.slice(1)}
             </label>
           ))}
         </div>
