@@ -27,9 +27,17 @@ const RequestsPage = () => {
         back={true}
       />
       <div className="p-4">
-        <p className="text-title mb-1 mt-2" style={{ fontSize: "28px" }}>
-          Development
-        </p>
+        <div className="text-bold grid grid-cols-[auto_100px_100px_25px] px-4 py-2">
+          <p className="text-title mb-1 mt-2" style={{ fontSize: "28px" }}>
+            Development
+          </p>
+          <p className="self-end" style={{ fontSize: "14px" }}>
+            Add Member
+          </p>
+          <p className="self-end" style={{ fontSize: "14px" }}>
+            Create Group
+          </p>
+        </div>
         {requests.map((request, index) => (
           <div key={index}>
             <RequestDropDown
