@@ -20,7 +20,7 @@ type Groups = {
 };
 
 type AddIDtoGroupFormProps = {
-  group: string;
+  group?: string;
 };
 
 const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
@@ -29,7 +29,7 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
     entraID: "",
     environment: [],
     role: "MEMBER",
-    group: group,
+    group: group || "",
   };
   const environments: AddIDtoGroupFormType["environment"] = [
     "prod",
@@ -49,7 +49,7 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
     }
     getGroups(data_partition_id, session.accessToken).then((groups) => {
       setGroups(groups);
-      setFormData((prev) => ({ ...prev, group: group })); //TASK: Make this work. Initial group in the form
+      //setFormData((prev) => ({ ...prev, group: groups })); //TASK: Make this work. Initial group in the form
     });
   }, [session]);
 
@@ -71,13 +71,23 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
 
     // Send data to the API
     if (session && session.accessToken) {
-      addMember(
-        formData.entraID,
-        formData.role,
-        "bootcamp",
-        formData.group,
-        session.accessToken
-      );
+      if (group) {
+        addMember(
+          formData.entraID,
+          formData.role,
+          "bootcamp",
+          group,
+          session.accessToken
+        );
+      } else {
+        addMember(
+          formData.entraID,
+          formData.role,
+          "bootcamp",
+          formData.group,
+          session.accessToken
+        );
+      }
     }
   };
 
@@ -180,28 +190,32 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
       {/* Group */}
       <div className="space-y-2">
         <label htmlFor="group" className="block text-lg font-semibold">
-          Select Group
+          {group ? "Selected Group" : "Select Group"}
         </label>
-        <select
-          required
-          id="group"
-          name="group"
-          value={formData.group}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-            setFormData((prev) => ({
-              ...prev,
-              group: e.target.value,
-            }))
-          }
-          className="w-full px-3 py-2 border border-gray-300 rounded"
-        >
-          <option value="">Select a group</option>
-          {groups.map((group) => (
-            <option key={group.email} value={group.email}>
-              {group.name}
-            </option>
-          ))}
-        </select>
+        {group ? (
+          <div>{group}</div>
+        ) : (
+          <select
+            required
+            id="group"
+            name="group"
+            value={formData.group}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setFormData((prev) => ({
+                ...prev,
+                group: e.target.value,
+              }))
+            }
+            className="w-full px-3 py-2 border border-gray-300 rounded"
+          >
+            <option value="">Select a group</option>
+            {groups.map((group) => (
+              <option key={group.email} value={group.email}>
+                {group.name}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
       {/* Submit Button */}

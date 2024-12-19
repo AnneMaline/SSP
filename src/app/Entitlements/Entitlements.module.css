@@ -1,0 +1,45 @@
+/* ---------------Tasks--------------- */
+.tasks {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  margin: 30px;
+}
+.task_container {
+  display: flex;
+  flex-direction: column;
+  /* Size */
+  width: 100%;
+  max-width: 400px;
+  height: fit-content;
+  padding: 15px;
+  gap: 30px;
+
+  /* Border style */
+  border-radius: 5px;
+  border: 2px dashed #80afb4;
+  background: #fff;
+}
+
+.close_button {
+  align-self: flex-end;
+}
+
+.button {
+  /* Button style */
+  background-color: #007079;
+  border-radius: 5px;
+  /* Spacing */
+  width: 84px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  /* Positioning */
+  align-self: flex-end;
+
+  /* Tekst style*/
+  color: white;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+}
