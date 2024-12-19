@@ -5,7 +5,7 @@ import { checkRole } from "@/utils/checkRole";
 import { signIn, useSession } from "next-auth/react";
 
 type Props = {
-  children?: React.ReactNode | ((session: any, status: any) => React.ReactNode);
+  children?: React.ReactNode;
   data_partition_id: string;
 };
 
@@ -46,5 +46,5 @@ export const RedirectHome = ({
     return <p>Loading...</p>;
   }
 
-  return <>{children}</>;
+  return { children };
 };

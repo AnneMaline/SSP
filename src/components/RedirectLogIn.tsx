@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode";
 import { signIn, useSession } from "next-auth/react";
 
 type Props = {
-  children?: React.ReactNode | ((session: any, status: any) => React.ReactNode);
+  children?: React.ReactNode;
 };
 
 type DecodedToken = {
@@ -51,7 +51,5 @@ export const RedirectLogIn = ({ children }: Props) => {
     return null; // Prevent further rendering until redirect
   }
 
-  return (
-    <>{typeof children === "function" ? children(session, status) : children}</>
-  );
+  return <>{children}</>;
 };
