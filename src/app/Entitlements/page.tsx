@@ -66,7 +66,7 @@ export default function EntitlementsPage() {
             </button>
             <p>Here you can create groups</p>
             <button
-              className={styles.button}
+              className="button"
               onClick={() => setShowCreateGroupForm(true)}
             >
               Add
@@ -85,7 +85,7 @@ export default function EntitlementsPage() {
             </button>
             <p>Here you can add members to groups</p>
             <button
-              className={styles.button}
+              className="button"
               onClick={() => setShowAddMemberForm(true)}
             >
               Add
@@ -94,13 +94,13 @@ export default function EntitlementsPage() {
         )}
       </div>
 
-      {/* ---------------Task forms---------------- */}
+      {/* ---------------Task form popups---------------- */}
       {showCreateGroupForm && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-4 rounded">
             <CreateGroupForm />
             <button
-              className="mt-4 bg-gray-500 text-white px-4 py-2"
+              className="button"
               onClick={() => setShowCreateGroupForm(false)}
             >
               Close
@@ -113,7 +113,7 @@ export default function EntitlementsPage() {
           <div className="bg-white p-4 rounded">
             <AddIDtoGroupForm />
             <button
-              className="mt-4 bg-gray-500 text-white px-4 py-2"
+              className="button"
               onClick={() => setShowAddMemberForm(false)}
             >
               Close
@@ -123,7 +123,11 @@ export default function EntitlementsPage() {
       )}
 
       {/* -------------GROUPS---------------- */}
-      <ul className="mb-2 mt-2">
+      <ul className={styles.group_table}>
+        <p className="text-small text-[#3D3D3D] pb-5">
+          {" "}
+          List of your access groups
+        </p>
         {GroupItems.map((item) => (
           <li key={item.email}>
             <GroupDropDown

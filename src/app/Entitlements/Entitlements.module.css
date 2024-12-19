@@ -25,21 +25,10 @@
   align-self: flex-end;
 }
 
-.button {
-  /* Button style */
-  background-color: #007079;
-  border-radius: 5px;
-  /* Spacing */
-  width: 84px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-
-  /* Positioning */
-  align-self: flex-end;
-
-  /* Tekst style*/
-  color: white;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
+/* -----------Group Table--------------- */
+.group_table {
+  display: flex;
+  flex-direction: column;
+  margin: 30px;
+  border-bottom: 1px solid #000;
 }

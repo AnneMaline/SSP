@@ -48,3 +48,22 @@ body {
   font-style: normal;
   font-weight: 700;
 }
+
+.button {
+  /* Button style */
+  background-color: #007079;
+  border-radius: 5px;
+  /* Spacing */
+  width: 84px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  /* Positioning */
+  align-self: flex-end;
+
+  /* Tekst style*/
+  color: white;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+}
