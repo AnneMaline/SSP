@@ -14,7 +14,14 @@ const TitleBanner = ({ title, description, back }: TitleBannerProps) => {
       {/* Back button if back is true */}
       {back ? (
         <div className={styles.back_arrow}>
-          <Link href="/">&larr; Back</Link> {/* Go back to Home page */}
+          <Link href="/">
+            <img
+              src="/icons/leftArrow.svg"
+              alt="Back"
+              className={styles.back_arrow_icon}
+            />
+          </Link>{" "}
+          {/* Go back to Home page */}
           {/* <button onClick={() => window.history.back()}>&larr; Back</button> */}
           {/* Go back to previous page */}
         </div>

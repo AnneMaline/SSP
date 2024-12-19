@@ -100,7 +100,7 @@ export default function EntitlementsPage() {
           <div className="bg-white p-4 rounded max-h-[90vh] overflow-y-auto">
             <CreateGroupForm />
             <button
-              className="button"
+              className="button mt-4"
               onClick={() => setShowCreateGroupForm(false)}
             >
               Close
@@ -113,7 +113,7 @@ export default function EntitlementsPage() {
           <div className="bg-white p-4 rounded max-h-[90vh] overflow-y-auto">
             <AddIDtoGroupForm />
             <button
-              className="button"
+              className="button mt-4"
               onClick={() => setShowAddMemberForm(false)}
             >
               Close

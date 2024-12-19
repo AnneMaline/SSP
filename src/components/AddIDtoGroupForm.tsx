@@ -12,6 +12,7 @@ type AddIDtoGroupFormType = {
   data_partition_id: "bootcamp" | "data";
   role: "MEMBER" | "OWNER";
   group: string;
+  reason: string;
 };
 
 type Groups = {
@@ -32,6 +33,7 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
     data_partition_id: "bootcamp",
     role: "MEMBER",
     group: group || "",
+    reason: "",
   };
   const environments: AddIDtoGroupFormType["environment"] = [
     "prod",
@@ -70,15 +72,30 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
       return;
     }
 
-    const existingData = localStorage.getItem("AddMember");
+    const request = {
+      requestID: 1,
+      name: group ? group : formData.group,
+      description: "Description for request",
+      applicant: "e3671de9-9e0c-49e0-9774-f3726efe038f", // get this another way
+      reason: formData.reason,
+      data_partition_id: "bootcamp",
+      type: {
+        type: "ADD_MEMBER",
+        endraID: formData.entraID,
+        role: "MEMBER",
+        group_email: group ? group : formData.group,
+      },
+    };
+    const existingData = localStorage.getItem("requests");
     if (existingData) {
       const parsedData = JSON.parse(existingData);
+      request.requestID = parsedData.length + 1;
       const updatedData = Array.isArray(parsedData)
-        ? [...parsedData, formData]
-        : [parsedData, formData];
-      localStorage.setItem("AddMember", JSON.stringify(updatedData));
+        ? [...parsedData, request]
+        : [parsedData, request];
+      localStorage.setItem("requests", JSON.stringify(updatedData));
     } else {
-      localStorage.setItem("AddMember", JSON.stringify([formData]));
+      localStorage.setItem("requests", JSON.stringify([request]));
     }
 
     // Send data to the API
@@ -259,6 +276,28 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
             ))}
           </select>
         )}
+      </div>
+
+      {/* Reason */}
+      <div className="space-y-2">
+        <label htmlFor="reason" className="block text-lg font-semibold">
+          Reason
+        </label>
+        <input
+          required
+          type="text"
+          id="reason"
+          name="reason"
+          value={formData.reason}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setFormData((prev) => ({
+              ...prev,
+              reason: e.target.value,
+            }))
+          }
+          className="w-full px-3 py-2 border border-gray-300 rounded"
+          placeholder="Enter reason"
+        />
       </div>
 
       {/* Submit Button */}

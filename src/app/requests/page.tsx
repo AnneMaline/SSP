@@ -3,41 +3,14 @@ import RequestDropDown from "@/components/RequestDropDown";
 import { RequestDropDownType } from "@/utils/interfaces";
 import { useState } from "react";
 import { RedirectHome } from "@/components/RedirectHome";
-
-const requestsTemp: RequestDropDownType[] = [
-  {
-    requestID: "1",
-    name: "string",
-    description: "Description for request 1",
-    applicant: "Applicant 1",
-    data_partition_id: "bootcamp",
-    reason: "Reason for request 1",
-    type: {
-      type: "CREATE_GROUP",
-      group_type: "Group Type 1",
-      access_type: "Access Type 1",
-    },
-  },
-  {
-    requestID: "2",
-    name: "string",
-    description: "Description for request 2",
-    applicant: "Applicant 2",
-    data_partition_id: "bootcamp",
-    reason: "Reason for request 2",
-    type: {
-      type: "ADD_MEMBER",
-      entraID: "a",
-      role: "MEMBER",
-      group_email: "string@bootcamp.dataservices.energy",
-    },
-  },
-];
+import TitleBanner from "@/components/TitleBanner";
 
 const RequestsPage = () => {
+  const reqs = localStorage.getItem("requests");
   const [showAgain, setShowAgain] = useState(true);
-  const [requests, setRequests] = useState<RequestDropDownType[]>(requestsTemp);
-
+  const [requests, setRequests] = useState<RequestDropDownType[]>(
+    JSON.parse(reqs || "[]")
+  );
   //TASK: make a storage solution for the requests
   //TASK: get requests from API and set in setRequests
   const removeRequest = (request: RequestDropDownType) => {
@@ -48,8 +21,15 @@ const RequestsPage = () => {
 
   return (
     <RedirectHome data_partition_id="bootcamp">
+      <TitleBanner
+        title="Requests"
+        description="Approve request from users"
+        back={true}
+      />
       <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">Requests</h1>
+        <p className="text-title mb-1 mt-2" style={{ fontSize: "28px" }}>
+          Development
+        </p>
         {requests.map((request, index) => (
           <div key={index}>
             <RequestDropDown
@@ -60,6 +40,12 @@ const RequestsPage = () => {
             />
           </div>
         ))}
+        <p className="text-title mb-1 mt-2" style={{ fontSize: "28px" }}>
+          Test
+        </p>
+        <p className="text-title mb-1 mt-2" style={{ fontSize: "28px" }}>
+          Production
+        </p>
       </div>
     </RedirectHome>
   );

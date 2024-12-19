@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { createGroup } from "@/utils/entitlement/createGroup";
 import { useSession } from "next-auth/react";
+import { access } from "fs";
 
 type Environment = "prod" | "test" | "development" | "bootcamp";
 
@@ -12,6 +13,7 @@ type CreateGroupFormType = {
   name: string;
   description: string;
   //accessType: "view" | "data" | "edit";
+  reason: string;
 };
 
 const CreateGroupForm = () => {
@@ -23,6 +25,7 @@ const CreateGroupForm = () => {
     name: "",
     description: "",
     //accessType: "view",
+    reason: "",
   };
   const environments: CreateGroupFormType["environment"] = [
     "prod",
@@ -55,16 +58,25 @@ const CreateGroupForm = () => {
     if (!session || !session.accessToken) {
       throw new Error("Session not found");
     }
-
-    const existingData = localStorage.getItem("CreateGroup");
+    const request = {
+      requestID: 1,
+      name: formData.name,
+      description: formData.description,
+      applicant: "e3671de9-9e0c-49e0-9774-f3726efe038f", // get this another way
+      reason: formData.reason,
+      data_partition_id: "bootcamp",
+      type: { type: "CREATE_GROUP", group_type: "", access_type: "" },
+    };
+    const existingData = localStorage.getItem("requests");
     if (existingData) {
       const parsedData = JSON.parse(existingData);
+      request.requestID = parsedData.length + 1;
       const updatedData = Array.isArray(parsedData)
-        ? [...parsedData, formData]
-        : [parsedData, formData];
-      localStorage.setItem("CreateGroup", JSON.stringify(updatedData));
+        ? [...parsedData, request]
+        : [parsedData, request];
+      localStorage.setItem("requests", JSON.stringify(updatedData));
     } else {
-      localStorage.setItem("CreateGroup", JSON.stringify([formData]));
+      localStorage.setItem("requests", JSON.stringify([request]));
     }
 
     // createGroup(
@@ -234,6 +246,28 @@ const CreateGroupForm = () => {
           ))}
         </div>
       </fieldset> */}
+
+      {/* Reason */}
+      <div className="space-y-2">
+        <label htmlFor="reason" className="block text-lg font-semibold">
+          Reason
+        </label>
+        <input
+          required
+          type="text"
+          id="reason"
+          name="reason"
+          value={formData.reason}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setFormData((prev) => ({
+              ...prev,
+              reason: e.target.value,
+            }))
+          }
+          className="w-full px-3 py-2 border border-gray-300 rounded"
+          placeholder="Enter reason"
+        />
+      </div>
 
       {/* Submit Button */}
       <button

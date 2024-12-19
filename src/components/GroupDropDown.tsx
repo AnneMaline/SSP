@@ -117,7 +117,13 @@ const GroupDropDown = ({
         onClick={toggleDropdown}
       >
         <span>{name}</span>
-        <span>{isOpen ? "↑" : "↓"}</span>
+        <span>
+          {isOpen ? (
+            <img src="/icons/upArrow.svg" alt="entraID" />
+          ) : (
+            <img src="/icons/downArrow.svg" alt="entraID" />
+          )}
+        </span>
       </div>
 
       {/* Dropdown Body (visible when isOpen is true) */}
@@ -194,10 +200,10 @@ const GroupDropDown = ({
           {/* AddIDtoGroupForm Pop-up */}
           {showAddIDForm && (
             <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-              <div className="bg-white p-4 rounded">
+              <div className="bg-white p-4 rounded max-h-[90vh] overflow-y-auto">
                 <AddIDtoGroupForm group={name} />
                 <button
-                  className="button"
+                  className="button mt-4"
                   onClick={() => setShowAddIDForm(false)}
                 >
                   Close

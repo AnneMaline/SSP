@@ -19,7 +19,11 @@ export default function Home() {
     "We'll take you through!",
     "Handle requests",
   ];
-  const topTaskIcon = ["globe.svg", "globe.svg", "globe.svg"];
+  const topTaskIcon = [
+    "/icons/world.svg",
+    "/icons/world.svg",
+    "/icons/world.svg",
+  ];
 
   useEffect(() => {
     if (status !== "loading" && (!session || !session.accessToken)) {

@@ -62,6 +62,13 @@ const RequestDropDown = ({
       }
     }
     console.log("API request to remove the request");
+
+    const storedRequests = JSON.parse(localStorage.getItem("requests") || "[]");
+    const updatedRequests = storedRequests.filter(
+      (request: RequestDropDownType) => request.requestID !== requestID
+    );
+    localStorage.setItem("requests", JSON.stringify(updatedRequests));
+
     removeRequest({
       requestID,
       name,
@@ -84,84 +91,56 @@ const RequestDropDown = ({
   };
 
   return (
-    <div className="border border-gray-300 w-full">
+    <div className="bg-white border border-gray-300 w-full">
       {/* Dropdown Header */}
       <div
-        className="flex justify-between items-center px-4 py-2 cursor-pointer"
+        className="grid grid-cols-[auto_100px_100px_25px] px-4 py-2 cursor-pointer"
         onClick={toggleDropdown}
       >
-        <span>{name}</span>
-        <span></span>
+        <span className="text-small">{name}</span>
         {type.type === "CREATE_GROUP" && (
-          <img src="globe.svg" alt="Globe Icon" className="w-6 h-6" />
+          <>
+            <span></span>
+            <img src="/icons/check.svg" alt="entraID" />
+          </>
         )}
         {type.type === "ADD_MEMBER" && (
-          <img src="file.svg" alt="File Icon" className="w-6 h-6" />
+          <>
+            <img src="/icons/addMember.svg" alt="entraID" />
+            <span></span>
+          </>
         )}
 
-        <span>{isOpen ? "↑" : "↓"}</span>
+        <span>
+          {isOpen ? (
+            <img src="/icons/upArrow.svg" alt="entraID" />
+          ) : (
+            <img src="/icons/downArrow.svg" alt="entraID" />
+          )}
+        </span>
       </div>
 
       {/* Dropdown Body (visible when isOpen is true) */}
       {isOpen && (
         <div className="p-4">
           {/* Information about the request */}
-          <div className="bg-blue-300">
+          <div className="text-bold bg-[#D5EAF4A3] pt-[30px] pl-5 pb-5 pr-6 flex flex-col">
             {/* Description */}
-            <div className="mb-2">
-              <p>
-                <b>Description: </b>
-                {description}
-              </p>
-            </div>
-
+            <p>Description: {description}</p>
             {/* Applicant */}
-            <div className="mb-4">
-              <p className="mb-2">
-                <b>Applicant: </b>
-                {applicant}
-              </p>
-            </div>
-
+            <p>Applicant: {applicant}</p>
             {/* Group type */}
             {type.type === "CREATE_GROUP" && (
-              <div className="mb-4">
-                <p className="mb-2">
-                  <b>Group type: </b>
-                  {type.group_type}
-                </p>
-              </div>
+              <p>Group type: {type.group_type}</p>
             )}
-
             {/* Access type */}
             {type.type === "CREATE_GROUP" && (
-              <div className="mb-4">
-                <p className="mb-2">
-                  <b>Access type: </b>
-                  {type.access_type}
-                </p>
-              </div>
+              <p>Access type: {type.access_type}</p>
             )}
-
             {/* EntraID */}
-            {type.type === "ADD_MEMBER" && (
-              <div className="mb-4">
-                <p className="mb-2">
-                  <b>EntraID: </b>
-                  {type.entraID}
-                </p>
-              </div>
-            )}
-
+            {type.type === "ADD_MEMBER" && <p>EntraID: {type.entraID}</p>}
             {/* Role */}
-            {type.type === "ADD_MEMBER" && (
-              <div className="mb-4">
-                <p className="mb-2">
-                  <b>Role: </b>
-                  {type.role}
-                </p>
-              </div>
-            )}
+            {type.type === "ADD_MEMBER" && <p>Role: {type.role}</p>}
           </div>
 
           {/* Reason for request */}
@@ -171,15 +150,12 @@ const RequestDropDown = ({
           </div>
 
           {/* Buttons for approval or rejection*/}
-          <div className="mb-4">
-            <button
-              className="bg-blue-500 text-white px-4 py-2 mr-2"
-              onClick={() => handleConfirmation(true)}
-            >
+          <div className="mb-4 gap-5 flex">
+            <button className="button" onClick={() => handleConfirmation(true)}>
               Approve
             </button>
             <button
-              className="bg-blue-500 text-white px-4 py-2 mr-2"
+              className="button"
               onClick={() => handleConfirmation(false)}
             >
               Reject
