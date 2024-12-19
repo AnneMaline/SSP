@@ -4,7 +4,7 @@ import GroupDropDown from "../../components/GroupDropDown";
 import CreateGroupForm from "@/components/CreateGroupForm";
 import { getGroups } from "@/utils/entitlement/getGroups";
 import { signIn, useSession } from "next-auth/react";
-import { checkRole } from "@/utils/checkRole";
+import TitleBanner from "@/components/TitleBanner";
 
 type GroupItem = {
   name: string;
@@ -36,9 +36,17 @@ export default function EntitlementsPage() {
     }
   }, [session]);
 
+  const description =
+    "See groups with access, make more groups or add members.";
+
   return (
     <div>
-      <h1>Entitlements</h1>
+      {/* Title */}
+      <TitleBanner
+        title="Entitlements API"
+        description={description}
+        back={true}
+      />
 
       {/* -------------CREATE GROUP---------------- */}
       <button

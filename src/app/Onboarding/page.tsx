@@ -2,16 +2,19 @@
 import Card from "@/components/InfoCard/Card";
 import ContentRenderer from "@/components/InfoCard/Content/ContentRenderer";
 import SideBar from "@/components/SideBar";
-import "./onboarding.css";
+import styles from "./onboarding.module.css";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { Chapter, ContentType } from "@/utils/interfaces";
+import TitleBanner from "@/components/TitleBanner";
 
 export default function OnboardingPage() {
   const searchParams = useSearchParams();
   const chapter = searchParams ? searchParams.get("chapter") : null;
   const [content, setContent] = useState<ContentType>();
   const [chapters, setChapters] = useState<Chapter[]>([]);
+  const descriptionOnboarding =
+    "How to get started; Getting started with OSDU can be complicated. This will help you getting the right start on your wonderful journey";
 
   // ---------------FETCH CHAPTERS----------------
   useEffect(() => {
@@ -55,25 +58,43 @@ export default function OnboardingPage() {
   // ---------------Select chapter----------------
   if (!chapter) {
     return (
-      <div className="container">
+      <div className={styles.container}>
         <SideBar chapters={chapters} />
-        <h1>Select a chapter to view content</h1>
+        <div className={styles.content}>
+          {/* Title */}
+          <TitleBanner
+            title="Onboarding"
+            description={descriptionOnboarding}
+            back={true}
+          />
+          <h1 className={styles.temp_text}>Select a chapter to view content</h1>
+        </div>
       </div>
     );
   }
 
   // ---------------Loading content----------------
   if (!content) {
-    return <div>Loading content for chapter {chapter}...</div>;
+    return (
+      <div className={styles.temp_text}>
+        Loading content for chapter {chapter}...
+      </div>
+    );
   }
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       {/* Sidebar */}
       <SideBar chapters={chapters} />
       {/* Content */}
-      <div className="content">
-        <div className="info-cards">
+      <div className={styles.content}>
+        {/* Title */}
+        <TitleBanner
+          title={chapter + ". " + content.name}
+          description={""}
+          back={true}
+        />
+        <div className={styles.info_cards}>
           {content.subchapters.map((subchapter, index) => (
             <Card key={index}>
               <ContentRenderer subChapter={subchapter} />

@@ -1,7 +1,7 @@
 "use client";
 import { Chapter } from "@/utils/interfaces";
 import { useState } from "react";
-import "./SideBar.css";
+import styles from "./SideBar.module.css";
 
 interface SideBarProps {
   chapters: Chapter[];
@@ -12,6 +12,7 @@ const SideBar = ({ chapters }: SideBarProps) => {
     {}
   );
 
+  // ---------------Toggle chapter dropdown----------------
   const toggleChapter = (title: string) => {
     setOpenChapters((prev) => ({
       ...prev,
@@ -20,29 +21,38 @@ const SideBar = ({ chapters }: SideBarProps) => {
   };
 
   return (
-    <div className="sidebar">
+    <div className={styles.sidebar}>
+      {/* Chapter titles with "button" to open subchapters */}
       {chapters.map((chapter) => (
         <div key={chapter.name}>
           <div
             onClick={() => toggleChapter(chapter.name)}
-            className="chapter-title"
+            className={styles.chapter_title}
           >
-            {chapter.name}
+            <p className="text-sidebar">
+              {"Chapter " + chapter.chapterNumber + ": " + chapter.name}
+            </p>
           </div>
+
+          {/* Subchapters name and links to pages */}
           {openChapters[chapter.name] && (
-            <div className="subchapters">
+            <div className={styles.subchapters}>
               {chapter.subchapters.map((subchapter) => (
                 <a
                   key={subchapter.name}
                   href={
                     "onboarding?chapter=" +
                     chapter.chapterNumber.toString() +
-                    "-" +
+                    "." +
                     subchapter.subchapterNumber.toString()
                   }
-                  className="subchapter-link"
+                  className="text-sidebar"
                 >
-                  {subchapter.name}
+                  {chapter.chapterNumber.toString() +
+                    "." +
+                    subchapter.subchapterNumber.toString() +
+                    " " +
+                    subchapter.name}
                 </a>
               ))}
             </div>

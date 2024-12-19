@@ -1,0 +1,40 @@
+.title_banner {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  width: 100%;
+}
+
+.back_arrow {
+  padding-bottom: 50px;
+  padding-top: 50px;
+  padding-left: 80px;
+}
+
+.back_arrow button {
+  height: 36px;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.no_back_arrow {
+  height: 136px;
+}
+
+.content_title {
+  padding-left: 80px;
+  padding-right: 40px;
+  gap: 2px;
+}
+
+.separator {
+  width: 100%;
+  border: 1px solid #ddd;
+  margin-bottom: 40px;
+}
+
+.description {
+  padding-left: 80px;
+  padding-bottom: 40px;
+  padding-right: 40px;
+}

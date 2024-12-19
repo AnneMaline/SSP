@@ -1,11 +1,14 @@
 .container {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  height: calc(100vh - var(--navbar-height)); /* Adjust the height as needed */
+  display: flex;
+
+  /* Size */
+  width: 100%;
+  height: calc(100vh - var(--navbar-height));
 }
 
 .content {
   overflow-y: auto;
+  width: 100%;
   /* Hide scrollbar*/
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -17,8 +20,14 @@
   height: 0;
 }
 
-.info-cards {
+.info_cards {
   padding: 1rem;
   max-width: 800px;
   justify-self: center;
+}
+
+.temp_text {
+  color: #3d3d3d;
+  font-size: 16px;
+  padding: 0.5rem;
 }

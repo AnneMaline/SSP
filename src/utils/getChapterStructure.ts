@@ -36,7 +36,7 @@ async function getChapterStructure(): Promise<Chapter[]> {
       } else if (currentChapter) {
         const subchapterParts = trimmedLine.replace("#", "").trim().split(":");
         const subchapterNumber = parseInt(
-          subchapterParts[0].split("-")[1].replace(".txt", "")
+          subchapterParts[0].replace(".txt", "").split(".")[1]
         );
         const subchapterName = subchapterParts[1].trim();
         const fileName = subchapterParts[0].trim();
