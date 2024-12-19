@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./TitleBanner.module.css"; // Make sure to create a corresponding CSS file for styling
+import Link from "next/link";
 
 interface TitleBannerProps {
   title: string;
@@ -13,7 +14,9 @@ const TitleBanner = ({ title, description, back }: TitleBannerProps) => {
       {/* Back button if back is true */}
       {back ? (
         <div className={styles.back_arrow}>
-          <button onClick={() => window.history.back()}>&larr; Back</button>
+          <Link href="/">&larr; Back</Link> {/* Go back to Home page */}
+          {/* <button onClick={() => window.history.back()}>&larr; Back</button> */}
+          {/* Go back to previous page */}
         </div>
       ) : (
         <div className={styles.no_back_arrow}></div>
