@@ -11,15 +11,19 @@ const Authentication = () => {
   if (session) {
     return (
       <div>
-        <p>Welcome, {session.user?.name}!</p>
-        <button onClick={() => signOut()}>Sign out</button>
+        <p className="text-small  text-black">Welcome, {session.user?.name}</p>
+        <button className="button" onClick={() => signOut()}>
+          Sign out
+        </button>
       </div>
     );
   }
 
   return (
-    <div>
-      <button onClick={() => signIn("azure-ad")}>Sign in with Azure AD</button>
+    <div className="text-small text-black">
+      <button className="button" onClick={() => signIn("azure-ad")}>
+        Sign in with Azure AD
+      </button>
     </div>
   );
 };

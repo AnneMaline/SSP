@@ -1,1 +1,5 @@
 Chapter 1.2: Quick Start Guide
+##Prerequisites for Use 
+List tools, access requirements, and knowledge needed to work with OSDU.
+##Developer’s First Steps
+Include instructions for setting up a development environment, connecting APIs, and accessing test datasets.

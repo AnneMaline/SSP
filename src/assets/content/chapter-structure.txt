@@ -2,3 +2,22 @@ Chapter 1: Getting Started with OSDU
 #chapter1.1.txt: Introduction to OSDU
 #chapter1.2.txt: Quick Start Guide
 Chapter 2: Core Concepts of OSDU
+#chapter2.1.txt: OSDU Platform Features and Capabilities
+#chapter2.2.txt: Authentication and Authorization
+#chapter2.3.txt: Interacting with the Platform
+Chapter 4: Data in OSDU
+#chapter4.1.txt: Understanding OSDU Data Definitions
+#chapter4.2.txt: Managing and Governing Data
+#chapter4.3.txt: Domain Data Management Services (DDMS)
+Chapter 5: Building and Contributing to OSDU
+#chapter5.1.txt: Open Source Foundations
+#chapter5.2.txt: Becoming a Contributor
+#chapter5.3.txt: Development Tools and Resources
+Chapter 6: Documentation and Resource Hub
+#chapter6.1.txt: Essential OSDU Documentation
+#chapter6.2.txt: Developer Tools
+#chapter6.3.txt: Community Hub
+Chapter 7: Feedback and Support Services
+#chapter7.1.txt: Sharing Ideas and Feature Requests
+#chapter7.2.txt: Reporting and Resolving Issues
+#chapter7.3.txt: Support and Contact Information
