@@ -21,7 +21,7 @@ const TitleBanner = ({ title, description, back }: TitleBannerProps) => {
 
       {/* Title */}
       <div className={styles.content_title}>
-        <p className="text-intro">Welcome to</p>
+        <p className="text-small text-[#3d3d3d]">Welcome to</p>
         <h1 className="text-title">{title}</h1>
       </div>
 

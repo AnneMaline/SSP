@@ -29,7 +29,7 @@ const SideBar = ({ chapters }: SideBarProps) => {
             onClick={() => toggleChapter(chapter.name)}
             className={styles.chapter_title}
           >
-            <p className="text-sidebar">
+            <p className="text-white text-small">
               {"Chapter " + chapter.chapterNumber + ": " + chapter.name}
             </p>
           </div>
@@ -46,7 +46,7 @@ const SideBar = ({ chapters }: SideBarProps) => {
                     "." +
                     subchapter.subchapterNumber.toString()
                   }
-                  className="text-sidebar"
+                  className="text-white text-small"
                 >
                   {chapter.chapterNumber.toString() +
                     "." +

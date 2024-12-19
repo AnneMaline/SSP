@@ -30,10 +30,9 @@ body {
   margin-bottom: 15px;
 }
 
-.text-intro {
+.text-small {
   font-size: 16px;
   font-weight: 400;
-  color: #3d3d3d;
   font-style: normal;
 }
 
@@ -41,11 +40,4 @@ body {
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
-}
-
-.text-sidebar {
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  color: #ffffff;
 }
