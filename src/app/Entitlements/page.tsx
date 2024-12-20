@@ -6,7 +6,6 @@ import { getGroups } from "@/utils/entitlement/getGroups";
 import { signIn, useSession } from "next-auth/react";
 import TitleBanner from "@/components/TitleBanner";
 import styles from "./entitlements.module.css";
-import { FaTimes } from "react-icons/fa";
 import AddIDtoGroupForm from "@/components/AddIDtoGroupForm";
 
 type GroupItem = {
@@ -62,7 +61,7 @@ export default function EntitlementsPage() {
               className={styles.close_button}
               onClick={() => setShowCreateGroupTask(false)}
             >
-              <FaTimes />
+              <img src="/icons/close.svg" alt="close" />
             </button>
             <p>Here you can create groups</p>
             <button
@@ -81,7 +80,7 @@ export default function EntitlementsPage() {
               className={styles.close_button}
               onClick={() => setShowAddMemberTask(false)}
             >
-              <FaTimes />
+              <img src="/icons/close.svg" alt="close" />
             </button>
             <p>Here you can add members to groups</p>
             <button

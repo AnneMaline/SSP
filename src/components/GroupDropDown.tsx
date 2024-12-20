@@ -133,7 +133,6 @@ const GroupDropDown = ({
           <div className="text-bold bg-[#D5EAF4A3] pt-[30px] pl-5 pb-5 pr-6 flex flex-col">
             <p>Description: {description}</p>
             <p>Group email: {group_email}</p>
-            <p>Number of members: {membersCount}</p>
             {/* See Member button */}
             <button
               className="button"
@@ -151,6 +150,9 @@ const GroupDropDown = ({
           <div className="grid grid-cols-[auto_auto]">
             {/* Table of Members (visible when showMembers is true) */}
             <div>
+              <p className="text-bold pb-5 pt-10 pl-4">
+                Number of members: {membersCount}
+              </p>
               {showMembers && (
                 <div>
                   <p className="text-bold pb-5 pt-10 pl-4">Members</p>
@@ -187,7 +189,7 @@ const GroupDropDown = ({
               style={{
                 alignSelf: "flex-start",
                 justifySelf: "end",
-                marginTop: "84px",
+                marginTop: "40px",
                 marginRight: "1.5rem",
                 width: "123px",
               }}
