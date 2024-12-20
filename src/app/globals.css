@@ -16,10 +16,38 @@
   }
 }
 
+@font-face {
+  font-family: "EquinorFont";
+  src: url("/fonts/Equinor-Light.otf") format("opentype");
+  font-weight: 300; /* Light */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "EquinorFont";
+  src: url("/fonts/Equinor-Medium.otf") format("opentype");
+  font-weight: 500; /* Medium */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "EquinorFont";
+  src: url("/fonts/Equinor-Regular.otf") format("opentype");
+  font-weight: 500; /* Medium */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "EquinorFont";
+  src: url("/fonts/Equinor-Bold.otf") format("opentype");
+  font-weight: 700; /* Bold */
+  font-style: normal;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: EquinorFont, Arial, Helvetica, sans-serif;
 }
 
 .text-title {
