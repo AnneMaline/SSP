@@ -1,5 +1,7 @@
 .container {
   display: flex;
+  background-color: #f5f5f5;
+  padding-bottom: 1px; /* To avoid showing background color from homepage */
 
   /* Size */
   width: 100%;

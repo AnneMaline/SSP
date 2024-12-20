@@ -46,7 +46,7 @@ export default function EntitlementsPage() {
     "See groups with access, make more groups or add members.";
 
   return (
-    <div>
+    <div className={styles.page}>
       {/* Title */}
       <TitleBanner
         title="Entitlements API"
