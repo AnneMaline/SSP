@@ -1,7 +1,6 @@
 .sidebar {
   /* Size */
-  max-width: 330px;
-  min-width: 150px;
+  width: 330px;
   height: 100%;
 
   /* Background Color */
@@ -14,18 +13,24 @@
   padding-bottom: 10px;
 }
 
+.close_button {
+  /* Color */
+  color: #ffffff;
+}
+
 .chapter_title {
   /* Mouse Cursor */
   cursor: pointer;
   /* Underline */
   border-bottom: 1px solid #ffffff;
+  padding-top: 10px;
 }
 
 .subchapters {
   /* Padding/Margin */
   padding-left: 50px;
   margin-top: 8px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 
   /* Content */
   display: flex;

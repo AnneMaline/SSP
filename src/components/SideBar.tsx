@@ -11,6 +11,7 @@ const SideBar = ({ chapters }: SideBarProps) => {
   const [openChapters, setOpenChapters] = useState<{ [key: string]: boolean }>(
     {}
   );
+  const [open, setOpen] = useState(true);
 
   // ---------------Toggle chapter dropdown----------------
   const toggleChapter = (title: string) => {
@@ -20,8 +21,24 @@ const SideBar = ({ chapters }: SideBarProps) => {
     }));
   };
 
+  if (!open) {
+    return (
+      <div className={styles.sidebar} style={{ width: "fit-content" }}>
+        {/* Open sidebar */}
+        <button onClick={() => setOpen(true)} className={styles.close_button}>
+          <img src="/icons/open.svg" alt="close" />
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.sidebar}>
+      {/* Close sidebar */}
+      <button onClick={() => setOpen(false)} className={styles.close_button}>
+        <img src="/icons/close1.svg" alt="close" />
+      </button>
+
       {/* Chapter titles with "button" to open subchapters */}
       {chapters.map((chapter) => (
         <div key={chapter.name}>
