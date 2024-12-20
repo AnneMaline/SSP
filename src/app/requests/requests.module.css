@@ -4,3 +4,13 @@
   min-height: 100vh;
   padding-bottom: 1px; /* To avoid showing background color from homepage */
 }
+
+.section {
+  font-weight: bold;
+  display: grid;
+  grid-template-columns: auto 100px 100px 25px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
