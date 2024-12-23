@@ -7,6 +7,10 @@ This is the Self-Service portal for OSDU. It is used for onboarding of new membe
 This is a MVP and there are many possible improvements available.
 The OSDU teams DevOps for Self Service Portal (tag: accSSP) includes many possible future features and improvements.
 
+## Contributor
+
+This project was created by Anne Maline Hjelmervik and Shahir Riaz as part of the Acceleration scope project for OSDU. 
+
 ## Azure Services
 
 App registration name: osdu-ssp-np
