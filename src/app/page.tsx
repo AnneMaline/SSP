@@ -31,11 +31,15 @@ export default function Home() {
       return;
     }
     if (session && session.accessToken) {
-      checkRole(session.accessToken, "bootcamp").then((hasRole) => {
-        if (hasRole) {
-          setTopTaskPageTitle(["Entitlements", "Onboarding", "Requests"]);
+      //TASK: loop over environments to get all the environments
+      //TASK: switch from "bootcamp" to ... either "bootcamp" or "data"
+      checkRole(session.accessToken, "bootcamp", "development").then(
+        (hasRole) => {
+          if (hasRole) {
+            setTopTaskPageTitle(["Entitlements", "Onboarding", "Requests"]);
+          }
         }
-      });
+      );
     }
   }, [session]);
 

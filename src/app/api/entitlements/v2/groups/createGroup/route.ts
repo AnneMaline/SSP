@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const ENDPOINT = process.env.API_URL + "/groups";
+const DEV_ENDPOINT = process.env.API_DEV_URL + "/groups";
+const PROD_ENDPOINT = process.env.API_PROD_URL + "/groups";
+const TEST_ENDPOINT = process.env.API_TEST_URL + "/groups";
 
 export async function POST(request: NextRequest) {
   const data_partition_id =
@@ -8,6 +10,14 @@ export async function POST(request: NextRequest) {
   const description = request.headers.get("description") || "";
   const name = request.headers.get("name") || "";
   const authToken = request.headers.get("Authorization")?.replace("Bearer", "");
+  const environment = request.headers.get("environment") || "development";
+  let endpoint = DEV_ENDPOINT;
+
+  if (environment === "production") {
+    endpoint = PROD_ENDPOINT;
+  } else if (environment === "test") {
+    endpoint = TEST_ENDPOINT;
+  }
 
   if (!data_partition_id || !authToken || !description || !name) {
     return NextResponse.json(
@@ -23,7 +33,7 @@ export async function POST(request: NextRequest) {
       Authorization: `Bearer ${authToken}`,
     };
 
-    const response = await fetch(ENDPOINT, {
+    const response = await fetch(endpoint, {
       method: "POST",
       headers: headers,
       body: JSON.stringify({ description, name }),

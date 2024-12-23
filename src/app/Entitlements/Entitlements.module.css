@@ -4,6 +4,14 @@
   padding-bottom: 1px; /* To avoid showing background color from homepage */
 }
 
+.section {
+  font-weight: bold;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
 /* ---------------Tasks--------------- */
 .tasks {
   display: flex;

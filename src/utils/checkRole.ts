@@ -15,10 +15,11 @@ const adminGroup = "users.datalake.admins";
 
 export async function checkRole(
   authToken: string,
-  data_partition_id: string
+  data_partition_id: string,
+  environment: string
 ): Promise<boolean> {
   try {
-    const groups = await getGroups(data_partition_id, authToken);
+    const groups = await getGroups(data_partition_id, environment, authToken);
     return groups.some(
       (group: any) =>
         group.name in opsRoles || opsGroup || adminRoles || adminGroup

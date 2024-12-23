@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const ENDPOINT = process.env.API_URL + "/groups";
+const DEV_ENDPOINT = process.env.API_DEV_URL + "/groups";
+const PROD_ENDPOINT = process.env.API_PROD_URL + "/groups";
+const TEST_ENDPOINT = process.env.API_TEST_URL + "/groups";
 
 export async function POST(request: NextRequest) {
   const group_email = request.headers.get("group_email") || "";
@@ -9,6 +11,14 @@ export async function POST(request: NextRequest) {
   const email = request.headers.get("email") || "";
   const role = request.headers.get("role") || "";
   const authToken = request.headers.get("Authorization")?.replace("Bearer", "");
+  const environment = request.headers.get("environment") || "development";
+  let endpoint = DEV_ENDPOINT;
+
+  if (environment === "production") {
+    endpoint = PROD_ENDPOINT;
+  } else if (environment === "test") {
+    endpoint = TEST_ENDPOINT;
+  }
 
   if (!group_email || !data_partition_id || !email || !role || !authToken) {
     return NextResponse.json(
@@ -26,7 +36,7 @@ export async function POST(request: NextRequest) {
       Authorization: `Bearer ${authToken}`,
     };
 
-    const response = await fetch(ENDPOINT + url, {
+    const response = await fetch(endpoint + url, {
       method: "POST",
       headers: headers,
       body: JSON.stringify({ email, role }),

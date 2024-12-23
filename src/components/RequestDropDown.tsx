@@ -17,6 +17,7 @@ const RequestDropDown = ({
   description,
   applicant,
   data_partition_id,
+  environment,
   reason,
   type,
   removeRequest,
@@ -43,21 +44,30 @@ const RequestDropDown = ({
       }
       if (type.type === "CREATE_GROUP") {
         console.log(
-          "CreateGroup - Set correct data_partition_id when done developing: ",
-          data_partition_id
+          "CreateGroup - Set correct data_partition_id and environment when done developing: ",
+          data_partition_id,
+          environment
         );
-        createGroup(name, description, "bootcamp", session.accessToken);
+        createGroup(
+          name,
+          description,
+          "bootcamp",
+          session.accessToken,
+          "development"
+        );
       } else {
         console.log(
-          "Add Member - Set correct data_partition_id when done developing: ",
-          data_partition_id
+          "Add Member - Set correct data_partition_id and environment when done developing: ",
+          data_partition_id,
+          environment
         );
         addMember(
           type.entraID,
           type.role,
           "bootcamp",
           type.group_email,
-          session.accessToken
+          session.accessToken,
+          "development"
         );
       }
     }
@@ -76,6 +86,7 @@ const RequestDropDown = ({
       applicant,
       reason,
       data_partition_id,
+      environment,
       type,
     });
   };
@@ -129,6 +140,12 @@ const RequestDropDown = ({
             <p>Description: {description}</p>
             {/* Applicant */}
             <p>Applicant: {applicant}</p>
+            {/* Data-partition-id */}
+            <p>
+              Data Parition ID:{" "}
+              {data_partition_id.charAt(0).toUpperCase() +
+                data_partition_id.slice(1)}
+            </p>
             {/* Group type */}
             {type.type === "CREATE_GROUP" && (
               <p>Group type: {type.group_type}</p>

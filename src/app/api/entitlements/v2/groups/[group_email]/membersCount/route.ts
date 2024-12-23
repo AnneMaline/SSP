@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const ENDPOINT = process.env.API_URL + "/groups";
+const DEV_ENDPOINT = process.env.API_DEV_URL + "/groups";
+const PROD_ENDPOINT = process.env.API_PROD_URL + "/groups";
+const TEST_ENDPOINT = process.env.API_TEST_URL + "/groups";
 
 export async function GET(request: NextRequest) {
   const group_email =
@@ -9,6 +11,14 @@ export async function GET(request: NextRequest) {
   const data_partition_id =
     request.headers.get("data-partition-id") || "bootcamp";
   const authToken = request.headers.get("Authorization")?.replace("Bearer", "");
+  const environment = request.headers.get("environment") || "development";
+  let endpoint = DEV_ENDPOINT;
+
+  if (environment === "production") {
+    endpoint = PROD_ENDPOINT;
+  } else if (environment === "test") {
+    endpoint = TEST_ENDPOINT;
+  }
 
   if (!data_partition_id || !group_email) {
     return NextResponse.json(
@@ -30,7 +40,7 @@ export async function GET(request: NextRequest) {
     }
 
     const response = await fetch(
-      ENDPOINT + "/" + group_email + "/membersCount",
+      endpoint + "/" + group_email + "/membersCount",
       {
         method: "GET",
         headers: headers,

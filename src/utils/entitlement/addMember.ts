@@ -4,7 +4,8 @@ export async function addMember(
   role: string,
   data_partition_id: string,
   group_email: string,
-  authToken: string
+  authToken: string,
+  environment: string
 ) {
   try {
     const response = await fetch(
@@ -18,6 +19,7 @@ export async function addMember(
           Authorization: `Bearer ${authToken}`,
           email,
           role,
+          environment,
         },
       }
     );

@@ -12,6 +12,7 @@ const RequestsPage = () => {
   const [requests, setRequests] = useState<RequestDropDownType[]>(
     JSON.parse(reqs || "[]")
   );
+
   //TASK: make a storage solution for the requests
   //TASK: get requests from API and set in setRequests
   const removeRequest = (request: RequestDropDownType) => {
@@ -22,6 +23,7 @@ const RequestsPage = () => {
 
   return (
     <RedirectHome data_partition_id="bootcamp">
+      {/* TASK: change data_partition_id */}
       <div className={styles.page}>
         <TitleBanner
           title="Requests"
@@ -40,16 +42,18 @@ const RequestsPage = () => {
               Create Group
             </p>
           </div>
-          {requests.map((request, index) => (
-            <div key={index}>
-              <RequestDropDown
-                {...request}
-                showAgain={showAgain}
-                setShowAgain={setShowAgain}
-                removeRequest={removeRequest}
-              />
-            </div>
-          ))}
+          {requests
+            .filter((req) => req.environment === "development")
+            .map((request, index) => (
+              <div key={index}>
+                <RequestDropDown
+                  {...request}
+                  showAgain={showAgain}
+                  setShowAgain={setShowAgain}
+                  removeRequest={removeRequest}
+                />
+              </div>
+            ))}
           <div className={styles.section}>
             <p className="text-title mb-1 mt-2" style={{ fontSize: "28px" }}>
               Test
@@ -61,8 +65,18 @@ const RequestsPage = () => {
               Create Group
             </p>
           </div>
-
-          {/* TASK: Add Requests for Test environment*/}
+          {requests
+            .filter((req) => req.environment === "development")
+            .map((request, index) => (
+              <div key={index}>
+                <RequestDropDown
+                  {...request}
+                  showAgain={showAgain}
+                  setShowAgain={setShowAgain}
+                  removeRequest={removeRequest}
+                />
+              </div>
+            ))}
 
           <div className={styles.section}>
             <p className="text-title mb-1 mt-2" style={{ fontSize: "28px" }}>
@@ -75,8 +89,18 @@ const RequestsPage = () => {
               Create Group
             </p>
           </div>
-
-          {/* TASK: Add Requests for Production environment*/}
+          {requests
+            .filter((req) => req.environment === "development")
+            .map((request, index) => (
+              <div key={index}>
+                <RequestDropDown
+                  {...request}
+                  showAgain={showAgain}
+                  setShowAgain={setShowAgain}
+                  removeRequest={removeRequest}
+                />
+              </div>
+            ))}
         </div>
       </div>
     </RedirectHome>

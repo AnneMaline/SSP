@@ -3,13 +3,16 @@ import { addMember } from "@/utils/entitlement/addMember";
 import { getGroups } from "@/utils/entitlement/getGroups";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { decodedToken } from "./RedirectLogIn";
+import { RequestDropDownType } from "@/utils/interfaces";
 
 type Environment = "prod" | "test" | "development";
+type ID = "bootcamp" | "data";
 
 type AddIDtoGroupFormType = {
   entraID: string;
   environment: Environment[];
-  data_partition_id: "bootcamp" | "data";
+  data_partition_id: ID[];
   role: "MEMBER" | "OWNER";
   group: string;
   reason: string;
@@ -30,7 +33,7 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
   const initialFormData: AddIDtoGroupFormType = {
     entraID: "",
     environment: ["development"],
-    data_partition_id: "bootcamp",
+    data_partition_id: ["bootcamp"],
     role: "MEMBER",
     group: group || "",
     reason: "",
@@ -40,7 +43,7 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
     "test",
     "development",
   ];
-  const data_partition_id: AddIDtoGroupFormType["data_partition_id"][] = [
+  const data_partition_id: AddIDtoGroupFormType["data_partition_id"] = [
     "bootcamp",
     "data",
   ];
@@ -53,7 +56,9 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
     if (!session || !session.accessToken) {
       throw new Error("Session not found");
     }
-    getGroups("bootcamp", session.accessToken).then((groups) => {
+    // TASK: loop over environments to get all the environments
+    // TASK: change the parameters in getGroups
+    getGroups("bootcamp", "development", session.accessToken).then((groups) => {
       setGroups(groups);
       //setFormData((prev) => ({ ...prev, group: groups })); //TASK: Make this work. Initial group in the form
     });
@@ -72,52 +77,78 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
       return;
     }
 
-    const request = {
-      requestID: 1,
-      name: group ? group : formData.group,
-      description: "Description for request",
-      applicant: "e3671de9-9e0c-49e0-9774-f3726efe038f", // get this another way
-      reason: formData.reason,
-      data_partition_id: "bootcamp",
-      type: {
-        type: "ADD_MEMBER",
-        endraID: formData.entraID,
-        role: "MEMBER",
-        group_email: group ? group : formData.group,
-      },
-    };
+    // ----------------------Store requests in local storage----------------------
+    // TASK: find another storage solution
     const existingData = localStorage.getItem("requests");
+
+    // Make requests - number of requests depends on the selected environments and data_partition_id
+    const request: RequestDropDownType[] = formData.data_partition_id.flatMap(
+      (partitionId, i) =>
+        formData.environment.map((env, index) => ({
+          requestID:
+            (existingData
+              ? JSON.parse(existingData).length +
+                i +
+                index * formData.data_partition_id.length
+              : i + index * formData.data_partition_id.length) +
+            "-" +
+            (session?.accessToken
+              ? decodedToken(session.accessToken)?.oid ?? ""
+              : ""),
+          name: group ? group : formData.group,
+          description: groups.find((g) => g.email === group)?.description ?? "",
+          applicant: session?.accessToken
+            ? decodedToken(session.accessToken)?.oid ?? ""
+            : "",
+          reason: formData.reason,
+          data_partition_id: partitionId,
+          environment: env,
+          type: {
+            type: "ADD_MEMBER",
+            entraID: formData.entraID,
+            role: "MEMBER",
+            group_email: group ? group : formData.group,
+          },
+        }))
+    );
+
     if (existingData) {
       const parsedData = JSON.parse(existingData);
-      request.requestID = parsedData.length + 1;
-      const updatedData = Array.isArray(parsedData)
-        ? [...parsedData, request]
-        : [parsedData, request];
-      localStorage.setItem("requests", JSON.stringify(updatedData));
+      parsedData.push(...request);
+      localStorage.setItem("requests", JSON.stringify(parsedData));
     } else {
-      localStorage.setItem("requests", JSON.stringify([request]));
+      localStorage.setItem("requests", JSON.stringify(request));
     }
 
     // Send data to the API
-    // if (session && session.accessToken) {
-    //   if (group) {
-    //     addMember(
-    //       formData.entraID,
-    //       formData.role,
-    //       "bootcamp",
-    //       group,
-    //       session.accessToken
-    //     );
-    //   } else {
-    //     addMember(
-    //       formData.entraID,
-    //       formData.role,
-    //       "bootcamp",
-    //       formData.group,
-    //       session.accessToken
-    //     );
-    //   }
-    // }
+    if (session && session.accessToken) {
+      // TASK: loop over environments and data_partition_id to get all the environments and partitions
+      if (
+        formData.environment.includes("development") &&
+        formData.data_partition_id.includes("bootcamp")
+      ) {
+        // if group was sent as a parameter
+        if (group) {
+          addMember(
+            formData.entraID,
+            formData.role,
+            "bootcamp",
+            group,
+            session.accessToken,
+            "development"
+          );
+        } else {
+          addMember(
+            formData.entraID,
+            formData.role,
+            "bootcamp",
+            formData.group,
+            session.accessToken,
+            "development"
+          );
+        }
+      }
+    }
 
     // Reset form after submission
     setFormData(initialFormData);
@@ -131,7 +162,7 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
       {/* EntraID */}
       <div className="space-y-2">
         <label htmlFor="entraID" className="block text-lg font-semibold">
-          Enter ID
+          EntraID
         </label>
         <input
           required
@@ -228,16 +259,20 @@ const AddIDtoGroupForm = ({ group }: AddIDtoGroupFormProps) => {
           {data_partition_id.map((id) => (
             <label key={id} className="block">
               <input
-                type="radio"
+                type="checkbox"
                 name="data_partition_id"
                 value={id}
-                checked={formData.data_partition_id === id}
+                checked={formData.data_partition_id.includes(id)}
                 onChange={() =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    data_partition_id:
-                      id as AddIDtoGroupFormType["data_partition_id"],
-                  }))
+                  setFormData((prev) => {
+                    const newID = prev.data_partition_id.includes(id)
+                      ? prev.data_partition_id.filter((i) => i !== id)
+                      : [...prev.data_partition_id, id];
+                    return {
+                      ...prev,
+                      data_partition_id: newID,
+                    };
+                  })
                 }
                 className="mr-2"
               />

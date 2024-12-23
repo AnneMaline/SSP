@@ -28,7 +28,13 @@ export const RedirectHome = ({
 
       // Redirect to home if user is not authorized
       if (session && session.accessToken) {
-        const hasRole = await checkRole(session.accessToken, data_partition_id);
+        // TASK: loop over environments to get all the environments
+        // TASK: add as a parameter to the function
+        const hasRole = await checkRole(
+          session.accessToken,
+          data_partition_id,
+          "development"
+        );
         if (!hasRole) {
           window.location.href = "/";
           return;

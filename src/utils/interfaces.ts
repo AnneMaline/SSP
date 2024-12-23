@@ -52,7 +52,8 @@ export type RequestDropDownType = {
   description: string;
   applicant: string;
   reason: string;
-  data_partition_id: string;
+  data_partition_id: "bootcamp" | "data";
+  environment: "prod" | "test" | "development";
   type: CreateGroupRequest | AddMemberRequest;
 };
 

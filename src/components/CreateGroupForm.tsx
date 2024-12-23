@@ -2,13 +2,15 @@
 import { useState } from "react";
 import { createGroup } from "@/utils/entitlement/createGroup";
 import { useSession } from "next-auth/react";
-import { access } from "fs";
+import { RequestDropDownType } from "@/utils/interfaces";
+import { decodedToken } from "./RedirectLogIn";
 
-type Environment = "prod" | "test" | "development" | "bootcamp";
+type Environment = "prod" | "test" | "development";
+type ID = "bootcamp" | "data";
 
 type CreateGroupFormType = {
   environment: Environment[];
-  data_partition_id: "bootcamp" | "data";
+  data_partition_id: ID[];
   //type: "data" | "service" | "users";
   name: string;
   description: string;
@@ -20,7 +22,7 @@ const CreateGroupForm = () => {
   // Initial state for the form
   const initialFormData: CreateGroupFormType = {
     environment: ["development"],
-    data_partition_id: "bootcamp",
+    data_partition_id: ["bootcamp"],
     //type: "data",
     name: "",
     description: "",
@@ -32,7 +34,7 @@ const CreateGroupForm = () => {
     "test",
     "development",
   ];
-  const data_partition_id: CreateGroupFormType["data_partition_id"][] = [
+  const data_partition_id: CreateGroupFormType["data_partition_id"] = [
     "bootcamp",
     "data",
   ];
@@ -52,39 +54,61 @@ const CreateGroupForm = () => {
     // prevent the default form submission
     e.preventDefault();
 
-    console.log(formData);
-
     // Send data to the API
     if (!session || !session.accessToken) {
       throw new Error("Session not found");
     }
-    const request = {
-      requestID: 1,
-      name: formData.name,
-      description: formData.description,
-      applicant: "e3671de9-9e0c-49e0-9774-f3726efe038f", // get this another way
-      reason: formData.reason,
-      data_partition_id: "bootcamp",
-      type: { type: "CREATE_GROUP", group_type: "", access_type: "" },
-    };
+
+    // ----------------------Store requests in local storage----------------------
+    // TASK: find another storage solution
     const existingData = localStorage.getItem("requests");
+
+    // Make requests - number of requests depends on the selected environments and data_partition_id
+    const request: RequestDropDownType[] = formData.data_partition_id.flatMap(
+      (partitionId, i) =>
+        formData.environment.map((env, index) => ({
+          requestID:
+            (existingData
+              ? JSON.parse(existingData).length +
+                i +
+                index * formData.data_partition_id.length
+              : i + index * formData.data_partition_id.length) +
+            "-" +
+            (session?.accessToken
+              ? decodedToken(session.accessToken)?.oid ?? ""
+              : ""),
+          name: formData.name,
+          description: formData.description,
+          applicant: session?.accessToken
+            ? decodedToken(session.accessToken)?.oid ?? ""
+            : "",
+          reason: formData.reason,
+          data_partition_id: partitionId,
+          environment: env,
+          type: { type: "CREATE_GROUP", group_type: "", access_type: "" },
+        }))
+    );
     if (existingData) {
       const parsedData = JSON.parse(existingData);
-      request.requestID = parsedData.length + 1;
-      const updatedData = Array.isArray(parsedData)
-        ? [...parsedData, request]
-        : [parsedData, request];
-      localStorage.setItem("requests", JSON.stringify(updatedData));
+      parsedData.push(...request);
+      localStorage.setItem("requests", JSON.stringify(parsedData));
     } else {
-      localStorage.setItem("requests", JSON.stringify([request]));
+      localStorage.setItem("requests", JSON.stringify(request));
     }
 
-    // createGroup(
-    //   formData.name,
-    //   formData.description,
-    //   "bootcamp",
-    //   session.accessToken
-    // );
+    // Create group in development environment in bootcamp data partition
+    if (
+      formData.environment.includes("development") &&
+      formData.data_partition_id.includes("bootcamp")
+    ) {
+      createGroup(
+        formData.name,
+        formData.description,
+        "bootcamp",
+        session.accessToken,
+        "development"
+      );
+    }
 
     // Reset form after submission
     setFormData(initialFormData);
@@ -159,16 +183,20 @@ const CreateGroupForm = () => {
           {data_partition_id.map((id) => (
             <label key={id} className="block">
               <input
-                type="radio"
+                type="checkbox"
                 name="data_partition_id"
                 value={id}
-                checked={formData.data_partition_id === id}
+                checked={formData.data_partition_id.includes(id)}
                 onChange={() =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    data_partition_id:
-                      id as CreateGroupFormType["data_partition_id"],
-                  }))
+                  setFormData((prev) => {
+                    const newID = prev.data_partition_id.includes(id)
+                      ? prev.data_partition_id.filter((i) => i !== id)
+                      : [...prev.data_partition_id, id];
+                    return {
+                      ...prev,
+                      data_partition_id: newID,
+                    };
+                  })
                 }
                 className="mr-2"
               />

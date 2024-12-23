@@ -12,6 +12,7 @@ type GroupItem = {
   name: string;
   email: string;
   description: string;
+  environment: "production" | "test" | "development";
 };
 
 export default function EntitlementsPage() {
@@ -22,6 +23,7 @@ export default function EntitlementsPage() {
   const [showAddMemberTask, setShowAddMemberTask] = useState(true);
   const data_partition_id = "bootcamp";
   const { data: session, status } = useSession();
+  const environments = ["development", "production", "test"];
 
   useEffect(() => {
     if (status !== "loading" && (!session || !session.accessToken)) {
@@ -29,15 +31,21 @@ export default function EntitlementsPage() {
       return;
     }
     if (session && session.accessToken) {
-      getGroups(data_partition_id, session.accessToken).then((groups) => {
-        setGroupItems(
-          groups.map((item: GroupItem) => ({
-            name: item.name,
-            email: item.email,
-            description: item.description,
-          }))
-        );
-      });
+      //TASK: loop over environments to get all the environments: ["development", "production", "test"]
+
+      // get groups from development environment
+      getGroups(data_partition_id, "development", session.accessToken).then(
+        (groups) => {
+          setGroupItems(
+            groups.map((item: GroupItem) => ({
+              name: item.name,
+              email: item.email,
+              description: item.description,
+              environment: "development",
+            }))
+          );
+        }
+      );
     }
   }, [session]);
 
@@ -122,22 +130,33 @@ export default function EntitlementsPage() {
       )}
 
       {/* -------------GROUPS---------------- */}
-      <ul className={styles.group_table}>
-        <p className="text-small text-[#3D3D3D] pb-5">
-          {" "}
-          List of your access groups
-        </p>
-        {GroupItems.map((item) => (
-          <li key={item.email}>
-            <GroupDropDown
-              name={item.name}
-              group_email={item.email}
-              description={item.description}
-              data_partition_id={data_partition_id}
-            />
-          </li>
-        ))}
-      </ul>
+      <p className="text-small text-[#3D3D3D] m-[30px] mb-2">
+        List of your access groups
+      </p>
+
+      {/* TASK: loop over environments to get test and production */}
+      {/* Groups in the different environments */}
+      {environments.map((env) => (
+        <ul className={styles.group_table} key={env}>
+          <div className={styles.section}>
+            <p className="text-title mb-1 mt-2" style={{ fontSize: "28px" }}>
+              {env.charAt(0).toUpperCase() + env.slice(1)}
+            </p>
+          </div>
+          {GroupItems.filter((group) => group.environment === env).map(
+            (item) => (
+              <li key={item.email}>
+                <GroupDropDown
+                  name={item.name}
+                  group_email={item.email}
+                  description={item.description}
+                  data_partition_id={data_partition_id}
+                />
+              </li>
+            )
+          )}
+        </ul>
+      ))}
     </div>
   );
 }

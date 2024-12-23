@@ -3,7 +3,8 @@ export async function createGroup(
   name: string,
   description: string,
   data_partition_id: string,
-  authToken: string
+  authToken: string,
+  environment: string
 ) {
   try {
     const response = await fetch("/api/entitlements/v2/groups/createGroup", {
@@ -14,6 +15,7 @@ export async function createGroup(
         Authorization: `Bearer ${authToken}`,
         name,
         description,
+        environment,
       },
     });
 

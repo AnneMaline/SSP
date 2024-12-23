@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { env } from "process";
 
-const ENDPOINT = process.env.API_URL + "/groups";
+const DEV_ENDPOINT = process.env.API_DEV_URL + "/groups";
+const PROD_ENDPOINT = process.env.API_PROD_URL + "/groups";
+const TEST_ENDPOINT = process.env.API_TEST_URL + "/groups";
 
 export async function GET(request: NextRequest) {
   const roleRequired = request.headers.get("roleRequired") || "";
@@ -8,6 +11,14 @@ export async function GET(request: NextRequest) {
     request.headers.get("data-partition-id") || "bootcamp";
   const on_behalf_of = request.headers.get("on-behalf-of") || "";
   const authToken = request.headers.get("Authorization")?.replace("Bearer", "");
+  const environment = request.headers.get("environment") || "development";
+  let endpoint = DEV_ENDPOINT;
+
+  if (environment === "production") {
+    endpoint = PROD_ENDPOINT;
+  } else if (environment === "test") {
+    endpoint = TEST_ENDPOINT;
+  }
 
   if (!data_partition_id || !authToken) {
     return NextResponse.json(
@@ -31,7 +42,7 @@ export async function GET(request: NextRequest) {
       headers["on-behalf-of"] = on_behalf_of;
     }
 
-    const response = await fetch(ENDPOINT, {
+    const response = await fetch(endpoint, {
       method: "GET",
       headers: headers,
     });
