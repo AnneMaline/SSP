@@ -16,55 +16,77 @@ App registration name: osdu-ssp-np
 ### APIs - /src/app/api/
 
 auth/[...nextauth] - a part of the login logic
+
 auth-API - get access token for the entititlement API
+
 content - get the text from the files in /assets/content
+
 entitlements - API calls to the entitlements groups
 
 ### Pages
 
 auth/signin/ - Redirect to organization login
+
 entitlements - Page that shows the users groups and available tasks to create groups and add members to the groups
+
 onboarding - Page that shows base information about OSDU for a new user.
+
 requests - Page that is only available for the platform team. Shows requests made by other users to create groups and add members to groups
+
 Home page - Takes the user to different pages
 
 ### Content - /assets/content
 
 Includes all the necessary text files for the onboarding page.
+
 Raw-content.xlsx includes a first draft of the content in the onboarding page.
 
 ### Components - /components
 
 /InfoCard - includes the frame for infocards shown in the onboarding page
+
 /InfoCard/Content/ - Includes the rendering for the content on the infocards
+
 /NOTUSE - every component made that are not used in this version
 
 /AddIDtoGruopForm - Gather information needed to add a member to a group from the user
+
 /CreateGroupForm - Gather information needed to create a group from the user
 
 /Authentication - SignIn/SignOut: shown when the profile icon in the navbar is pressed
+
 /RedirectHome - Redirects the user to the home page if it does not have access to the platform team page
+
 /RedirectLogIn - Redirects the user to the organization login page if it is not logged in
 
 /GroupDropDown - The information shown when a group is pressed in entitlements page
+
 /RequestDropDown - The information shown when a request is pressed in the Request page
 
 /NavBar - The content and logic of the navbar on top of the page
+
 /TitleBanner - The content of the title banner shown on every page
+
 /TopTask - The content and logic of the link buttons on the home page
+
 /SideBar - The content and logic of the sidebar on the onboarding page
 
 ### Utilities - /utils
 
 /entitlement - functions to call to /src/api/ for the entitlement APIs
+
 checkRole - checks the role of the user to see if the Request page is available for the user
+
 getChapterStructure and getContent - functions to call to /src/api/ for the content in onboarding
+
 interfaces - types for many of the object used in the code
 
 ### Tests /tests
 
 OBS! not updated
+
 e2e - end-to-end tests in Playwright
+
 unit - unit tests in Jest
 
 ## The structure of the content in Onboarding
@@ -87,8 +109,11 @@ The next lines are the content of Chapter X-Y.
 There are a few different types of content. Each tag needs to start the line:
 Subchapter: (ex: ## This is one information Card) - This marks each information card in every page. The number of lines that starts with ## is the number of cards on that page.
 Image: (ex: #img: imageFile.jpg;) - This will show an image on the card. Only the name of the file is needed and the picture needs to be stored in /public/images.
+
 Video: (ex: #video: videoFile.mp4;) - This will show a video on the card. Only the name of the file is needed and the video needs to be stored in /public/videos.
+
 List: (ex. - this is one item in a list) - The line needs to start with "- ". This will be one item in a list object.
+
 Paragraph: (ex. Just write the content like this) - If a line starts wihtout any tags, it will be a paragraph. Make sure to change lines if you will start a new paragraph. One paragraph needs to be on the same line.
 
 NOT ADDED YET :D
