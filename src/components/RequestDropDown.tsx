@@ -43,11 +43,7 @@ const RequestDropDown = ({
         throw new Error("Session not found");
       }
       if (type.type === "CREATE_GROUP") {
-        console.log(
-          "CreateGroup - Set correct data_partition_id and environment when done developing: ",
-          data_partition_id,
-          environment
-        );
+        //TASK: CreateGroup - Set correct data_partition_id and environment when done developing
         createGroup(
           name,
           description,
@@ -56,11 +52,7 @@ const RequestDropDown = ({
           "development"
         );
       } else {
-        console.log(
-          "Add Member - Set correct data_partition_id and environment when done developing: ",
-          data_partition_id,
-          environment
-        );
+        //TASK: Add Member - Set correct data_partition_id and environment when done developing
         addMember(
           type.entraID,
           type.role,
@@ -71,8 +63,7 @@ const RequestDropDown = ({
         );
       }
     }
-    console.log("API request to remove the request");
-
+    //TASK: API request to remove the request
     const storedRequests = JSON.parse(localStorage.getItem("requests") || "[]");
     const updatedRequests = storedRequests.filter(
       (request: RequestDropDownType) => request.requestID !== requestID

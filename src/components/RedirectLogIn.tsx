@@ -35,12 +35,9 @@ export const RedirectLogIn = ({ children }: Props) => {
   }
 
   if (session?.accessToken) {
-    console.log("decoding");
     const decoded = decodedToken(session.accessToken);
     if (decoded && decoded.exp < currentTime) {
       signIn("azure-ad", { callbackUrl: "/" });
-      console.log(decoded ? decoded.exp > currentTime : false);
-      console.log(session.accessToken);
       return null;
     }
   }

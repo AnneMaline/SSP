@@ -27,10 +27,6 @@ export async function addMember(
     if (!response.ok) {
       throw new Error(`Error: ${response.status} ${response.statusText}`);
     }
-
-    const data = await response.json();
-    console.log("Member added successfully:", data);
-    // Update the state or perform other actions with the response data
   } catch (error) {
     console.error("Error adding member:", error);
   }

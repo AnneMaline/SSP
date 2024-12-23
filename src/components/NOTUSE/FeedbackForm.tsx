@@ -30,7 +30,6 @@ const FeedbackForm = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Submitting form data:", formData);
 
     // Reset form after submission
     setFormData(initialFormData);
@@ -43,7 +42,7 @@ const FeedbackForm = () => {
     });
 
     if (response.ok) {
-      console.log("Form submitted successfully!");
+      alert("Form submitted successfully!");
     } else {
       console.error("Form submission failed.");
     }*/
